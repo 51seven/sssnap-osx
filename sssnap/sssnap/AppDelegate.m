@@ -27,9 +27,15 @@
     //  TODO: Own class?
     //
     NSString *homeDirectory = NSHomeDirectory(); //Users home directory
-    NSString *locationFilename = @"/Desktop/FromApp.png"; //everything after /Users/HOME
-    NSString *savePath = [homeDirectory stringByAppendingString: locationFilename]; //append
-    NSLog(@"%@", savePath); //Debug
+    NSString *location = @"/Desktop/"; //everything after /Users/HOME
+    NSString *homeLocation = [homeDirectory stringByAppendingString: location]; //append
+    NSDate *currDate = [NSDate date];
+    NSString *dateString = [currDate description];
+    NSString *fileName = [homeLocation stringByAppendingString:dateString];
+    NSString *extension = @".png";
+    NSString *fullPath = [fileName stringByAppendingString:extension];
+    
+    NSLog(@"%@", fullPath); //Debug
     
     
     //  Starts Screencapture Process
@@ -39,7 +45,7 @@
     
     //  Array with Arguments to be given to screencapture
     NSArray *arguments;
-    arguments = [NSArray arrayWithObjects:@"-s",savePath,nil];
+    arguments = [NSArray arrayWithObjects:@"-s",fullPath,nil];
     
     //  Apply arguments and start application
     [theProcess setArguments:arguments];

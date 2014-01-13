@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D90E21251884575D007CEE2D /* sendPost.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21241884575D007CEE2D /* sendPost.m */; };
 		D993D236188362F200C19A90 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D235188362F200C19A90 /* Cocoa.framework */; };
 		D993D240188362F200C19A90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D993D23E188362F200C19A90 /* InfoPlist.strings */; };
 		D993D242188362F200C19A90 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D993D241188362F200C19A90 /* main.m */; };
@@ -32,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D90E21231884575C007CEE2D /* sendPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sendPost.h; sourceTree = "<group>"; };
+		D90E21241884575D007CEE2D /* sendPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sendPost.m; sourceTree = "<group>"; };
 		D993D232188362F200C19A90 /* sssnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sssnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D993D235188362F200C19A90 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D993D238188362F200C19A90 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -121,6 +124,8 @@
 			children = (
 				D993D247188362F300C19A90 /* AppDelegate.h */,
 				D993D248188362F300C19A90 /* AppDelegate.m */,
+				D90E21231884575C007CEE2D /* sendPost.h */,
+				D90E21241884575D007CEE2D /* sendPost.m */,
 				D993D24A188362F300C19A90 /* MainMenu.xib */,
 				D993D24D188362F300C19A90 /* Images.xcassets */,
 				D993D23C188362F200C19A90 /* Supporting Files */,
@@ -258,6 +263,7 @@
 			files = (
 				D993D249188362F300C19A90 /* AppDelegate.m in Sources */,
 				D993D242188362F200C19A90 /* main.m in Sources */,
+				D90E21251884575D007CEE2D /* sendPost.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

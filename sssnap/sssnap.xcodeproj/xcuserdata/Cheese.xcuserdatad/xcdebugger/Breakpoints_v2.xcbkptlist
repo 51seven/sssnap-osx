@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "411311382.099305"
+            timestampString = "411326973.035466"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
             landmarkName = "-applicationDidFinishLaunching:"
             landmarkType = "5">
          </BreakpointContent>
@@ -38,17 +38,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "411318817.49839"
+            timestampString = "411327408.848345"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "@implementation AppDelegate"
-            landmarkType = "3">
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "-awakeFromNib"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

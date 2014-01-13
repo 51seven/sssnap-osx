@@ -9,9 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
-
 @property (assign) IBOutlet NSWindow *window;
 
 - (IBAction)takeScreenshot:(id)sender;
+
+@property (weak) IBOutlet NSMenu *menuBarOutlet;
+@property (strong, nonatomic) NSStatusItem *statusBar;
 
 @end

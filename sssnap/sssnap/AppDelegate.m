@@ -10,6 +10,8 @@
 
 @implementation AppDelegate
 
+@synthesize statusBar = _statusBar;
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
@@ -54,6 +56,20 @@
     [theProcess setArguments:arguments];
     [theProcess launch];
     
+}
+
+//Ovveride AwakeFromNib
+
+- (void) awakeFromNib {
+    self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    
+    self.statusBar.title = @"G";
+    
+    // you can also set an image
+    //self.statusBar.image =
+    
+    self.statusBar.menu = self.menuBarOutlet;
+    self.statusBar.highlightMode = YES;
 }
 
     

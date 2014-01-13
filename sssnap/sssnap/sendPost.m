@@ -12,7 +12,8 @@
 @implementation sendPost
 
 // Sends an HTTP POST-Request
-- (void)sendPost:(NSImage *) image {
+// S. http://pastebin.com/R70NJMnQ
+- (NSString)sendPost:(NSImage *) image {
     NSLog(@"Event Cought - Initializing Upload");
     
     NSString *username = @"test";
@@ -91,6 +92,7 @@
     NSString *str = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
     NSLog(@"Response : %@",str);
     
+    return str;
 }
 
 

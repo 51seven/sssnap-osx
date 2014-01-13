@@ -12,6 +12,7 @@
 @property (assign) IBOutlet NSWindow *window;
 
 - (IBAction)takeScreenshot:(id)sender;
+- (IBAction)sendPost:(id)sender;
 
 @property (weak) IBOutlet NSMenu *menuBarOutlet;
 @property (strong, nonatomic) NSStatusItem *statusBar;

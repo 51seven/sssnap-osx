@@ -655,6 +655,7 @@
         <customObject id="494" customClass="AppDelegate">
             <connections>
                 <outlet property="menuBarOutlet" destination="MaR-sV-yX7" id="tuj-bM-0Xi"/>
+                <outlet property="sendPost" destination="ejx-kX-zEP" id="BQU-k7-d9d"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
@@ -664,6 +665,13 @@
                     <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                     <connections>
                         <action selector="takeScreenshot:" target="494" id="jbS-1m-RuT"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Upload Image" id="ejx-kX-zEP">
+                    <attributedString key="attributedTitle"/>
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="sendPost:" target="494" id="pIi-dz-UDD"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="zrB-xX-hMW"/>

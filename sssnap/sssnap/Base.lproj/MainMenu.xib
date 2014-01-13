@@ -660,7 +660,12 @@
         <customObject id="420" customClass="NSFontManager"/>
         <menu id="MaR-sV-yX7">
             <items>
-                <menuItem title="Refresh" keyEquivalent="r" id="5w4-ce-eKf"/>
+                <menuItem title="Take Screenshot" keyEquivalent="Ö" id="5w4-ce-eKf">
+                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                    <connections>
+                        <action selector="takeScreenshot:" target="494" id="jbS-1m-RuT"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="zrB-xX-hMW"/>
                 <menuItem title="Preferences" keyEquivalent="," id="z2c-0Y-eJN"/>
                 <menuItem title="Quit" keyEquivalent="q" id="g1u-vb-P4V">

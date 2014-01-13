@@ -18,13 +18,14 @@
     NSString *username = @"admin";
     NSString *password = @"geheim";
     
-    //RP: Creando el request
+    //RP: Create el request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [request setHTTPShouldHandleCookies:NO];
     [request setTimeoutInterval:30];
     [request setHTTPMethod:@"POST"];
-    // RP: Empaquetando datos
+    
+    // RP: Packing el datos
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
     [_params setObject:[NSString stringWithFormat:@"%@", username] forKey:@"username"];
     [_params setObject:[NSString stringWithFormat:@"%@", password] forKey:@"password"];

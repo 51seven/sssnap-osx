@@ -38,6 +38,7 @@
     
     [theProcess waitUntilExit];
     NSString *items;
+    NSLog(@"%ld", [theProcess terminationReason]);
     if ([theProcess terminationStatus] == 0)
     {
         NSLog(@"Got here");
@@ -85,7 +86,7 @@
     gMyHotKeyID.id=1;
     
     //  Register the Hotkey
-    RegisterEventHotKey(49, cmdKey+optionKey, gMyHotKeyID,
+    RegisterEventHotKey(0x17, shiftKey+optionKey, gMyHotKeyID,
                         GetApplicationEventTarget(), 0, &gMyHotKeyRef);
     
     

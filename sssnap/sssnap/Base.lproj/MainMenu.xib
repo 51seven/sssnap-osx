@@ -660,8 +660,8 @@
         <customObject id="420" customClass="NSFontManager"/>
         <menu id="MaR-sV-yX7">
             <items>
-                <menuItem title="Take Screenshot" keyEquivalent="Ö" id="5w4-ce-eKf">
-                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                <menuItem title="Take Screenshot" keyEquivalent="5" id="5w4-ce-eKf">
+                    <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
                     <connections>
                         <action selector="takeScreenshot:" target="494" id="jbS-1m-RuT"/>
                     </connections>

@@ -26,14 +26,14 @@
     [request setHTTPMethod:@"POST"];
     // RP: Empaquetando datos
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
-    [_params setObject:[NSString stringWithFormat:@"%@", username] forKey:@"username"];
+    [_params setObject:[NSString stringWithFormat:@"%@", username] forKey:@"name"];
     [_params setObject:[NSString stringWithFormat:@"%@", password] forKey:@"password"];
     
     // the boundary string : a random string, that will not repeat in post data, to separate post data fields.
     NSString *BoundaryConstant = @"V2ymHFg03ehbqgZCaKO6jy";
     
     // string constant for the post parameter 'file'
-    NSString *FileParamConstant = @"image_field";
+    NSString *FileParamConstant = @"file";
     
     //RP: Configurando la dirección
     NSURL *requestURL = [[NSURL alloc] initWithString:@"http://api.sven-schiffer.de/sssnap_test.php"];

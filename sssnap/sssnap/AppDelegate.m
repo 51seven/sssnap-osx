@@ -62,7 +62,12 @@
     NSLog(@"%@", items);
     
     sendPost *test = [[sendPost alloc] init];
-    [test sendPost:clipboardimage];
+    NSString *imageUrl = [test sendPost:clipboardimage];
+    NSLog(@"%@", imageUrl);
+    
+    NSPasteboard *pasteBoard;
+    [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+    [pasteBoard setString:imageUrl forType:NSStringPboardType];
     
     
 }

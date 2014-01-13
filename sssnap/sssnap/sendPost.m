@@ -13,7 +13,7 @@
 
 // Sends an HTTP POST-Request
 // S. http://pastebin.com/R70NJMnQ
-- (NSString)sendPost:(NSImage *) image {
+- (NSString *)sendPost:(NSImage *) image {
     NSLog(@"Event Cought - Initializing Upload");
     
     NSString *username = @"test";

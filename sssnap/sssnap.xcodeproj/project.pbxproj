@@ -464,6 +464,7 @@
 				D993D265188362F300C19A90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D993D266188362F300C19A90 /* Build configuration list for PBXNativeTarget "sssnapTests" */ = {
 			isa = XCConfigurationList;
@@ -472,6 +473,7 @@
 				D993D268188362F300C19A90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

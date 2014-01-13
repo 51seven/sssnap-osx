@@ -21,29 +21,6 @@
 
 - (IBAction)takeScreenshot:(id)sender {
     
-    //
-    //  Sets the absolute path for the picture to be saved at.
-    //  Necessary because on some machines MacOS seems to need the absolute path.
-    //
-    //  TODO: Try to make it less dirty
-    //  TODO: Change location later on, Desktop for now
-    //  TODO: Own class?
-    //  TODO: Underscores etc in filname to mka it look like
-    //        Screen Shot 13_01_14 at 03_08_36
-    //        Do we need this? Only hash maybe?
-    //
-    NSString *homeDirectory = NSHomeDirectory(); //Users home directory
-    NSString *location = @"/Desktop/"; //everything after /Users/HOME
-    NSString *homeLocation = [homeDirectory stringByAppendingString: location]; //append
-    NSDate *currDate = [NSDate date];
-    NSString *dateString = [currDate description];
-    NSString *fileName = [homeLocation stringByAppendingString:dateString];
-    NSString *extension = @".png";
-    NSString *fullPath = [fileName stringByAppendingString:extension];
-    
-    NSLog(@"%@", fullPath); //Debug
-    
-    
     //  Starts Screencapture Process
     NSTask *theProcess;
     theProcess = [[NSTask alloc] init];
@@ -51,11 +28,28 @@
     
     //  Array with Arguments to be given to screencapture
     NSArray *arguments;
-    arguments = [NSArray arrayWithObjects:@"-s",fullPath,nil];
+    arguments = [NSArray arrayWithObjects:@"-s", @"-c",@"image.jpg",nil];
+    
     
     //  Apply arguments and start application
     [theProcess setArguments:arguments];
     [theProcess launch];
+    
+    [theProcess waitUntilExit];
+    if ([theProcess terminationStatus] == 0)
+    {
+        NSLog(@"Got here");
+        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+        NSArray *classes = [[NSArray alloc] initWithObjects: [NSImage class], nil];
+        NSDictionary *options = [NSDictionary dictionary];
+        NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
+        if (copiedItems != nil) {
+            // Do something with the contents...
+            NSString *items = [copiedItems description];
+            NSLog(@"%@", items);
+        }
+
+    }
     
 }
 
@@ -70,7 +64,7 @@
     eventType.eventClass=kEventClassKeyboard;
     eventType.eventKind=kEventHotKeyPressed;
     
-    //  Fixed later
+    
     InstallApplicationEventHandler(&MyHotKeyHandler,1,&eventType,NULL,NULL);
     
     //  Name and ID of Hotkey
@@ -98,29 +92,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
 {
     
     
-    //
-    //  Sets the absolute path for the picture to be saved at.
-    //  Necessary because on some machines MacOS seems to need the absolute path.
-    //
-    //  TODO: Try to make it less dirty
-    //  TODO: Change location later on, Desktop for now
-    //  TODO: Own class?
-    //  TODO: Underscores etc in filname to mka it look like
-    //        Screen Shot 13_01_14 at 03_08_36
-    //        Do we need this? Only hash maybe?
-    //
-    NSString *homeDirectory = NSHomeDirectory(); //Users home directory
-    NSString *location = @"/Desktop/"; //everything after /Users/HOME
-    NSString *homeLocation = [homeDirectory stringByAppendingString: location]; //append
-    NSDate *currDate = [NSDate date];
-    NSString *dateString = [currDate description];
-    NSString *fileName = [homeLocation stringByAppendingString:dateString];
-    NSString *extension = @".png";
-    NSString *fullPath = [fileName stringByAppendingString:extension];
-    
-    NSLog(@"%@", fullPath); //Debug
-    
-    
     //  Starts Screencapture Process
     NSTask *theProcess;
     theProcess = [[NSTask alloc] init];
@@ -128,11 +99,29 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     //  Array with Arguments to be given to screencapture
     NSArray *arguments;
-    arguments = [NSArray arrayWithObjects:@"-s",fullPath,nil];
+    arguments = [NSArray arrayWithObjects:@"-s", @"-c",@"image.jpg",nil];
+    
     
     //  Apply arguments and start application
     [theProcess setArguments:arguments];
     [theProcess launch];
+    
+    [theProcess waitUntilExit];
+    if ([theProcess terminationStatus] == 0)
+    {
+        NSLog(@"Got here");
+        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+        NSArray *classes = [[NSArray alloc] initWithObjects: [NSImage class], nil];
+        NSDictionary *options = [NSDictionary dictionary];
+        NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
+        if (copiedItems != nil) {
+            // Do something with the contents...
+            NSString *items = [copiedItems description];
+            NSLog(@"%@", items);
+        }
+        
+    }
+
     
     return noErr;
 }

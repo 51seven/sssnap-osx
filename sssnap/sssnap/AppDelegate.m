@@ -122,7 +122,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [theProcess launch];
     
     [theProcess waitUntilExit];
-    NSString *items;
     NSImage *clipboardimage;
     if ([theProcess terminationStatus] == 0)
     {

@@ -15,8 +15,8 @@
 - (void)sendPost:(NSImage *) image {
     NSLog(@"Event Cought - Initializing Upload");
     
-    NSString *username = @"admin";
-    NSString *password = @"geheim";
+    NSString *username = @"test";
+    NSString *password = @"test";
     
     //RP: Creando el request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -32,9 +32,6 @@
     // the boundary string : a random string, that will not repeat in post data, to separate post data fields.
     NSString *BoundaryConstant = @"V2ymHFg03ehbqgZCaKO6jy";
     
-    // string constant for the post parameter 'file'
-    NSString *FileParamConstant = @"file";
-    
     //RP: Configurando la dirección
     NSURL *requestURL = [[NSURL alloc] initWithString:@"http://localhost:3000/api/upload"];
     
@@ -44,6 +41,13 @@
     
     // post body
     NSMutableData *body = [NSMutableData data];
+    
+    // add params (all params are strings)
+    for (NSString *param in _params) {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
     
     // -----------------------------------------
     // add image data
@@ -55,8 +59,7 @@
     if (imageData) {
         printf("appending image data\n");
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\'%@\'; filename=\"image.jpg\"\r\n",
-                           FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
         
         [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:imageData];
@@ -67,13 +70,6 @@
     // end image
     // -----------------------------------------
     
-    
-    // add params (all params are strings)
-    for (NSString *param in _params) {
-        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [_params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
     
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
     

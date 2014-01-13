@@ -12,6 +12,6 @@
 
 
 
-- (void)sendPost: (NSString *)string;
+- (void)sendPost: (NSImage *)image;
 
 @end

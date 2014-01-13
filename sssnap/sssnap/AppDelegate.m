@@ -38,6 +38,7 @@
     
     [theProcess waitUntilExit];
     NSString *items;
+    NSImage *clipboardimage;
     NSLog(@"%ld", [theProcess terminationReason]);
     if ([theProcess terminationStatus] == 0)
     {
@@ -51,8 +52,8 @@
             NSLog(@"Lenght of cpoied items arra is %lu", (unsigned long)size);
             // Do something with the contents...
             if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]){
-                NSImage *clipboardImage = [copiedItems objectAtIndex:0];
-                NSLog(@"%@", [clipboardImage description]);
+                clipboardimage = [copiedItems objectAtIndex:0];
+                NSLog(@"%@", [clipboardimage description]);
             }
         }
 
@@ -61,7 +62,7 @@
     NSLog(@"%@", items);
     
     sendPost *test = [[sendPost alloc] init];
-    [test sendPost:items];
+    [test sendPost:clipboardimage];
     
     
 }
@@ -122,6 +123,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     [theProcess waitUntilExit];
     NSString *items;
+    NSImage *clipboardimage;
     if ([theProcess terminationStatus] == 0)
     {
         NSLog(@"Got here");
@@ -130,15 +132,20 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         NSDictionary *options = [NSDictionary dictionary];
         NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
         if (copiedItems != nil) {
+            NSUInteger size = [copiedItems count];
+            NSLog(@"Lenght of cpoied items arra is %lu", (unsigned long)size);
             // Do something with the contents...
-            items = [copiedItems description];
-            NSLog(@"%@", items);
+            if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]){
+                clipboardimage = [copiedItems objectAtIndex:0];
+                NSLog(@"%@", [clipboardimage description]);
+            }
         }
+
         
     }
 
     sendPost *test = [[sendPost alloc] init];
-    [test sendPost:items];
+    [test sendPost:clipboardimage];
     
     return noErr;
 }

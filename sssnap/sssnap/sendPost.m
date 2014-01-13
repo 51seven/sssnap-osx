@@ -11,9 +11,14 @@
 @implementation sendPost
 
 // Sends an HTTP POST-Request
-- (void)sendPost:(NSString *) string {
+- (void)sendPost:(NSImage *) image {
     NSLog(@"Event Cought - Initializing Upload");
-    NSLog(@"I recived this object: %@", string);
+    
+    
+    NSData *imageData = [image TIFFRepresentation];
+    NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
+    imageData = [imageRep representationUsingType:NSPNGFileType properties:nil];
+    
     
     NSString *username = @"admin";
     NSString *password = @"geheim";

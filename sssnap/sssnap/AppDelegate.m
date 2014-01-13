@@ -25,6 +25,9 @@
     //  TODO: Try to make it less dirty
     //  TODO: Change location later on, Desktop for now
     //  TODO: Own class?
+    //  TODO: Underscores etc in filname to mka it look like
+    //        Screen Shot 13_01_14 at 03_08_36
+    //        Do we need this? Only hash maybe?
     //
     NSString *homeDirectory = NSHomeDirectory(); //Users home directory
     NSString *location = @"/Desktop/"; //everything after /Users/HOME

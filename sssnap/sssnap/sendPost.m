@@ -36,7 +36,7 @@
     NSString *FileParamConstant = @"file";
     
     //RP: Configurando la dirección
-    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://api.sven-schiffer.de/sssnap_test.php"];
+    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://localhost:3000/api/upload"];
     
     // set Content-Type in HTTP header
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];

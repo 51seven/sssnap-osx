@@ -63,9 +63,9 @@
     
     sendPost *test = [[sendPost alloc] init];
     NSString *imageUrl = [test sendPost:clipboardimage];
-    NSLog(@"%@", imageUrl);
+    NSLog(@"%@", [imageUrl description]);
     
-    NSPasteboard *pasteBoard;
+    NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [pasteBoard setString:imageUrl forType:NSStringPboardType];
     

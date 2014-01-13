@@ -46,9 +46,13 @@
         NSDictionary *options = [NSDictionary dictionary];
         NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
         if (copiedItems != nil) {
+            NSUInteger size = [copiedItems count];
+            NSLog(@"Lenght of cpoied items arra is %lu", (unsigned long)size);
             // Do something with the contents...
-            items = [copiedItems description];
-            NSLog(@"%@", items);
+            if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]){
+                NSImage *clipboardImage = [copiedItems objectAtIndex:0];
+                NSLog(@"%@", [clipboardImage description]);
+            }
         }
 
     }

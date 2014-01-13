@@ -7,6 +7,7 @@
 //
 
 #import "sendPost.h"
+#import <AppKit/AppKit.h>
 
 @implementation sendPost
 
@@ -14,23 +15,16 @@
 - (void)sendPost:(NSImage *) image {
     NSLog(@"Event Cought - Initializing Upload");
     
-    
-    NSData *imageData = [image TIFFRepresentation];
-    NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
-    imageData = [imageRep representationUsingType:NSPNGFileType properties:nil];
-    
-    
     NSString *username = @"admin";
     NSString *password = @"geheim";
     
-    //RP: Create el request
+    //RP: Creando el request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [request setHTTPShouldHandleCookies:NO];
     [request setTimeoutInterval:30];
     [request setHTTPMethod:@"POST"];
-    
-    // RP: Packing el datos
+    // RP: Empaquetando datos
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
     [_params setObject:[NSString stringWithFormat:@"%@", username] forKey:@"username"];
     [_params setObject:[NSString stringWithFormat:@"%@", password] forKey:@"password"];
@@ -39,7 +33,7 @@
     NSString *BoundaryConstant = @"V2ymHFg03ehbqgZCaKO6jy";
     
     // string constant for the post parameter 'file'
-    //NSString *FileParamConstant = @"image_field";
+    NSString *FileParamConstant = @"image_field";
     
     //RP: Configurando la dirección
     NSURL *requestURL = [[NSURL alloc] initWithString:@"http://api.sven-schiffer.de/sssnap_test.php"];
@@ -50,6 +44,29 @@
     
     // post body
     NSMutableData *body = [NSMutableData data];
+    
+    // -----------------------------------------
+    // add image data
+    // -----------------------------------------
+    NSData *imageData = [image TIFFRepresentation]; // -> UIImageJPEGRepresentation(imageToPost, 1.0);;
+    NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData: imageData];
+    imageData = [imageRep representationUsingType:NSPNGFileType properties: nil];
+    
+    if (imageData) {
+        printf("appending image data\n");
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\'%@\'; filename=\"image.jpg\"\r\n",
+                           FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:imageData];
+        [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    // -----------------------------------------
+    // end image
+    // -----------------------------------------
+    
     
     // add params (all params are strings)
     for (NSString *param in _params) {
@@ -63,6 +80,8 @@
     // setting the body of the post to the reqeust
     [request setHTTPBody:body];
     
+    // NSLog(@"%@", [body description]);
+    
     // set the content-length
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[body length]];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
@@ -75,7 +94,7 @@
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSString *str = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
     NSLog(@"Response : %@",str);
-
+    
 }
 
 

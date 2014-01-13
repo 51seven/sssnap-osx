@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF55B0C018849D0B0003795D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D238188362F200C19A90 /* AppKit.framework */; };
 		D90E21251884575D007CEE2D /* sendPost.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21241884575D007CEE2D /* sendPost.m */; };
 		D993D236188362F200C19A90 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D235188362F200C19A90 /* Cocoa.framework */; };
 		D993D240188362F200C19A90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D993D23E188362F200C19A90 /* InfoPlist.strings */; };
@@ -62,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF55B0C018849D0B0003795D /* AppKit.framework in Frameworks */,
 				D9DBFE7C18841A95003E964E /* Carbon.framework in Frameworks */,
 				D993D236188362F200C19A90 /* Cocoa.framework in Frameworks */,
 			);

@@ -72,12 +72,12 @@
     NSLog(@"%@", items);
     
     sendPost *test = [[sendPost alloc] init];
-    NSString *imageUrl = [test sendPost:clipboardimage];
-    NSLog(@"%@", [imageUrl description]);
+    //NSString *imageUrl = [test sendPost:clipboardimage];
+    //NSLog(@"%@", [imageUrl description]);
     
     NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-    [pasteBoard setString:imageUrl forType:NSStringPboardType];
+    //[pasteBoard setString:imageUrl forType:NSStringPboardType];
     
     
 }
@@ -176,7 +176,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     }
 
     sendPost *test = [[sendPost alloc] init];
-    [test sendPost:clipboardimage];
+    //[test sendPost:clipboardimage];
     
     return noErr;
 }

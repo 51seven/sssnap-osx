@@ -10,8 +10,7 @@
 
 @interface sendPost : NSObject
 
-
-
+-(NSString *)authenticate:(NSString *) username with:(NSString *) password;
 -(NSString *)sendPost:(NSImage *) image;
 
 @end

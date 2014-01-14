@@ -61,14 +61,10 @@
 }
 
 
-
 // Sends an HTTP POST-Request
 // S. http://pastebin.com/R70NJMnQ
-- (NSString *)sendPost:(NSImage *) image {
+- (NSString *)uploadImage:(NSImage *) image authWith:(NSString *) username and:(NSString *) usertoken {
     NSLog(@"Event Cought - Initializing Upload");
-    
-    NSString *username = @"test";
-    NSString *password = @"test";
     
     //RP: Creando el request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -78,8 +74,8 @@
     [request setHTTPMethod:@"POST"];
     // RP: Empaquetando datos
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
-    [_params setObject:[NSString stringWithFormat:@"%@", username] forKey:@"name"];
-    [_params setObject:[NSString stringWithFormat:@"%@", password] forKey:@"password"];
+    [_params setObject:[NSString stringWithFormat:@"%@", username] forKey:@"username"];
+    [_params setObject:[NSString stringWithFormat:@"%@", usertoken] forKey:@"usertoken"];
     
     // the boundary string : a random string, that will not repeat in post data, to separate post data fields.
     NSString *BoundaryConstant = @"V2ymHFg03ehbqgZCaKO6jy";
@@ -104,7 +100,7 @@
     // -----------------------------------------
     // add image data
     // -----------------------------------------
-    NSData *imageData = [image TIFFRepresentation]; // -> UIImageJPEGRepresentation(imageToPost, 1.0);;
+    NSData *imageData = [image TIFFRepresentation];
     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData: imageData];
     imageData = [imageRep representationUsingType:NSPNGFileType properties: nil];
     
@@ -117,11 +113,6 @@
         [body appendData:imageData];
         [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
     }
-    
-    // -----------------------------------------
-    // end image
-    // -----------------------------------------
-    
     
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
     

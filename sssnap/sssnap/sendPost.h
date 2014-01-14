@@ -11,6 +11,6 @@
 @interface sendPost : NSObject
 
 -(NSString *)authenticate:(NSString *) username with:(NSString *) password;
--(NSString *)sendPost:(NSImage *) image;
+-(NSString *)uploadImage:(NSImage *) image authWith:(NSString *) username and:(NSString *) usertoken;
 
 @end

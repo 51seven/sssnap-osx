@@ -13,13 +13,15 @@
 
 -(NSString *)writeToken:(NSString *)username and: (NSString *) token {
     
+    NSString *sssnap = @"/sssnap/token.txt";
+    NSString *path = [NSHomeDirectory() stringByAppendingString:sssnap];
+    
     NSString *content = [username stringByAppendingString:token];
     NSData *fileContents = [content dataUsingEncoding:NSUTF8StringEncoding];
-    [[NSFileManager defaultManager] createFileAtPath:@"/token.txt"
+    [[NSFileManager defaultManager] createFileAtPath:path
                                             contents:fileContents
                                           attributes:nil];
-    NSString *tokenPath = @"/token.txt";
-    return tokenPath;
+    return path;
     
 }
 

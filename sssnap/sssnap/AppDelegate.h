@@ -12,6 +12,14 @@
 @property (assign) IBOutlet NSWindow *window;
 
 - (IBAction)takeScreenshot:(id)sender;
+- (IBAction)signIn:(id)sender;
+
+
+@property (weak) IBOutlet NSMenuItem *signIn;
+
+@property (weak) IBOutlet NSTextField *usernameInput;
+@property (weak) IBOutlet NSSecureTextField *passwordInput;
+
 
 
 @property (weak) IBOutlet NSMenu *menuBarOutlet;

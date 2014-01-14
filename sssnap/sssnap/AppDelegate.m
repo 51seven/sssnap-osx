@@ -8,19 +8,28 @@
 
 #import "AppDelegate.h"
 #import "sendPost.h"
+#import "checkSignedIn.h"
 #import <Carbon/Carbon.h>
 
-@implementation AppDelegate
+@implementation AppDelegate{
+    BOOL signedIn;
+}
 
 @synthesize statusBar = _statusBar;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    checkSignedIn *signInCheck = [[checkSignedIn alloc]init];
+    signedIn = [signInCheck checkSignInStatus];
+    if(signedIn){
+        [_signIn setHidden:YES];
+    }
 
 }
 
 - (IBAction)takeScreenshot:(id)sender {
+    // Hide Sign in snippet[_signIn setHidden:YES];
     
     //  Starts Screencapture Process
     NSTask *theProcess;
@@ -71,6 +80,19 @@
     
     
 }
+
+- (IBAction)signIn:(id)sender {
+    NSString *username = [_usernameInput stringValue];
+    NSLog(@"%@",username);
+    NSString *password = [_passwordInput stringValue];
+    NSLog(@"%@", password);
+    signedIn = true;
+    [_signIn setHidden:YES];
+}
+
+
+
+
 
 
 

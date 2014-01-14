@@ -86,6 +86,9 @@
     NSLog(@"%@",username);
     NSString *password = [_passwordInput stringValue];
     NSLog(@"%@", password);
+    sendPost *token = [[sendPost alloc]init];
+    NSString *userToken = [token authenticate:username with:password];
+    NSLog(@"%@", userToken);
     signedIn = true;
     [_signIn setHidden:YES];
 }

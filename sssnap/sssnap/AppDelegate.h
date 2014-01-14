@@ -7,8 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Reachability.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate>{
+    Reachability *internetReachable;
+}
 @property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
 
 

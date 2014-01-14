@@ -11,6 +11,8 @@
 		D90E21251884575D007CEE2D /* sendPost.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21241884575D007CEE2D /* sendPost.m */; };
 		D90E21281884BBC5007CEE2D /* checkSignedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21271884BBC5007CEE2D /* checkSignedIn.m */; };
 		D90E212B1884D1D4007CEE2D /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E212A1884D1D4007CEE2D /* Token.m */; };
+		D90E212E188603B5007CEE2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E212D188603B5007CEE2D /* Reachability.m */; };
+		D90E21301886051B007CEE2D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90E212F1886051B007CEE2D /* SystemConfiguration.framework */; };
 		D993D236188362F200C19A90 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D235188362F200C19A90 /* Cocoa.framework */; };
 		D993D240188362F200C19A90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D993D23E188362F200C19A90 /* InfoPlist.strings */; };
 		D993D242188362F200C19A90 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D993D241188362F200C19A90 /* main.m */; };
@@ -42,6 +44,9 @@
 		D90E21271884BBC5007CEE2D /* checkSignedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = checkSignedIn.m; sourceTree = "<group>"; };
 		D90E21291884D1D4007CEE2D /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
 		D90E212A1884D1D4007CEE2D /* Token.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Token.m; sourceTree = "<group>"; };
+		D90E212C188603B5007CEE2D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "../../../../../../Desktop/Reachability-master/Reachability.h"; sourceTree = "<group>"; };
+		D90E212D188603B5007CEE2D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "../../../../../../Desktop/Reachability-master/Reachability.m"; sourceTree = "<group>"; };
+		D90E212F1886051B007CEE2D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D993D232188362F200C19A90 /* sssnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sssnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D993D235188362F200C19A90 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D993D238188362F200C19A90 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -69,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D90E21301886051B007CEE2D /* SystemConfiguration.framework in Frameworks */,
 				BF55B0C018849D0B0003795D /* AppKit.framework in Frameworks */,
 				D9DBFE7C18841A95003E964E /* Carbon.framework in Frameworks */,
 				D993D236188362F200C19A90 /* Cocoa.framework in Frameworks */,
@@ -109,6 +115,7 @@
 		D993D234188362F200C19A90 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D90E212F1886051B007CEE2D /* SystemConfiguration.framework */,
 				D9DBFE7B18841A95003E964E /* Carbon.framework */,
 				D993D235188362F200C19A90 /* Cocoa.framework */,
 				D993D254188362F300C19A90 /* XCTest.framework */,
@@ -138,6 +145,8 @@
 				D90E21271884BBC5007CEE2D /* checkSignedIn.m */,
 				D90E21231884575C007CEE2D /* sendPost.h */,
 				D90E21241884575D007CEE2D /* sendPost.m */,
+				D90E212C188603B5007CEE2D /* Reachability.h */,
+				D90E212D188603B5007CEE2D /* Reachability.m */,
 				D993D24A188362F300C19A90 /* MainMenu.xib */,
 				D993D24D188362F300C19A90 /* Images.xcassets */,
 				D993D23C188362F200C19A90 /* Supporting Files */,
@@ -277,6 +286,7 @@
 				D90E212B1884D1D4007CEE2D /* Token.m in Sources */,
 				D90E21281884BBC5007CEE2D /* checkSignedIn.m in Sources */,
 				D993D242188362F200C19A90 /* main.m in Sources */,
+				D90E212E188603B5007CEE2D /* Reachability.m in Sources */,
 				D90E21251884575D007CEE2D /* sendPost.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

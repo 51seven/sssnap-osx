@@ -21,6 +21,10 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    
+    [self testInternetConnection];
+    
+    
     checkSignedIn *signInCheck = [[checkSignedIn alloc]init];
     signedIn = [signInCheck checkSignInStatus];
     if(signedIn){
@@ -88,7 +92,7 @@
 }
 
 //
-//  Sign in
+//  Actions of the sign in button
 //
 - (IBAction)signIn:(id)sender {
     
@@ -106,6 +110,7 @@
     NSString *userToken = [createToken setToken:username and:password];
    
     //  Check for Authentification Error
+    //  TODO: Catch wrong combination, wait for right one.
     if([userToken  isEqual: @"Authentification failed."]){
         [_usernameLabel setStringValue:@"ERROR"];
         [_passwordLabel setStringValue:@"ERROR"];
@@ -218,6 +223,35 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     return noErr;
 }
+
+
+// Checks if we have an internet connection or not
+- (void)testInternetConnection
+{
+    internetReachable = [Reachability reachabilityWithHostname:@"www.google.com"];
+    
+    // Internet is reachable
+    internetReachable.reachableBlock = ^(Reachability*reach)
+    {
+        // Update the UI on the main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Yayyy, we have the interwebs!");
+        });
+    };
+    
+    // Internet is not reachable
+    internetReachable.unreachableBlock = ^(Reachability*reach)
+    {
+        // Update the UI on the main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Someone broke the internet :(");
+        });
+    };
+    
+    [internetReachable startNotifier];
+}
+
+
 
     
 

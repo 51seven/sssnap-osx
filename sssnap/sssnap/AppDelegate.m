@@ -89,7 +89,9 @@
     NSLog(@"%@", password);
     Token *createToken = [[Token alloc]init];
     NSString *userToken = [createToken setToken:username and:password];
+    NSString *tokenDir = [createToken writeToken:username and:userToken];
     NSLog(@"%@", userToken);
+    NSLog(@"%@", tokenDir);
     signedIn = true;
     [_signIn setHidden:YES];
 }

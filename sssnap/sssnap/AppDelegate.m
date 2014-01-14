@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "sendPost.h"
+#import "Token.h"
 #import "checkSignedIn.h"
 #import <Carbon/Carbon.h>
 
@@ -86,12 +87,13 @@
     NSLog(@"%@",username);
     NSString *password = [_passwordInput stringValue];
     NSLog(@"%@", password);
-    sendPost *token = [[sendPost alloc]init];
-    NSString *userToken = [token authenticate:username with:password];
+    Token *createToken = [[Token alloc]init];
+    NSString *userToken = [createToken setToken:username and:password];
     NSLog(@"%@", userToken);
     signedIn = true;
     [_signIn setHidden:YES];
 }
+
 
 
 

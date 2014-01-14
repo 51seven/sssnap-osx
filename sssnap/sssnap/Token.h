@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Token : NSObject
+@interface Token : NSObject{
+    NSString *tokenPath;
+    BOOL tokenExists;
+}
+
 
 - (NSString *)setToken:(NSString *)username and: (NSString *) token;
 - (NSString *)writeToken:(NSString *)username and: (NSString *) password;
+- (NSString *)readTokenFile;
 
 @end

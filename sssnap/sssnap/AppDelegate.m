@@ -82,20 +82,31 @@
     
 }
 
+//
+//  Sign in
+//
 - (IBAction)signIn:(id)sender {
+    
+    //get the entered username
     NSString *username = [_usernameInput stringValue];
-    NSLog(@"%@",username);
+    NSLog(@"%@",username);//debug
+    //get the entered password
     NSString *password = [_passwordInput stringValue];
-    NSLog(@"%@", password);
+    NSLog(@"%@", password);//debug
+    
+    //Create a new token
+    //TODO: check if there already is one
+    //TODO: Check this at startup, too
     Token *createToken = [[Token alloc]init];
     NSString *userToken = [createToken setToken:username and:password];
-    
+   
     //  Check for Authentification Error
     if([userToken  isEqual: @"Authentification failed."]){
         [_usernameLabel setStringValue:@"ERROR"];
         [_passwordLabel setStringValue:@"ERROR"];
     }
     NSString *tokenDir = [createToken writeToken:username and:userToken];
+     [createToken readTokenFile];
     NSLog(@"%@", userToken);
     NSLog(@"%@", tokenDir);
     signedIn = true;

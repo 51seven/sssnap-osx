@@ -656,9 +656,11 @@
             <connections>
                 <outlet property="menuBarOutlet" destination="MaR-sV-yX7" id="tuj-bM-0Xi"/>
                 <outlet property="passwordInput" destination="GVY-RZ-0oA" id="e3e-rh-vjH"/>
+                <outlet property="passwordLabel" destination="u4s-pr-4pk" id="jzX-c0-68t"/>
                 <outlet property="signIn" destination="PiH-H5-X5f" id="ZgO-pe-rYH"/>
                 <outlet property="username" destination="XyR-Pc-Fsv" id="Aqz-7U-Sn8"/>
                 <outlet property="usernameInput" destination="XyR-Pc-Fsv" id="8aj-qM-FqH"/>
+                <outlet property="usernameLabel" destination="pvT-zO-fCO" id="Pib-o5-Tad"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>

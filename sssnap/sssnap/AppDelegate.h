@@ -15,6 +15,8 @@
 - (IBAction)signIn:(id)sender;
 
 
+@property (weak) IBOutlet NSTextField *usernameLabel;
+@property (weak) IBOutlet NSTextField *passwordLabel;
 
 @property (weak) IBOutlet NSMenuItem *signIn;
 

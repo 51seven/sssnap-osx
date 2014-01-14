@@ -89,6 +89,12 @@
     NSLog(@"%@", password);
     Token *createToken = [[Token alloc]init];
     NSString *userToken = [createToken setToken:username and:password];
+    
+    //  Check for Authentification Error
+    if([userToken  isEqual: @"Authentification Error"]){
+        [_usernameLabel setStringValue:@"ERROR"];
+        [_passwordLabel setStringValue:@"ERROR"];
+    }
     NSString *tokenDir = [createToken writeToken:username and:userToken];
     NSLog(@"%@", userToken);
     NSLog(@"%@", tokenDir);

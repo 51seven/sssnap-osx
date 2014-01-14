@@ -10,12 +10,16 @@
 
 @interface Token : NSObject{
     NSString *tokenPath;
+    NSString *usernameGlobal;
+    NSString * tokenGlobal;
     BOOL tokenExists;
 }
 
 
 - (NSString *)setToken:(NSString *)username and: (NSString *) token;
 - (NSString *)writeToken:(NSString *)username and: (NSString *) password;
-- (NSString *)readTokenFile;
+- (NSString *)getUsername;
+- (NSString *)getToken;
+- (void)readTokenFile;
 
 @end

@@ -72,8 +72,13 @@
     NSLog(@"%@", items);
     
     sendPost *test = [[sendPost alloc] init];
-    //NSString *imageUrl = [test sendPost:clipboardimage];
-    //NSLog(@"%@", [imageUrl description]);
+    //TODO: Dirty, fix this
+    Token *recieveAuth = [[Token alloc]init];
+    [recieveAuth readTokenFile];
+    NSString *imageUrl =  [test uploadImage:clipboardimage authWith:[recieveAuth getUsername] and:[recieveAuth getToken]];
+    NSLog(@"USERNAME RECIEVED: %@", [recieveAuth getUsername]);
+    NSLog(@"TOKEN RECIEVED: %@", [recieveAuth getToken]);
+    NSLog(@"%@", [imageUrl description]);
     
     NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
@@ -195,7 +200,10 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     }
 
     sendPost *test = [[sendPost alloc] init];
-    //[test sendPost:clipboardimage];
+    //TODO: Dirty, fix this
+    Token *recieveAuth = [[Token alloc]init];
+    [recieveAuth readTokenFile];
+    [test uploadImage:clipboardimage authWith:[recieveAuth getUsername] and:[recieveAuth getToken]];
     
     return noErr;
 }

@@ -14,6 +14,8 @@
 -(id) init {
     
     tokenPath = @"x";
+    usernameGlobal = @"x";
+    tokenGlobal = @"x";
     tokenExists = false;
     
     return self;
@@ -62,6 +64,14 @@
     
 }
 
+-(NSString *)getToken {
+    return tokenGlobal;
+}
+
+-(NSString *)getUsername {
+    return usernameGlobal;
+}
+
 
 //
 //  Gets a new Token from the server
@@ -78,22 +88,40 @@
 //
 //  Read the saved Token and return it
 //
--(NSString *)readTokenFile {
+-(void)readTokenFile {
+    
+    NSString *usernameToken = @"x";
+    
+    //HARDCODE! FIX!!!!!
+    NSString *sssnap = @"/sssnap/token.txt";
+    NSString *path = [NSHomeDirectory() stringByAppendingString:sssnap];
+    tokenPath = path;
+    tokenExists = true;
     
     if(tokenExists == true){
         NSLog(@"There is a token at %@", tokenPath);
         
         //read file contents
         NSError *error;
-        NSString *fileContents = [NSString stringWithContentsOfFile:tokenPath encoding:NSUTF8StringEncoding error:&error];
+        usernameToken = [NSString stringWithContentsOfFile:tokenPath encoding:NSUTF8StringEncoding error:&error];
         
-        NSLog(@"Read from file : %@", fileContents);
+        NSLog(@"Read from file : %@", usernameToken);
             }
     else {
         NSLog(@"There is no token to be read");
-
     }
-    return NULL;
+    
+    //Split the String in two strings
+    NSArray *usernameTokenArray = [usernameToken componentsSeparatedByCharactersInSet:
+                        [NSCharacterSet characterSetWithCharactersInString:@"-:"]
+                        ];
+
+    usernameGlobal = [usernameTokenArray objectAtIndex:0];
+    tokenGlobal = [usernameTokenArray objectAtIndex:1];
+    
+    //NSLog(@"username: %@", usernameGlobal);
+    //NSLog(@"Token: %@", tokenGlobal);
+    
 }
 
 

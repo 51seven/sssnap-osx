@@ -658,6 +658,7 @@
                 <outlet property="passwordInput" destination="GVY-RZ-0oA" id="e3e-rh-vjH"/>
                 <outlet property="passwordLabel" destination="u4s-pr-4pk" id="jzX-c0-68t"/>
                 <outlet property="signIn" destination="PiH-H5-X5f" id="ZgO-pe-rYH"/>
+                <outlet property="signInWindow" destination="0Tr-Cm-0Gy" id="bW8-R4-Zy0"/>
                 <outlet property="username" destination="XyR-Pc-Fsv" id="Aqz-7U-Sn8"/>
                 <outlet property="usernameInput" destination="XyR-Pc-Fsv" id="8aj-qM-FqH"/>
                 <outlet property="usernameLabel" destination="pvT-zO-fCO" id="Pib-o5-Tad"/>
@@ -691,7 +692,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="386" y="257" width="205" height="143"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="tAC-es-waC">
                 <rect key="frame" x="0.0" y="0.0" width="205" height="143"/>
                 <autoresizingMask key="autoresizingMask"/>

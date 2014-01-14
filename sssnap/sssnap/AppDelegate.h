@@ -9,7 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
-@property (assign) IBOutlet NSWindow *window;
+@property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
+
 
 - (IBAction)takeScreenshot:(id)sender;
 - (IBAction)signIn:(id)sender;

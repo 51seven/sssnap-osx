@@ -115,7 +115,11 @@
     NSLog(@"%@", userToken);
     NSLog(@"%@", tokenDir);
     signedIn = true;
+    
+    //Hide SignIn from Menu
     [_signIn setHidden:YES];
+    //Close Sign In Window
+    [_signInWindow close];
 }
 
 

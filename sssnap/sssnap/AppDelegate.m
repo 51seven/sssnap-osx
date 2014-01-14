@@ -82,7 +82,7 @@
     
     NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-    //[pasteBoard setString:imageUrl forType:NSStringPboardType];
+    [pasteBoard setString:imageUrl forType:NSStringPboardType];
     
     
 }
@@ -203,7 +203,14 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     //TODO: Dirty, fix this
     Token *recieveAuth = [[Token alloc]init];
     [recieveAuth readTokenFile];
-    [test uploadImage:clipboardimage authWith:[recieveAuth getUsername] and:[recieveAuth getToken]];
+    NSString *imageUrl =  [test uploadImage:clipboardimage authWith:[recieveAuth getUsername] and:[recieveAuth getToken]];
+    NSLog(@"USERNAME RECIEVED: %@", [recieveAuth getUsername]);
+    NSLog(@"TOKEN RECIEVED: %@", [recieveAuth getToken]);
+    NSLog(@"%@", [imageUrl description]);
+    
+    NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
+    [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+    [pasteBoard setString:imageUrl forType:NSStringPboardType];
     
     return noErr;
 }

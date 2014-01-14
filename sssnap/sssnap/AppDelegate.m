@@ -91,7 +91,7 @@
     NSString *userToken = [createToken setToken:username and:password];
     
     //  Check for Authentification Error
-    if([userToken  isEqual: @"Authentification Error"]){
+    if([userToken  isEqual: @"Authentification failed."]){
         [_usernameLabel setStringValue:@"ERROR"];
         [_passwordLabel setStringValue:@"ERROR"];
     }

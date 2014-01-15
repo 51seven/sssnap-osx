@@ -676,7 +676,7 @@
                 <menuItem title="Take Screenshot" keyEquivalent="5" id="5w4-ce-eKf">
                     <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
                     <connections>
-                        <action selector="takeScreenshot:" target="494" id="jbS-1m-RuT"/>
+                        <action selector="takeScreenshotItem:" target="494" id="y4b-s2-92V"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="zrB-xX-hMW"/>

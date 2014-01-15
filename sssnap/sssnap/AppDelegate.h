@@ -15,10 +15,11 @@
 @property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
 
 
-- (IBAction)takeScreenshot:(id)sender;
+- (IBAction)takeScreenshotItem:(id)sender;
 - (IBAction)signIn:(id)sender;
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 + (void) triggerNotification: (NSString *) imageUrl;
++ (NSString *) takeScreenshot;
 
 
 @property (weak) IBOutlet NSTextField *usernameLabel;

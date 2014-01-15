@@ -38,63 +38,13 @@
 
 }
 
-- (IBAction)takeScreenshot:(id)sender {
-    // Hide Sign in snippet[_signIn setHidden:YES];
+- (IBAction)takeScreenshotItem:(id)sender {
+        
+    //Take the Screenshot
+    NSString *imageUrl = [AppDelegate takeScreenshot];
     
-    //  Starts Screencapture Process
-    NSTask *theProcess;
-    theProcess = [[NSTask alloc] init];
-    [theProcess setLaunchPath:@"/usr/sbin/screencapture"];
-    
-    //  Array with Arguments to be given to screencapture
-    NSArray *arguments;
-    arguments = [NSArray arrayWithObjects:@"-s", @"-c",@"image.jpg",nil];
-    
-    
-    //  Apply arguments and start application
-    [theProcess setArguments:arguments];
-    [theProcess launch];
-    
-    [theProcess waitUntilExit];
-    NSString *items;
-    NSImage *clipboardimage;
-    NSLog(@"%ld", [theProcess terminationReason]);
-    if ([theProcess terminationStatus] == 0)
-    {
-        NSLog(@"Got here");
-        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-        NSArray *classes = [[NSArray alloc] initWithObjects: [NSImage class], nil];
-        NSDictionary *options = [NSDictionary dictionary];
-        NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
-        if (copiedItems != nil) {
-            NSUInteger size = [copiedItems count];
-            NSLog(@"Lenght of cpoied items arra is %lu", (unsigned long)size);
-            // Do something with the contents...
-            if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]){
-                clipboardimage = [copiedItems objectAtIndex:0];
-                NSLog(@"%@", [clipboardimage description]);
-            }
-        }
-
-    }
-    
-    NSLog(@"%@", items);
-    
-    sendPost *test = [[sendPost alloc] init];
-    //TODO: Dirty, fix this
-    Token *recieveAuth = [[Token alloc]init];
-    [recieveAuth readTokenFile];
-    NSString *imageUrl =  [test uploadImage:clipboardimage authWith:[recieveAuth getUsername] and:[recieveAuth getToken]];
-    NSLog(@"USERNAME RECIEVED: %@", [recieveAuth getUsername]);
-    NSLog(@"TOKEN RECIEVED: %@", [recieveAuth getToken]);
-    NSLog(@"%@", [imageUrl description]);
-    
-    NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
-    [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-    [pasteBoard setString:imageUrl forType:NSStringPboardType];
-    
+    //Fire the Notification
     [AppDelegate triggerNotification:imageUrl];
-    
     
 }
 
@@ -178,6 +128,18 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
                          void *userData)
 {
     
+    //Take the Screenshot
+    NSString *imageUrl = [AppDelegate takeScreenshot];
+    
+    //Fire the Notification
+    [AppDelegate triggerNotification:imageUrl];
+    
+    
+    return noErr;
+}
+
+
++(NSString *) takeScreenshot {
     
     //  Starts Screencapture Process
     NSTask *theProcess;
@@ -194,7 +156,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [theProcess launch];
     
     [theProcess waitUntilExit];
+    NSString *items;
     NSImage *clipboardimage;
+    NSLog(@"%ld", [theProcess terminationReason]);
     if ([theProcess terminationStatus] == 0)
     {
         NSLog(@"Got here");
@@ -211,10 +175,13 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
                 NSLog(@"%@", [clipboardimage description]);
             }
         }
-
+        
+    
         
     }
-
+    
+    NSLog(@"%@", items);
+    
     sendPost *test = [[sendPost alloc] init];
     //TODO: Dirty, fix this
     Token *recieveAuth = [[Token alloc]init];
@@ -228,10 +195,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [pasteBoard setString:imageUrl forType:NSStringPboardType];
     
-    [AppDelegate triggerNotification:imageUrl];
-    
-    
-    return noErr;
+    return imageUrl;
 }
 
 
@@ -262,16 +226,30 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
 }
 
 
+//
+//  Display Notification even if application is not key
+//
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
     return YES;
 }
 
 
+
+//
+//  Triggers a Notification
+//  Needs the imageUrl to display it in the notification
+//
 +(void)triggerNotification:(NSString *)imageUrl {
+    
+    //New Notification
     NSUserNotification *notification = [[NSUserNotification alloc] init];
+    
+    //Properties of the Notification
     notification.title = imageUrl;
     notification.informativeText = @"Link copied to clipboard";
     notification.soundName = NSUserNotificationDefaultSoundName;
+    
+    //Deliver
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 

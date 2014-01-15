@@ -115,7 +115,7 @@
     
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     
-    self.statusBar.title = @"sssnap";
+    self.statusBar.title = @"S";
     
     // you can also set an image
     //self.statusBar.image =

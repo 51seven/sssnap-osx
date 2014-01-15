@@ -36,26 +36,17 @@
     [self testInternetConnection];
     
     
-    Token *checkToken = [[Token alloc]init];
-    if([checkToken readTokenFile]){
-        
-        NSString *username = [checkToken getUsername];
-        NSString *token = [checkToken getToken];
-        
-        sendPost *readToken = [[sendPost alloc]init];
-        if([readToken isValidToken:username with:token]){
-            //Hide sign in option from menu
-            [_signIn setHidden:YES];
-        }else {
-            //Hide the error label on
-            [_signInErrorLabel setHidden:YES];
-            //Show sign in window
-            [_signInWindow makeKeyAndOrderFront:_signInWindow];
-        }
+   
+    if([AppDelegate tokenIsValid]){
+        //Hide sign in option from menu
+        [_signIn setHidden:YES];
     }else {
+        //Hide the error label on
+        [_signInErrorLabel setHidden:YES];
         //Show sign in window
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
     }
+    
         
 
 }
@@ -271,6 +262,35 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     //Deliver
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+
+
+//
+//Checks if the currently saved token is valid.
+//
++(BOOL)tokenIsValid {
+    Token *checkToken = [[Token alloc]init];
+    if([checkToken readTokenFile]){
+        
+        NSString *username = [checkToken getUsername];
+        NSString *token = [checkToken getToken];
+        
+        sendPost *readToken = [[sendPost alloc]init];
+        if([readToken isValidToken:username with:token]){
+            //Token found and valid
+            NSLog(@"Token is found an valid");
+            return YES;
+        }else {
+            //Token found but is not valid
+            NSLog(@"Token is found but not valid");
+            return NO;
+        }
+    }else {
+        //No token found
+        NSLog(@"Token is not found");
+        return NO;
+    }
+
 }
 
 

@@ -75,7 +75,7 @@
     [_params setObject:[NSString stringWithFormat:@"%@", token] forKey:@"token"];
     
     NSString *BoundaryConstant = @"V2ymHFgaLs0Lac8qCaKO6jy";
-    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://localhost:3000/api/auth_token"];
+    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://localhost:3000/api/auth/token"];
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
     

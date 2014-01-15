@@ -20,6 +20,8 @@
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 + (void) triggerNotification: (NSString *) imageUrl;
 + (NSString *) takeScreenshot;
++ (BOOL) tokenIsValid;
+
 
 
 

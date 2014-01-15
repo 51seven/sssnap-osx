@@ -12,5 +12,7 @@
 
 -(NSString *)authenticate:(NSString *) username with:(NSString *) password;
 -(NSString *)uploadImage:(NSImage *) image authWith:(NSString *) username and:(NSString *) usertoken;
+-(BOOL)isValidToken:(NSString *) username with:(NSString *) token;
+
 
 @end

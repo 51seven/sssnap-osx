@@ -32,10 +32,20 @@
     
     Token *checkToken = [[Token alloc]init];
     if([checkToken readTokenFile]){
-        [_signIn setHidden:YES];
+        
+        NSString *username = [checkToken getUsername];
+        NSString *token = [checkToken getToken];
+        
+        sendPost *readToken = [[sendPost alloc]init];
+        if([readToken isValidToken:username with:token]){
+            [_signIn setHidden:YES];
+        }else {
+            [_signInWindow makeKeyAndOrderFront:_signInWindow];
+        }
     }else {
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
     }
+        
 
 }
 

@@ -22,6 +22,9 @@
 {
     // Insert code here to initialize your application
     
+    //Check internet connection
+    //TODO: Implement necessary action
+    //(Later, not important by now)
     [self testInternetConnection];
     
     

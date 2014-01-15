@@ -13,26 +13,18 @@
     
 -(id) init {
     
-    tokenPath = @"x";
+
     usernameGlobal = @"x";
     tokenGlobal = @"x";
-    tokenExists = false;
     
     return self;
 }
 
 //
-//  Writes token and Username to a file called token.txt
-//  Directory: /users/USER/sssnap/token.txt
-//  Format in token.txt: username:token
+//  Check if the sssnap directory already exists.
+//  If not, it's the first start of the app, directory will be created.
 //
--(NSString *)writeToken:(NSString *)username and: (NSString *) token {
-    
-    NSLog(@"DEBUG: empty tokenPath is %@", tokenPath);
-    
-    //  Build path
-    NSString *sssnap = @"/sssnap/token.txt";
-    NSString *path = [NSHomeDirectory() stringByAppendingString:sssnap];
++(void)checkTokenDir {
     
     //  Check if directory already exists
     NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap"];
@@ -48,7 +40,60 @@
         [ [ NSFileManager defaultManager ] createDirectoryAtPath: pathToFile withIntermediateDirectories: YES attributes: nil error: NULL ];
         NSLog(@"Directory does not exist, created one");
     }
+
     
+}
+
+
+
+//
+//  Checks if the token.txt exists
+//  Returns BOOL
+//
++(BOOL)tokenFileExists {
+    
+    BOOL exists;
+    
+    //Make sure the directroy exists
+    [Token checkTokenDir];
+    
+    //  Check if file exists
+    NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap/token.txt"];
+    BOOL isDir = NO;
+    BOOL isFile = [[NSFileManager defaultManager] fileExistsAtPath:pathToFile isDirectory:&isDir];
+    
+    if(isFile)
+    {
+        NSLog(@"Directory exists");
+        return exists = YES;
+        
+        
+    }
+    else
+    {
+        
+        NSLog(@"Directory does not exist, created one");
+        return exists = NO;
+    }
+
+    
+}
+
+//
+//  Writes token and Username to a file called token.txt
+//  Directory: /users/USER/sssnap/token.txt
+//  Format in token.txt: username:token
+//
+-(NSString *)writeToken:(NSString *)username and: (NSString *) token {
+    
+
+    
+    //  Build path
+    NSString *sssnap = @"/sssnap/token.txt";
+    NSString *path = [NSHomeDirectory() stringByAppendingString:sssnap];
+    
+    //Check if directory exists/create one
+    [Token checkTokenDir];
     
     //  Write username and token to file
     NSString *aToken = [@":" stringByAppendingString:token];
@@ -57,9 +102,7 @@
     [[NSFileManager defaultManager] createFileAtPath:path
                                             contents:fileContents
                                           attributes:nil];
-    //save path and return it
-    tokenExists = true;
-    tokenPath = path;
+
     return path;
     
 }
@@ -88,40 +131,46 @@
 //
 //  Read the saved Token and return it
 //
--(void)readTokenFile {
+-(BOOL)readTokenFile {
     
-    NSString *usernameToken = @"x";
     
-    //HARDCODE! FIX!!!!!
-    NSString *sssnap = @"/sssnap/token.txt";
-    NSString *path = [NSHomeDirectory() stringByAppendingString:sssnap];
-    tokenPath = path;
-    tokenExists = true;
     
-    if(tokenExists == true){
-        NSLog(@"There is a token at %@", tokenPath);
+    if([Token tokenFileExists]){
+        NSString *pathToToken = [Token getTokenPath];
+        
         
         //read file contents
         NSError *error;
-        usernameToken = [NSString stringWithContentsOfFile:tokenPath encoding:NSUTF8StringEncoding error:&error];
+        NSString *usernameToken = [NSString stringWithContentsOfFile:pathToToken encoding:NSUTF8StringEncoding error:&error];
         
-        NSLog(@"Read from file : %@", usernameToken);
-            }
-    else {
-        NSLog(@"There is no token to be read");
+        //Split the String in two strings
+        NSArray *usernameTokenArray = [usernameToken componentsSeparatedByCharactersInSet:
+                                       [NSCharacterSet characterSetWithCharactersInString:@"-:"]
+                                       ];
+        
+        usernameGlobal = [usernameTokenArray objectAtIndex:0];
+        tokenGlobal = [usernameTokenArray objectAtIndex:1];
+        
+        return YES;
+
+    }else {
+        return NO;
     }
     
-    //Split the String in two strings
-    NSArray *usernameTokenArray = [usernameToken componentsSeparatedByCharactersInSet:
-                        [NSCharacterSet characterSetWithCharactersInString:@"-:"]
-                        ];
 
-    usernameGlobal = [usernameTokenArray objectAtIndex:0];
-    tokenGlobal = [usernameTokenArray objectAtIndex:1];
     
     //NSLog(@"username: %@", usernameGlobal);
     //NSLog(@"Token: %@", tokenGlobal);
     
+}
+
++(NSString *)getTokenPath {
+    
+    //  Build path
+    NSString *sssnap = @"/sssnap/token.txt";
+    NSString *path = [NSHomeDirectory() stringByAppendingString:sssnap];
+    
+    return path;
 }
 
 

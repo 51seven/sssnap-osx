@@ -9,10 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface Token : NSObject{
-    NSString *tokenPath;
     NSString *usernameGlobal;
     NSString * tokenGlobal;
-    BOOL tokenExists;
+
 }
 
 
@@ -20,6 +19,9 @@
 - (NSString *)writeToken:(NSString *)username and: (NSString *) password;
 - (NSString *)getUsername;
 - (NSString *)getToken;
-- (void)readTokenFile;
+- (BOOL)readTokenFile;
++ (void)checkTokenDir;
++ (BOOL) tokenFileExists;
++ (NSString *) getTokenPath;
 
 @end

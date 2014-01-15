@@ -30,10 +30,11 @@
     [self testInternetConnection];
     
     
-    checkSignedIn *signInCheck = [[checkSignedIn alloc]init];
-    signedIn = [signInCheck checkSignInStatus];
-    if(signedIn){
+    Token *checkToken = [[Token alloc]init];
+    if([checkToken readTokenFile]){
         [_signIn setHidden:YES];
+    }else {
+        [_signInWindow makeKeyAndOrderFront:_signInWindow];
     }
 
 }
@@ -64,6 +65,11 @@
     //TODO: check if there already is one
     //TODO: Check this at startup, too
     Token *createToken = [[Token alloc]init];
+    if([createToken readTokenFile]){
+        NSLog(@"Token File checked and found");
+    } else{
+        NSLog(@"No tokenfile found");
+    }
     NSString *userToken = [createToken setToken:username and:password];
    
     //  Check for Authentification Error
@@ -253,6 +259,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
-    
+
 
 @end

@@ -93,11 +93,7 @@
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [pasteBoard setString:imageUrl forType:NSStringPboardType];
     
-    NSUserNotification *notification = [[NSUserNotification alloc] init];
-    notification.title = @"Hello, World!";
-    notification.informativeText = @"A notification";
-    notification.soundName = NSUserNotificationDefaultSoundName;
-    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    [AppDelegate triggerNotification:imageUrl];
     
     
 }
@@ -232,11 +228,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [pasteBoard setString:imageUrl forType:NSStringPboardType];
     
-    NSUserNotification *notification = [[NSUserNotification alloc] init];
-    notification.title = @"Hello, World!";
-    notification.informativeText = @"A notification";
-    notification.soundName = NSUserNotificationDefaultSoundName;
-    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    [AppDelegate triggerNotification:imageUrl];
+    
     
     return noErr;
 }
@@ -273,6 +266,14 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     return YES;
 }
 
+
++(void)triggerNotification:(NSString *)imageUrl {
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = imageUrl;
+    notification.informativeText = @"Link copied to clipboard";
+    notification.soundName = NSUserNotificationDefaultSoundName;
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
 
     
 

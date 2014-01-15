@@ -17,6 +17,8 @@
 
 - (IBAction)takeScreenshot:(id)sender;
 - (IBAction)signIn:(id)sender;
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
++ (void) triggerNotification: (NSString *) imageUrl;
 
 
 @property (weak) IBOutlet NSTextField *usernameLabel;

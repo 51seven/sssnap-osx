@@ -22,6 +22,9 @@
 {
     // Insert code here to initialize your application
     
+    //Hide the error label
+    [_signInErrorLabel setHidden:YES];
+    
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
     //Check internet connection
@@ -60,44 +63,37 @@
 }
 
 //
-//  Actions of the sign in button
+//  Behavior of the Sign In button.
+//  Only called if a username:token combination is not valid anymore.
+//  Keeps the Sign In window open until successful login.
 //
 - (IBAction)signIn:(id)sender {
     
     //get the entered username
     NSString *username = [_usernameInput stringValue];
-    NSLog(@"%@",username);//debug
     //get the entered password
     NSString *password = [_passwordInput stringValue];
-    NSLog(@"%@", password);//debug
-    
+
     //Create a new token
     //TODO: check if there already is one
     //TODO: Check this at startup, too
     Token *createToken = [[Token alloc]init];
-    if([createToken readTokenFile]){
-        NSLog(@"Token File checked and found");
-    } else{
-        NSLog(@"No tokenfile found");
-    }
     NSString *userToken = [createToken setToken:username and:password];
    
     //  Check for Authentification Error
-    //  TODO: Catch wrong combination, wait for right one.
     if([userToken  isEqual: @"Authentification failed."]){
-        [_usernameLabel setStringValue:@"ERROR"];
-        [_passwordLabel setStringValue:@"ERROR"];
-    }
-    NSString *tokenDir = [createToken writeToken:username and:userToken];
-     [createToken readTokenFile];
-    NSLog(@"%@", userToken);
-    NSLog(@"%@", tokenDir);
-    signedIn = true;
+        //Show error label
+        [_signInErrorLabel setHidden:NO];
+    }else{
+        //Authentification successful, save username and token
+        [createToken writeToken:username and:userToken];
     
-    //Hide SignIn from Menu
-    [_signIn setHidden:YES];
-    //Close Sign In Window
-    [_signInWindow close];
+        //Hide SignIn from Menu
+        [_signIn setHidden:YES];
+        //Close Sign In Window
+        [_signInWindow close];
+    }
+    
 }
 
 

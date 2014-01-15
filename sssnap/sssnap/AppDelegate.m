@@ -22,6 +22,8 @@
 {
     // Insert code here to initialize your application
     
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+    
     //Check internet connection
     //TODO: Implement necessary action
     //(Later, not important by now)
@@ -90,6 +92,12 @@
     NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [pasteBoard setString:imageUrl forType:NSStringPboardType];
+    
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = @"Hello, World!";
+    notification.informativeText = @"A notification";
+    notification.soundName = NSUserNotificationDefaultSoundName;
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
     
     
 }
@@ -224,6 +232,12 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [pasteBoard setString:imageUrl forType:NSStringPboardType];
     
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = @"Hello, World!";
+    notification.informativeText = @"A notification";
+    notification.soundName = NSUserNotificationDefaultSoundName;
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    
     return noErr;
 }
 
@@ -254,6 +268,10 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [internetReachable startNotifier];
 }
 
+
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
+    return YES;
+}
 
 
     

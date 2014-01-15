@@ -13,17 +13,20 @@
 #import <Carbon/Carbon.h>
 
 @implementation AppDelegate{
-    BOOL signedIn;
+    BOOL signedIn; //still needed?
 }
 
 @synthesize statusBar = _statusBar;
 
+
+//
+//  All code in here is executed immediately after the
+//  application has finished loading.
+//
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
     
-    //Hide the error label
-    [_signInErrorLabel setHidden:YES];
+    
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
@@ -41,11 +44,16 @@
         
         sendPost *readToken = [[sendPost alloc]init];
         if([readToken isValidToken:username with:token]){
+            //Hide sign in option from menu
             [_signIn setHidden:YES];
         }else {
+            //Hide the error label on
+            [_signInErrorLabel setHidden:YES];
+            //Show sign in window
             [_signInWindow makeKeyAndOrderFront:_signInWindow];
         }
     }else {
+        //Show sign in window
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
     }
         

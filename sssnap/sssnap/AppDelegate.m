@@ -126,10 +126,13 @@
     
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     
-    self.statusBar.title = @"S";
+    // self.statusBar.title = @"S";
+    NSString *pathToIcon = [NSHomeDirectory() stringByAppendingString:@"/sssnap/iconx2.png"];
+    NSImage *icon = [[NSImage alloc]initWithContentsOfFile:pathToIcon];
+    NSLog(@"%@",[icon description]);
     
     // you can also set an image
-    //self.statusBar.image =
+    self.statusBar.image = icon;
     
     self.statusBar.menu = self.menuBarOutlet;
     self.statusBar.highlightMode = YES;

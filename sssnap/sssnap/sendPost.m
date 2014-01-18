@@ -64,6 +64,7 @@
 // Authenticates against username and password. Returns unique user token if success.
 - (BOOL)isValidToken:(NSString *) username with:(NSString *) token {
     printf("sending token authentification");
+    NSLog(@"Token send to Server to verify: %@", token);
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];

@@ -14,6 +14,7 @@
 
 @implementation AppDelegate{
     BOOL signedIn; //still needed?
+    
 }
 
 @synthesize statusBar = _statusBar;
@@ -34,6 +35,7 @@
     //TODO: Implement necessary action
     //(Later, not important by now)
     [self testInternetConnection];
+    
     
     
    
@@ -224,6 +226,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         // Update the UI on the main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Yayyy, we have the interwebs!");
+            [_noInternetConnection setHidden:YES];
+            
         });
     };
     
@@ -233,6 +237,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         // Update the UI on the main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Someone broke the internet :(");
+            [_noInternetConnection setHidden:NO];
+            [_signIn setHidden:YES];
+            [_takeScreenshotMenuItem setHidden:YES];
         });
     };
     

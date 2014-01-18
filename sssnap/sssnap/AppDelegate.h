@@ -21,11 +21,14 @@
 + (void) triggerNotification: (NSString *) imageUrl;
 + (NSString *) takeScreenshot;
 + (BOOL) tokenIsValid;
+- (void)testInternetConnection;
 
 
 
 
 @property (weak) IBOutlet NSTextField *signInErrorLabel;
+@property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;
+@property (weak) IBOutlet NSMenuItem *noInternetConnection;
 
 @property (weak) IBOutlet NSMenuItem *signIn;
 

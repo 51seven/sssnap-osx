@@ -86,7 +86,7 @@
 //
 -(NSString *)writeToken:(NSString *)username and: (NSString *) token {
     
-
+    NSLog(@"Token to write to File: %@", token);
     
     //  Build path
     NSString *sssnap = @"/sssnap/token.txt";
@@ -150,6 +150,7 @@
         
         usernameGlobal = [usernameTokenArray objectAtIndex:0];
         tokenGlobal = [usernameTokenArray objectAtIndex:1];
+        NSLog(@"Token read from file: %@",tokenGlobal);
         
         return YES;
 

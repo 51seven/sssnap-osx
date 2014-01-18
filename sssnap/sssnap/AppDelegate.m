@@ -215,7 +215,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
 }
 
 
-// Checks if we have an internet connection or not
+//  Checks if we have an internet connection or not
+//  TODO: WTF do these errors mean?
 - (void)testInternetConnection
 {
     internetReachable = [Reachability reachabilityWithHostname:@"www.google.com"];

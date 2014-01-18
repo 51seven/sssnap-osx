@@ -56,7 +56,7 @@
     NSError *err = nil;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSString *str = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
-    NSLog(@"User-Token: %@",str);
+    NSLog(@"User-Token sent from Server: %@",str);
     
     return str;
 }

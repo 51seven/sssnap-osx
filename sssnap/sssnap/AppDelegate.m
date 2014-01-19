@@ -271,10 +271,14 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     notification.informativeText = @"Link copied to clipboard";
     notification.soundName = NSUserNotificationDefaultSoundName;
     
+    
     //Deliver
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
+//
+//  Makes the notification clickable
+//
 - (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
     

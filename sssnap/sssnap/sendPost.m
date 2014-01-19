@@ -74,7 +74,7 @@
     
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
     [_params setObject:[NSString stringWithFormat:@"%@", username] forKey:@"username"];
-    [_params setObject:[NSString stringWithFormat:@"%@", token] forKey:@"token"];
+    [_params setObject:[NSString stringWithFormat:@"%@", token] forKey:@"usertoken"];
     
     NSString *BoundaryConstant = @"V2ymHFgaLs0Lac8qCaKO6jy";
     NSURL *requestURL = [[NSURL alloc] initWithString:@"http://sssnap.theclonker.de:8080/api/auth/token"];

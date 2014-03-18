@@ -26,7 +26,7 @@
     [_params setObject:[NSString stringWithFormat:@"%@", password] forKey:@"password"];
     
     NSString *BoundaryConstant = @"V2ymHFga7BdLac8qCaKO6jy";
-    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://sssnap.theclonker.de:8080/api/auth"];
+    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://51seven.de:8888/api/auth"];
     //         NSURL *requestURL = [[NSURL alloc] initWithString:@"http://localhost:3000/api/auth"];
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
@@ -76,7 +76,7 @@
     [_params setObject:[NSString stringWithFormat:@"%@", token] forKey:@"token"];
     
     NSString *BoundaryConstant = @"V2ymHFgaLs0Lac8qCaKO6jy";
-    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://sssnap.theclonker.de:8080/api/auth/token"];
+    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://51seven.de:8888/api/auth/token"];
 //             NSURL *requestURL = [[NSURL alloc] initWithString:@"http://localhost:3000/api/auth/token"];
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
@@ -138,7 +138,7 @@
     NSString *BoundaryConstant = @"V2ymHFg03ehbqgZCaKO6jy";
     
     //RP: Configurando la dirección
-    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://sssnap.theclonker.de:8080/api/upload"];
+    NSURL *requestURL = [[NSURL alloc] initWithString:@"http://51seven.de:8888/api/upload"];
 //             NSURL *requestURL = [[NSURL alloc] initWithString:@"http://localhost:3000/api/upload"];
     
     // set Content-Type in HTTP header

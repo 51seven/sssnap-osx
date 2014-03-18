@@ -14,6 +14,7 @@
 
 @implementation AppDelegate{
     BOOL signedIn; //still needed?
+    
 }
 
 @synthesize statusBar = _statusBar;
@@ -34,6 +35,7 @@
     //TODO: Implement necessary action
     //(Later, not important by now)
     [self testInternetConnection];
+    
     
     
    
@@ -213,7 +215,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
 }
 
 
-// Checks if we have an internet connection or not
+//  Checks if we have an internet connection or not
+//  TODO: WTF do these errors mean?
 - (void)testInternetConnection
 {
     internetReachable = [Reachability reachabilityWithHostname:@"www.google.com"];
@@ -224,6 +227,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         // Update the UI on the main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Yayyy, we have the interwebs!");
+            [_noInternetConnection setHidden:YES];
+            
         });
     };
     
@@ -233,6 +238,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         // Update the UI on the main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Someone broke the internet :(");
+            [_noInternetConnection setHidden:NO];
+            [_signIn setHidden:YES];
+            [_takeScreenshotMenuItem setHidden:YES];
         });
     };
     
@@ -263,9 +271,22 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     notification.informativeText = @"Link copied to clipboard";
     notification.soundName = NSUserNotificationDefaultSoundName;
     
+    
     //Deliver
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
+
+//
+//  Makes the notification clickable
+//
+- (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
+{
+    
+    NSLog(@"Notification - Clicked");
+    NSString *url = notification.title;
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
+}
+
 
 
 //

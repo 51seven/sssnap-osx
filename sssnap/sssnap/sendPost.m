@@ -56,7 +56,7 @@
     NSError *err = nil;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSString *str = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
-    NSLog(@"User-Token: %@",str);
+    NSLog(@"User-Token sent from Server: %@",str);
     
     return str;
 }
@@ -64,6 +64,7 @@
 // Authenticates against username and password. Returns unique user token if success.
 - (BOOL)isValidToken:(NSString *) username with:(NSString *) token {
     printf("sending token authentification");
+    NSLog(@"Token send to Server to verify: %@", token);
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
@@ -73,7 +74,7 @@
     
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
     [_params setObject:[NSString stringWithFormat:@"%@", username] forKey:@"username"];
-    [_params setObject:[NSString stringWithFormat:@"%@", token] forKey:@"token"];
+    [_params setObject:[NSString stringWithFormat:@"%@", token] forKey:@"usertoken"];
     
     NSString *BoundaryConstant = @"V2ymHFgaLs0Lac8qCaKO6jy";
     NSURL *requestURL = [[NSURL alloc] initWithString:@"http://51seven.de:8888/api/auth/token"];

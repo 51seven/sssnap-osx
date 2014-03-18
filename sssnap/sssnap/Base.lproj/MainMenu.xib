@@ -655,10 +655,12 @@
         <customObject id="494" customClass="AppDelegate">
             <connections>
                 <outlet property="menuBarOutlet" destination="MaR-sV-yX7" id="tuj-bM-0Xi"/>
+                <outlet property="noInternetConnection" destination="R9u-00-Dgn" id="TDa-dR-9y9"/>
                 <outlet property="passwordInput" destination="GVY-RZ-0oA" id="e3e-rh-vjH"/>
                 <outlet property="signIn" destination="PiH-H5-X5f" id="ZgO-pe-rYH"/>
                 <outlet property="signInErrorLabel" destination="lh8-CN-kRK" id="1Me-Xc-0gh"/>
                 <outlet property="signInWindow" destination="0Tr-Cm-0Gy" id="bW8-R4-Zy0"/>
+                <outlet property="takeScreenshotMenuItem" destination="5w4-ce-eKf" id="e3O-X6-PBQ"/>
                 <outlet property="username" destination="XyR-Pc-Fsv" id="Aqz-7U-Sn8"/>
                 <outlet property="usernameInput" destination="XyR-Pc-Fsv" id="8aj-qM-FqH"/>
             </connections>
@@ -666,6 +668,9 @@
         <customObject id="420" customClass="NSFontManager"/>
         <menu id="MaR-sV-yX7">
             <items>
+                <menuItem title="No Internet Connection..." enabled="NO" id="R9u-00-Dgn">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
                 <menuItem title="Sign In..." id="PiH-H5-X5f">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

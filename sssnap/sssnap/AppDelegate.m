@@ -211,8 +211,15 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
     NSLog(@"image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
     if(imageSize.width != imagePixelSize.width){
-        imagePixelSize.width = imageSize.width;
-        imagePixelSize.height = imageSize.height;
+    
+        NSImage *scaledImage = [[NSImage alloc] initWithSize:(NSSize)imageSize];
+        [scaledImage lockFocus];
+        [clipboardimage drawInRect:NSMakeRect(0,0,[scaledImage size].width,[scaledImage size].height)
+                          fromRect:NSMakeRect(0,0,[clipboardimage size].width,[clipboardimage size].height)
+                         operation:NSCompositeCopy fraction:1.0];
+        [scaledImage unlockFocus];
+
+        clipboardimage = scaledImage;
     }
     
     

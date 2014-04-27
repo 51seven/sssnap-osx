@@ -177,7 +177,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [theProcess launch];
     
     [theProcess waitUntilExit];
-    NSLog(@"scale factor of the monitor is %f",[[NSScreen mainScreen] backingScaleFactor]);
     
     NSString *items;
     NSImage *clipboardimage;
@@ -204,6 +203,13 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     }
     
     NSLog(@"%@", items);
+    
+    NSSize imageSize = [clipboardimage size];
+    NSLog(@"image size: %f x %f",imageSize.width, imageSize.height);
+    NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];
+    NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
+    NSLog(@"image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
+    
     
     sendPost *test = [[sendPost alloc] init];
     //TODO: Dirty, fix this

@@ -168,7 +168,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     //  Array with Arguments to be given to screencapture
     NSArray *arguments;
-    arguments = [NSArray arrayWithObjects:@"-s", @"-c",@"image.jpg",nil];
+    arguments = [NSArray arrayWithObjects:@"-i", @"-c" ,@"image.jpg",nil];
     
     
     
@@ -204,7 +204,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     NSLog(@"%@", items);
     
-    //Retina shizzle£
+    //Retina shizzle
+    //SWEET MOTHER OF GOD, PUT THIS IN A FUNCTION!!
     NSSize imageSize = [clipboardimage size];
     NSLog(@"image size: %f x %f",imageSize.width, imageSize.height);
     NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];

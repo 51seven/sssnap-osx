@@ -13,7 +13,6 @@
 		D90E212B1884D1D4007CEE2D /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E212A1884D1D4007CEE2D /* Token.m */; };
 		D90E21301886051B007CEE2D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90E212F1886051B007CEE2D /* SystemConfiguration.framework */; };
 		D90E21331886099D007CEE2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21321886099D007CEE2D /* Reachability.m */; };
-		D91C8919188B649F0027C9C1 /* iconset.icns in Resources */ = {isa = PBXBuildFile; fileRef = D91C8918188B649E0027C9C1 /* iconset.icns */; };
 		D993D236188362F200C19A90 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D235188362F200C19A90 /* Cocoa.framework */; };
 		D993D240188362F200C19A90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D993D23E188362F200C19A90 /* InfoPlist.strings */; };
 		D993D242188362F200C19A90 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D993D241188362F200C19A90 /* main.m */; };
@@ -48,7 +47,6 @@
 		D90E212F1886051B007CEE2D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D90E21311886099D007CEE2D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		D90E21321886099D007CEE2D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		D91C8918188B649E0027C9C1 /* iconset.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = iconset.icns; path = ../../../../../../Desktop/iconset.icns; sourceTree = "<group>"; };
 		D993D232188362F200C19A90 /* sssnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sssnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D993D235188362F200C19A90 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D993D238188362F200C19A90 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -159,7 +157,6 @@
 		D993D23C188362F200C19A90 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D91C8918188B649E0027C9C1 /* iconset.icns */,
 				D993D23D188362F200C19A90 /* sssnap-Info.plist */,
 				D993D23E188362F200C19A90 /* InfoPlist.strings */,
 				D993D241188362F200C19A90 /* main.m */,
@@ -263,7 +260,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D91C8919188B649F0027C9C1 /* iconset.icns in Resources */,
 				D993D240188362F200C19A90 /* InfoPlist.strings in Resources */,
 				D993D24E188362F300C19A90 /* Images.xcassets in Resources */,
 				D993D246188362F300C19A90 /* Credits.rtf in Resources */,

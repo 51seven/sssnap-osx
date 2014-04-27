@@ -226,6 +226,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         [sourceImageRep drawInRect: targetFrame];
         [scaledImage unlockFocus];
         
+        clipboardimage = scaledImage;
+        
         NSLog(@"Theoratically, I should have scaled the image by now");
         
         NSImageRep *repScaledImage = [[scaledImage representations] objectAtIndex:0];

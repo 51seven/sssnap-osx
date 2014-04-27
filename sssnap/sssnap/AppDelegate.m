@@ -169,7 +169,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     //  Array with Arguments to be given to screencapture
     NSArray *arguments;
     arguments = [NSArray arrayWithObjects:@"-s", @"-c",@"image.jpg",nil];
-    NSLog(@"scale factor of the monitor is %f",[[NSScreen mainScreen] backingScaleFactor]);
+    
     
     
     //  Apply arguments and start application
@@ -177,6 +177,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [theProcess launch];
     
     [theProcess waitUntilExit];
+    NSLog(@"scale factor of the monitor is %f",[[NSScreen mainScreen] backingScaleFactor]);
     
     NSString *items;
     NSImage *clipboardimage;

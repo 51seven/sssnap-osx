@@ -25,6 +25,7 @@
 
 
 
+@property (weak) IBOutlet NSMenuItem *preferences;
 
 @property (weak) IBOutlet NSTextField *signInErrorLabel;
 @property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;

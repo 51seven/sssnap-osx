@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -657,9 +657,10 @@
                 <outlet property="menuBarOutlet" destination="MaR-sV-yX7" id="tuj-bM-0Xi"/>
                 <outlet property="noInternetConnection" destination="R9u-00-Dgn" id="TDa-dR-9y9"/>
                 <outlet property="passwordInput" destination="GVY-RZ-0oA" id="e3e-rh-vjH"/>
+                <outlet property="preferences" destination="z2c-0Y-eJN" id="bn3-cu-V6N"/>
                 <outlet property="signIn" destination="PiH-H5-X5f" id="ZgO-pe-rYH"/>
                 <outlet property="signInErrorLabel" destination="lh8-CN-kRK" id="1Me-Xc-0gh"/>
-                <outlet property="signInWindow" destination="0Tr-Cm-0Gy" id="bW8-R4-Zy0"/>
+                <outlet property="signInWindow" destination="0Tr-Cm-0Gy" id="TKb-Y8-i1H"/>
                 <outlet property="takeScreenshotMenuItem" destination="5w4-ce-eKf" id="e3O-X6-PBQ"/>
                 <outlet property="username" destination="XyR-Pc-Fsv" id="Aqz-7U-Sn8"/>
                 <outlet property="usernameInput" destination="XyR-Pc-Fsv" id="8aj-qM-FqH"/>
@@ -684,7 +685,11 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="zrB-xX-hMW"/>
-                <menuItem title="Preferences" keyEquivalent="," id="z2c-0Y-eJN"/>
+                <menuItem title="Preferences" keyEquivalent="," id="z2c-0Y-eJN">
+                    <connections>
+                        <action selector="makeKeyAndOrderFront:" target="NGQ-cL-Vyr" id="Uk2-ff-Efb"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Quit" keyEquivalent="q" id="g1u-vb-P4V">
                     <connections>
                         <action selector="terminate:" target="-3" id="zlA-eg-rVi"/>
@@ -696,7 +701,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="386" y="257" width="234" height="165"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <view key="contentView" id="tAC-es-waC">
                 <rect key="frame" x="0.0" y="0.0" width="234" height="165"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -743,6 +748,16 @@
                         </textFieldCell>
                     </textField>
                 </subviews>
+            </view>
+        </window>
+        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="NGQ-cL-Vyr">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="396" y="252" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+            <view key="contentView" id="ReR-JK-lRs">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
             </view>
         </window>
     </objects>

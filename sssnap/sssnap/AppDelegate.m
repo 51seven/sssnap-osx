@@ -41,7 +41,9 @@
    
     if([AppDelegate tokenIsValid]){
         //Hide sign in option from menu
+        NSLog(@"The token is valid, Sig In Window should be hidden");
         [_signIn setHidden:YES];
+        //[_signInWindow setHidden:YES];
     }else {
         //Hide the error label on
         [_signInErrorLabel setHidden:YES];

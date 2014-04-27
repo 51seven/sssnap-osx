@@ -211,15 +211,25 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
     NSLog(@"image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
     if(imageSize.width != imagePixelSize.width){
-    
+        NSLog(@"Checked the size, they differ, I NEED TO SCALE THE IMAGE DOWN");
         NSImage *scaledImage = [[NSImage alloc] initWithSize:(NSSize)imageSize];
         [scaledImage lockFocus];
         [clipboardimage drawInRect:NSMakeRect(0,0,[scaledImage size].width,[scaledImage size].height)
                           fromRect:NSMakeRect(0,0,[clipboardimage size].width,[clipboardimage size].height)
                          operation:NSCompositeCopy fraction:1.0];
         [scaledImage unlockFocus];
+        
+        NSLog(@"Theoratically, I should have scaled the image by now");
+        
+        NSImageRep *repScaledImage = [[scaledImage representations] objectAtIndex:0];
+        NSSize ScaledPixelSize = NSMakeSize(repScaledImage.pixelsWide, repScaledImage.pixelsHigh);
+        NSLog(@"The Pixel size of the new created image is: %f x %f", ScaledPixelSize.width, ScaledPixelSize.height);
+        
+        
+        NSImageRep *repClipboardImage = [[clipboardimage representations] objectAtIndex:0];
+        NSSize ScaledClipboardPixelSize = NSMakeSize(repClipboardImage.pixelsWide, repClipboardImage.pixelsHigh);
+        NSLog(@"The Pixel size of the clipboard image image is: %f x %f", ScaledClipboardPixelSize.width, ScaledClipboardPixelSize.height);
 
-        clipboardimage = scaledImage;
     }
     
     

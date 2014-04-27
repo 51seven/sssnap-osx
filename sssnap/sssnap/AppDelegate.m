@@ -212,11 +212,18 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSLog(@"image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
     if(imageSize.width != imagePixelSize.width){
         NSLog(@"Checked the size, they differ, I NEED TO SCALE THE IMAGE DOWN");
-        NSImage *scaledImage = [[NSImage alloc] initWithSize:(NSSize)imageSize];
+        
+        NSRect targetFrame = NSMakeRect(0, 0, imageSize.width, imageSize.height);
+        NSImage* scaledImage = nil;
+        NSImageRep *sourceImageRep =
+        [clipboardimage bestRepresentationForRect:targetFrame
+                                       context:nil
+                                         hints:nil];
+        
+        scaledImage = [[NSImage alloc] initWithSize:imageSize];
+        
         [scaledImage lockFocus];
-        [clipboardimage drawInRect:NSMakeRect(0,0,[scaledImage size].width,[scaledImage size].height)
-                          fromRect:NSMakeRect(0,0,[clipboardimage size].width,[clipboardimage size].height)
-                         operation:NSCompositeCopy fraction:1.0];
+        [sourceImageRep drawInRect: targetFrame];
         [scaledImage unlockFocus];
         
         NSLog(@"Theoratically, I should have scaled the image by now");

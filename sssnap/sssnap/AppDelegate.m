@@ -204,11 +204,16 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     NSLog(@"%@", items);
     
+    //Retina shizzle£
     NSSize imageSize = [clipboardimage size];
     NSLog(@"image size: %f x %f",imageSize.width, imageSize.height);
     NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];
     NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
     NSLog(@"image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
+    if(imageSize.width != imagePixelSize.width){
+        imagePixelSize.width = imageSize.width;
+        imagePixelSize.height = imageSize.height;
+    }
     
     
     sendPost *test = [[sendPost alloc] init];

@@ -224,53 +224,31 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     //If so, the image needs to be sscaled down
     if(imageSize.width < imagePixelSize.width){
         
-        /*This is commented out.
-        //Debug
-        NSLog(@"Checked the size, they differ, I NEED TO SCALE THE IMAGE DOWN");
+        NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap"];
+        NSBitmapImageRep *imgRep = [[clipboardimage representations] objectAtIndex: 0];
+        NSData *data = [imgRep representationUsingType: NSPNGFileType properties: nil];
+        [data writeToFile: pathToFile atomically: NO];
         
+        NSTask *theProcess;
+        theProcess = [[NSTask alloc] init];
+        [theProcess setLaunchPath:@"/usr/bash"];
         
-        NSRect targetFrame = NSMakeRect(0, 0, imageSize.width, imageSize.height);
-        NSSize rectSize = targetFrame.size;
-        NSLog(@"The size of the Rectangle to draw in is %f x %f", rectSize.width, rectSize.height);
-
-        
-        
-        NSImage* scaledImage = nil;
-        NSImageRep *sourceImageRep = [clipboardimage bestRepresentationForRect:targetFrame context:nil hints:nil];
-        NSSize sourceImageRepSize = NSMakeSize(sourceImageRep.pixelsWide, sourceImageRep.pixelsHigh);
-        NSLog(@"The size of the sourceImageRep is %f x %f", sourceImageRepSize.width, sourceImageRepSize.height);
-        
-        scaledImage = [[NSImage alloc] initWithSize:imageSize];
-        
-        
-        [scaledImage lockFocus];
-        [sourceImageRep drawInRect: targetFrame];
-        [scaledImage unlockFocus];
+        //  Array with Arguments to be given to screencapture
+        NSArray *arguments;
+        //sips -z 768 1024 example.png
+        arguments = [NSArray arrayWithObjects:@"sips", @"-z", @"100", @"100" ,@"image.jpg",nil];
         
         
         
-        NSLog(@"Theoratically, I should have scaled the image by now");
+        //  Apply arguments and start application
+        [theProcess setArguments:arguments];
+        [theProcess launch];
         
-        NSImageRep *repScaledImage = [[scaledImage representations] objectAtIndex:0];
-        NSSize ScaledPixelSize = NSMakeSize(repScaledImage.pixelsWide, repScaledImage.pixelsHigh);
-        NSLog(@"The Pixel size of the new created image is: %f x %f", ScaledPixelSize.width, ScaledPixelSize.height);
+        [theProcess waitUntilExit];
         
-        
-        NSImageRep *repClipboardImage = [[clipboardimage representations] objectAtIndex:0];
-        NSSize ScaledClipboardPixelSize = NSMakeSize(repClipboardImage.pixelsWide, repClipboardImage.pixelsHigh);
-        NSLog(@"The Pixel size of the clipboard image image is: %f x %f", ScaledClipboardPixelSize.width, ScaledClipboardPixelSize.height);
-        */
-        
-        
-        
-        //Yet, another try
-        NSLog(@"Imagesize * 0.5 is %@", imageSize*0.5);
-        [rep setSize:imageSize];
-        clipboardimage = [[NSImage alloc] initWithSize:[rep size]];
-        [clipboardimage addRepresentation: rep];
-        
-        NSLog(@"%@", [clipboardimage description]);
-        
+        NSString *items;
+        NSImage *clipboardimage;
+        NSLog(@"%ld", [theProcess terminationReason]);
         
         
 

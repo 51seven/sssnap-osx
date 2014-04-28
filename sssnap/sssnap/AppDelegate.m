@@ -231,19 +231,17 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         NSRect targetFrame = NSMakeRect(0, 0, imageSize.width, imageSize.height);
         NSSize rectSize = targetFrame.size;
         NSLog(@"The size of the Rectangle to draw in is %f x %f", rectSize.width, rectSize.height);
+
         
         
         NSImage* scaledImage = nil;
-        NSImageRep *sourceImageRep =
-        [clipboardimage bestRepresentationForRect:targetFrame
-                                       context:nil
-                                         hints:nil];
+        NSImageRep *sourceImageRep = [clipboardimage bestRepresentationForRect:targetFrame context:nil hints:nil];
         NSSize sourceImageRepSize = NSMakeSize(sourceImageRep.pixelsWide, sourceImageRep.pixelsHigh);
         NSLog(@"The size of the sourceImageRep is %f x %f", sourceImageRepSize.width, sourceImageRepSize.height);
         
         scaledImage = [[NSImage alloc] initWithSize:imageSize];
-        NSSize scaledImageSize = [scaledImage size];
-        NSLog(@"The size of the newly alloced image without content is %f x %f", scaledImageSize.width, scaledImageSize.height);
+        NSImageRep *scaledImageRepBefore = [[scaledImage representations] objectAtIndex:0];
+        NSLog(@"The New created and not yet filled image is %ld x %ld pixels wide", (long)scaledImageRepBefore.pixelsWide, (long)scaledImageRepBefore.pixelsHigh);
         
         [scaledImage lockFocus];
         [sourceImageRep drawInRect: targetFrame];

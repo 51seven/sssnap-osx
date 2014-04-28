@@ -264,6 +264,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         
         
         //Yet, another try
+        NSLog(@"Imagesize * 0.5 is %@", imageSize*0.5);
         [rep setSize:imageSize];
         clipboardimage = [[NSImage alloc] initWithSize:[rep size]];
         [clipboardimage addRepresentation: rep];

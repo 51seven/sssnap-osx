@@ -264,16 +264,17 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         
         
         //Yet, another try
-        NSData *imageData = [clipboardimage  TIFFRepresentation]; // converting img into data
-        NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData]; // converting into BitmapImageRep
-        NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.5] forKey:NSImageCompressionFactor]; // any number betwwen 0 to 1
-        imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps]; // use NSPNGFileType if needed
-        clipboardimage = [[NSImage alloc] initWithData:imageData]; // image created from data
+        float resizeWidth = imageSize.width;
+        float resizeHeight = imageSize.height;
+        
+        NSImage *resizedImage = [[NSImage alloc] initWithSize: NSMakeSize(resizeWidth, resizeHeight)];
         
         
-        NSImageRep *repAfterResize = [[clipboardimage representations] objectAtIndex:0];
-        NSSize sizeafterResize = NSMakeSize(repAfterResize.pixelsWide, repAfterResize.pixelsHigh);
-        NSLog(@"Pixel size of clipboarImage after resizing are %f x %f", sizeafterResize.width, sizeafterResize.height);
+        [resizedImage lockFocus];
+        [clipboardimage drawInRect: NSMakeRect(0, 0, resizeWidth, resizeHeight) fromRect: NSMakeRect(0, 0, imageSize.width, imageSize.height) operation: NSCompositeSourceOver fraction: 1.0];
+        [resizedImage unlockFocus];
+        
+        NSLog(@"%@", [clipboardimage description]);
         
         
         

@@ -240,6 +240,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
                                          hints:nil];
         
         scaledImage = [[NSImage alloc] initWithSize:imageSize];
+        NSSize scaledImageSize = [scaledImage size];
+        NSLog(@"The size of the newly alloced image without content is %f x %f", scaledImageSize.width, scaledImageSize.height);
         
         [scaledImage lockFocus];
         [sourceImageRep drawInRect: targetFrame];

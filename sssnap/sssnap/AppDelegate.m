@@ -240,8 +240,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         NSLog(@"The size of the sourceImageRep is %f x %f", sourceImageRepSize.width, sourceImageRepSize.height);
         
         scaledImage = [[NSImage alloc] initWithSize:imageSize];
-        NSImageRep *scaledImageRepBefore = [[scaledImage representations] objectAtIndex:0];
-        NSLog(@"The New created and not yet filled image is %ld x %ld pixels wide", (long)scaledImageRepBefore.pixelsWide, (long)scaledImageRepBefore.pixelsHigh);
+        
         
         [scaledImage lockFocus];
         [sourceImageRep drawInRect: targetFrame];

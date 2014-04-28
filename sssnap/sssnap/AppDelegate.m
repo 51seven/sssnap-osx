@@ -271,6 +271,12 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         clipboardimage = [[NSImage alloc] initWithData:imageData]; // image created from data
         
         
+        NSImageRep *repAfterResize = [[clipboardimage representations] objectAtIndex:0];
+        NSSize sizeafterResize = NSMakeSize(repAfterResize.pixelsWide, repAfterResize.pixelsHigh);
+        NSLog(@"Pixel size of clipboarImage after resizing are %f x %f", sizeafterResize.width, sizeafterResize.height);
+        
+        
+        
 
     }
     

@@ -224,10 +224,11 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     //If so, the image needs to be sscaled down
     if(imageSize.width < imagePixelSize.width){
         
-        NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap"];
+        NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap/copiedimage"];
         NSBitmapImageRep *imgRep = [[clipboardimage representations] objectAtIndex: 0];
-        NSData *data = [imgRep representationUsingType: NSPNGFileType properties: nil];
-        [data writeToFile: pathToFile atomically: NO];
+        NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+        NSData *data = [imgRep representationUsingType:NSJPEGFileType properties:imageProps];
+        [data writeToFile:pathToFile atomically:NO];
         
         NSTask *theProcess;
         theProcess = [[NSTask alloc] init];

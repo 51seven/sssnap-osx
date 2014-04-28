@@ -264,15 +264,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         
         
         //Yet, another try
-        float resizeWidth = imageSize.width;
-        float resizeHeight = imageSize.height;
-        
-        NSImage *resizedImage = [[NSImage alloc] initWithSize: NSMakeSize(resizeWidth, resizeHeight)];
-        
-        
-        [resizedImage lockFocus];
-        [clipboardimage drawInRect: NSMakeRect(0, 0, resizeWidth, resizeHeight) fromRect: NSMakeRect(0, 0, imageSize.width, imageSize.height) operation: NSCompositeSourceOver fraction: 1.0];
-        [resizedImage unlockFocus];
+        [rep setSize:imageSize];
+        clipboardimage = [[NSImage alloc] initWithSize:[rep size]];
+        [clipboardimage addRepresentation: rep];
         
         NSLog(@"%@", [clipboardimage description]);
         

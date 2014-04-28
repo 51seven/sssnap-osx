@@ -224,6 +224,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     //If so, the image needs to be sscaled down
     if(imageSize.width < imagePixelSize.width){
         
+        /*This is commented out.
         //Debug
         NSLog(@"Checked the size, they differ, I NEED TO SCALE THE IMAGE DOWN");
         
@@ -258,6 +259,16 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         NSImageRep *repClipboardImage = [[clipboardimage representations] objectAtIndex:0];
         NSSize ScaledClipboardPixelSize = NSMakeSize(repClipboardImage.pixelsWide, repClipboardImage.pixelsHigh);
         NSLog(@"The Pixel size of the clipboard image image is: %f x %f", ScaledClipboardPixelSize.width, ScaledClipboardPixelSize.height);
+        */
+        
+        
+        
+        //Yet, another try
+        NSData *imageData = [clipboardimage  TIFFRepresentation]; // converting img into data
+        NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData]; // converting into BitmapImageRep
+        NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.5] forKey:NSImageCompressionFactor]; // any number betwwen 0 to 1
+        imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps]; // use NSPNGFileType if needed
+        clipboardimage = [[NSImage alloc] initWithData:imageData]; // image created from data
         
         
 

@@ -34,7 +34,7 @@
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
     //Check internet connection
-    //TODO: Implement necessary action
+    //TODO: Implement necessary actions
     //(Later, not important by now)
     [self testInternetConnection];
     
@@ -126,7 +126,9 @@
     gMyHotKeyID.id=1;
     
     //  Register the Hotkey
-    RegisterEventHotKey(0x17, shiftKey+optionKey, gMyHotKeyID,
+    //Path to file with keyboard codes:
+    // /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
+    RegisterEventHotKey(0x15, shiftKey+optionKey, gMyHotKeyID,
                         GetApplicationEventTarget(), 0, &gMyHotKeyRef);
     
     

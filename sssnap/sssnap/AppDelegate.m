@@ -238,6 +238,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         [clipboardimage bestRepresentationForRect:targetFrame
                                        context:nil
                                          hints:nil];
+        NSSize sourceImageRepSize = NSMakeSize(sourceImageRep.pixelsWide, sourceImageRep.pixelsHigh);
+        NSLog(@"The size of the sourceImageRep is %f x %f", sourceImageRepSize.width, sourceImageRepSize.height);
         
         scaledImage = [[NSImage alloc] initWithSize:imageSize];
         NSSize scaledImageSize = [scaledImage size];

@@ -206,15 +206,31 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     //Retina shizzle
     //SWEET MOTHER OF GOD, PUT THIS IN A FUNCTION!!
+    
+    NSLog(@"~~~~START OF RETINA SCALE LOGS~~~~~");
+    
+    //Debug: Log the size of the image
     NSSize imageSize = [clipboardimage size];
-    NSLog(@"image size: %f x %f",imageSize.width, imageSize.height);
+    NSLog(@"Image size: %f x %f",imageSize.width, imageSize.height);
+    
+    //Debug: Log the actual pixel-size of the image
     NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];
     NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
-    NSLog(@"image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
-    if(imageSize.width != imagePixelSize.width){
+    NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
+    
+    //Check if the tow size differ
+    //If so, the image needs to be sscaled down
+    if(imageSize.width < imagePixelSize.width){
+        
+        //Debug
         NSLog(@"Checked the size, they differ, I NEED TO SCALE THE IMAGE DOWN");
         
+        
         NSRect targetFrame = NSMakeRect(0, 0, imageSize.width, imageSize.height);
+        NSSize rectSize = targetFrame.size;
+        NSLog(@"The size of the Rectangle to draw in is %f x %f", rectSize.width, rectSize.height);
+        
+        
         NSImage* scaledImage = nil;
         NSImageRep *sourceImageRep =
         [clipboardimage bestRepresentationForRect:targetFrame
@@ -227,7 +243,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         [sourceImageRep drawInRect: targetFrame];
         [scaledImage unlockFocus];
         
-        clipboardimage = scaledImage;
+        
         
         NSLog(@"Theoratically, I should have scaled the image by now");
         
@@ -239,6 +255,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         NSImageRep *repClipboardImage = [[clipboardimage representations] objectAtIndex:0];
         NSSize ScaledClipboardPixelSize = NSMakeSize(repClipboardImage.pixelsWide, repClipboardImage.pixelsHigh);
         NSLog(@"The Pixel size of the clipboard image image is: %f x %f", ScaledClipboardPixelSize.width, ScaledClipboardPixelSize.height);
+        
+        
 
     }
     

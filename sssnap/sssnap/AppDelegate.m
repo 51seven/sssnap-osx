@@ -234,8 +234,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
    // Some stuff from the Interwebs
     
     
-    NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
-                             (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
+    NSImage *resizedImage = [[NSImage alloc] initWithSize:imagePixelSizeHalf];
     [resizedImage lockFocus];
     [[NSGraphicsContext currentContext]
      setImageInterpolation:NSImageInterpolationHigh];    // optional - higher

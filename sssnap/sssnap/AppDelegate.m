@@ -220,36 +220,82 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
     NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
     
+    NSSize imagePixelSizeHalf = NSMakeSize(rep.pixelsWide /2, rep.pixelsHigh /2);
+    
+   
+    
+    NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
+    
+    
+   // Some stuff from the Interwebs
+    
+    
+    NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
+                             (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
+    [resizedImage lockFocus];
+    [[NSGraphicsContext currentContext]
+     setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
+    
+    [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
+                  operation:NSCompositeSourceOver fraction:1.0];
+    [resizedImage unlockFocus];
+    
+    clipboardimage = resizedImage;
+    
+    NSLog(@"resized Image: %@", [resizedImage description]);
+    NSLog(@"Clipboard£ Image: %@", [clipboardimage description]);
+    
+
+   
+
+    
+    
+    
     //Check if the tow size differ
     //If so, the image needs to be sscaled down
     if(imageSize.width < imagePixelSize.width){
-        
+         /*Meh
         NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap/copiedimage"];
         NSBitmapImageRep *imgRep = [[clipboardimage representations] objectAtIndex: 0];
         NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
         NSData *data = [imgRep representationUsingType:NSJPEGFileType properties:imageProps];
         [data writeToFile:pathToFile atomically:NO];
         
-        NSTask *theProcess;
-        theProcess = [[NSTask alloc] init];
-        [theProcess setLaunchPath:@"/usr/bash"];
         
-        //  Array with Arguments to be given to screencapture
-        NSArray *arguments;
-        //sips -z 768 1024 example.png
-        arguments = [NSArray arrayWithObjects:@"sips", @"-z", @"100", @"100" ,@"image.jpg",nil];
+        NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
+        
+        NSLog(@"Now creating a new rep from the clipboard image");
+        NSBitmapImageRep *clipboardRep = [[clipboardimage representations] objectAtIndex: 0];
+        NSSize clipboardRepPixels = NSMakeSize(clipboardRep.pixelsWide, clipboardRep.pixelsHigh);
+        NSLog(@"Size of the new rep is %f x %f", clipboardRepPixels.width, clipboardRepPixels.height);
+        
+        NSLog(@"Now creating a new NSSize");
+        NSSize updatedSize = imageSize;
+        updatedSize.width = clipboardRepPixels.width / 2;
+        updatedSize.height = clipboardRepPixels.height / 2;
+        NSLog(@"New size has the dimensions %f x %f", updatedSize.width, updatedSize.height);
+        
+        NSRect dimensionsRect = NSMakeRect(0, 0, updatedSize.width, updatedSize.height);
+        */
+        
+        // Some stuff from the Interwebs
         
         
+        NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
+                                 (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
+        [resizedImage lockFocus];
+        [[NSGraphicsContext currentContext]
+         setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
         
-        //  Apply arguments and start application
-        [theProcess setArguments:arguments];
-        [theProcess launch];
+        [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
+                         operation:NSCompositeSourceOver fraction:1.0];
+        [resizedImage unlockFocus];
         
-        [theProcess waitUntilExit];
+        clipboardimage = resizedImage;
         
-        NSString *items;
-        NSImage *clipboardimage;
-        NSLog(@"%ld", [theProcess terminationReason]);
+        NSLog(@"resized Image: %@", [resizedImage description]);
+        NSLog(@"Clipboard£ Image: %@", [clipboardimage description]);
+
         
         
 

@@ -221,6 +221,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
     
     NSSize imagePixelSizeHalf = NSMakeSize(rep.pixelsWide /2, rep.pixelsHigh /2);
+    NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
     
    
     
@@ -231,19 +232,19 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     
     NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
-                             (100,100)];
+                             (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
     [resizedImage lockFocus];
     [[NSGraphicsContext currentContext]
      setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
     
-    [clipboardimage drawInRect:NSMakeRect(0,0,100,100) fromRect:NSZeroRect
+    [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
                   operation:NSCompositeSourceOver fraction:1.0];
     [resizedImage unlockFocus];
     
     clipboardimage = resizedImage;
     
     NSLog(@"resized Image: %@", [resizedImage description]);
-    NSLog(@"Clipboard£ Image: %@", [clipboardimage description]);
+    NSLog(@"Clipboard Image: %@", [clipboardimage description]);
     
 
    

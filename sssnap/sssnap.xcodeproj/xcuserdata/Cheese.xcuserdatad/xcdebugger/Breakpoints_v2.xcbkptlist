@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "420588073.351495"
+            timestampString = "420589007.571809"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440">
+            startingLineNumber = "441"
+            endingLineNumber = "441">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -136,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "420588073.351495"
+            timestampString = "420589007.571809"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "-testInternetConnection"
             landmarkType = "5">
             <Locations>

@@ -223,7 +223,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSSize imagePixelSizeHalf = NSMakeSize(rep.pixelsWide /2, rep.pixelsHigh /2);
     NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
     
-   
+    int halfWidth = imagePixelSizeHalf.width;
+    int halfHeight = imagePixelSizeHalf.height;
+    NSLog(@"The integers: %d %d", halfWidth, halfHeight);
     
     NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
     
@@ -232,12 +234,12 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     
     NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
-                             (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
+                             (halfWidth,halfHeight)];
     [resizedImage lockFocus];
     [[NSGraphicsContext currentContext]
      setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
     
-    [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
+    [clipboardimage drawInRect:NSMakeRect(0,0,halfWidth,halfHeight) fromRect:NSZeroRect
                   operation:NSCompositeSourceOver fraction:1.0];
     [resizedImage unlockFocus];
     

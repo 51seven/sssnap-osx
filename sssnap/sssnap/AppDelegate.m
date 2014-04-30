@@ -221,9 +221,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
 
     
-    long halfWidth = rep.pixelsWide / 2;
-    long halfHeight = rep.pixelsHigh / 2;
-    NSLog(@"The integers: %ld %ld", halfWidth, halfHeight);
+    CGFloat halfWidth = rep.pixelsWide / 2;
+    CGFloat halfHeight = rep.pixelsHigh / 2;
+    NSLog(@"The CGFloats: %f %f", halfWidth, halfHeight);
     
     NSSize imagePixelSizeHalf = NSMakeSize(halfWidth, halfHeight);
     NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);

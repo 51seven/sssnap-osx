@@ -219,13 +219,14 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];
     NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
     NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
+
     
-    NSSize imagePixelSizeHalf = NSMakeSize(rep.pixelsWide /2, rep.pixelsHigh /2);
+    long halfWidth = rep.pixelsWide / 2;
+    long halfHeight = rep.pixelsHigh / 2;
+    NSLog(@"The integers: %ld %ld", halfWidth, halfHeight);
+    
+    NSSize imagePixelSizeHalf = NSMakeSize(halfWidth, halfHeight);
     NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
-    
-    double *halfWidth = &imagePixelSizeHalf.width;
-    double *halfHeight = &imagePixelSizeHalf.height;
-    NSLog(@"The integers: %f %f", *halfWidth, *halfHeight);
     
     NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
     
@@ -234,12 +235,12 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     
     NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
-                             (*halfWidth,*halfHeight)];
+                             (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
     [resizedImage lockFocus];
     [[NSGraphicsContext currentContext]
      setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
     
-    [clipboardimage drawInRect:NSMakeRect(0,0,*halfWidth,*halfHeight) fromRect:NSZeroRect
+    [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
                   operation:NSCompositeSourceOver fraction:1.0];
     [resizedImage unlockFocus];
     

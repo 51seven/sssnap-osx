@@ -221,9 +221,21 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
 
     
-    CGFloat halfWidth = rep.pixelsWide / 2;
-    CGFloat halfHeight = rep.pixelsHigh / 2;
-    NSLog(@"The CGFloats: %f %f", halfWidth, halfHeight);
+    /*
+     This part creates CGFloats with half of the width and height of the original image.
+     This is the size we desire for Retina screenshots
+     All of this works on non-retina machines, but not on retina machines, which is quit unfortunate
+     */
+    //The error seems to be here
+    //When Timo replaces the variables with constant numbers (i.e. "100") it works for him
+    float halfWidth = rep.pixelsWide / 2;
+    float halfHeight = rep.pixelsHigh / 2;
+    NSLog(@"The floats are: %f %f", halfWidth, halfHeight);
+    
+    //Convert the floats to CGFLoats
+    CGFloat CGHalfWidth = halfWidth;
+    CGFloat CGHalfHeight = halfHeight;
+    NSLog(@"The CGFloats are: %f %f", CGHalfWidth, CGHalfHeight);
     
     NSSize imagePixelSizeHalf = NSMakeSize(halfWidth, halfHeight);
     NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
@@ -239,7 +251,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [[NSGraphicsContext currentContext]
      setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
     
-    [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
+    [clipboardimage drawInRect:NSMakeRect(0,0,CGHalfWidth,CGHalfHeight) fromRect:NSZeroRect
                   operation:NSCompositeSourceOver fraction:1.0];
     [resizedImage unlockFocus];
     
@@ -258,6 +270,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     //If so, the image needs to be sscaled down
     if(imageSize.width < imagePixelSize.width){
          /*Meh
+          All of this could be deleted I guess
+          
         NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap/copiedimage"];
         NSBitmapImageRep *imgRep = [[clipboardimage representations] objectAtIndex: 0];
         NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];

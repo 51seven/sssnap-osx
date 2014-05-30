@@ -122,9 +122,10 @@
 -(NSString *)setToken:(NSString *)username and:(NSString *)password{
     
     sendPost *token = [[sendPost alloc]init];
-    NSString *userToken = [token authenticate:username with:password];
+   //REMOVED BECAUSE OF sendPOST.h deprecated ->  NSString *userToken = [token authenticate:username with:password];
     
-    return userToken;
+//    return userToken;
+    return @"deprecated";
     
 }
 

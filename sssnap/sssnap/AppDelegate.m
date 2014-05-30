@@ -27,9 +27,29 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     
-    //NSLog(@"//////////");
-    //NSLog(@"STARTUP DEBUG LOGS");
+    NSLog(@"Application did finish launching.");
+    [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", @""]];
+
+    //Configure client
     
+    
+    //Go through all accounts saved in sharedStore
+    /* for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"]) {
+     NSLog(@"Account: %@", account.accessToken);
+     };*/
+    
+    // Noch kein Account im Keychain
+    if(![[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]){
+        NSLog(@"AccountStore is empty.");
+        [_signInErrorLabel setHidden:YES];
+        [_signInWindow makeKeyAndOrderFront:_signInWindow];
+    }
+    // User war bereits eingeloggt
+    else {
+        [_signIn setHidden:YES];
+        [_signInWindow close];
+        NSLog(@"Auth2AccountStore: \n%@", [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"]);
+    }
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
@@ -38,73 +58,75 @@
     //(Later, not important by now)
     [self testInternetConnection];
     
+    /*
+     if([AppDelegate tokenIsValid]){
+     //Hide sign in option from menu
+     NSLog(@"The token is valid, Sig In Window should be hidden");
+     [_signIn setHidden:YES];
+     //[_signInWindow setHidden:YES];
+     }else {
+     //Hide the error label on
+     [_signInErrorLabel setHidden:YES];
+     //Show sign in window
+     [_signInWindow makeKeyAndOrderFront:_signInWindow];
+     }
+     */
     
-    
-   
-    if([AppDelegate tokenIsValid]){
-        //Hide sign in option from menu
-        NSLog(@"The token is valid, Sig In Window should be hidden");
-        [_signIn setHidden:YES];
-        //[_signInWindow setHidden:YES];
-    }else {
-        //Hide the error label on
-        [_signInErrorLabel setHidden:YES];
-        //Show sign in window
-        [_signInWindow makeKeyAndOrderFront:_signInWindow];
-    }
-    
-        
-
 }
 
 - (IBAction)takeScreenshotItem:(id)sender {
-        
+    
     //Take the Screenshot
-    NSString *imageUrl = [AppDelegate takeScreenshot];
+    //    NSString *imageUrl =
+    [AppDelegate takeScreenshot];
     
     //Fire the Notification
-    [AppDelegate triggerNotification:imageUrl];
-    
+    //[AppDelegate triggerNotification:imageUrl];
 }
 
 //
 //  Behavior of the Sign In button.
-//  Only called if a username:token combination is not valid anymore.
 //  Keeps the Sign In window open until successful login.
 //
 - (IBAction)signIn:(id)sender {
     
-    //get the entered username
-    NSString *username = [_usernameInput stringValue];
-    //get the entered password
-    NSString *password = [_passwordInput stringValue];
-
-    //Create a new token
-    //TODO: check if there already is one
-    //TODO: Check this at startup, too
-    Token *createToken = [[Token alloc]init];
-    NSString *userToken = [createToken setToken:username and:password];
-   
-    //  Check for Authentification Error
-    if([userToken  isEqual: @"Authentification failed."]){
-        //Show error label
-        [_signInErrorLabel setHidden:NO];
-    }else{
-        //Authentification successful, save username and token
-        [createToken writeToken:username and:userToken];
+    [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
+                                             secret:@"testsecret"
+                                   authorizationURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
+                                           tokenURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
+                                        redirectURL:[NSURL URLWithString:@"http://localhost:3000/"]
+                                     forAccountType:@"password"];
     
-        //Hide SignIn from Menu
-        [_signIn setHidden:YES];
-        //Close Sign In Window
-        [_signInWindow close];
-    }
     
+    NSString *username = [_usernameInput stringValue];  // get username by login-form
+    NSString *password = [_passwordInput stringValue];  // get password by login-form
+    
+    // Request access
+    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"password"
+                                                              username:username
+                                                              password:password];
+    
+    // On Sucess
+    [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
+                                                      object:[NXOAuth2AccountStore sharedStore]
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *aNotification) {
+                                                      [_signIn setHidden: YES];
+                                                      [_signInWindow close];
+                                                      NSLog(@"Successfully logged in.");
+                                                  }];
+    
+    // On Failure
+    [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidFailToRequestAccessNotification
+                                                      object:[NXOAuth2AccountStore sharedStore]
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *aNotification) {
+                                                      NSError *error = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreErrorKey];
+                                                      [_signInErrorLabel setHidden: NO];
+                                                      [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", [error localizedDescription]]];
+                                                      NSLog(@"Failed to login: \n%@", error);
+                                                  }];
 }
-
-
-
-
-
 
 
 
@@ -146,22 +168,20 @@
     self.statusBar.highlightMode = YES;
 }
 
-OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
-                         void *userData)
-{
+OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void *userData) {
     
     //Take the Screenshot
-    NSString *imageUrl = [AppDelegate takeScreenshot];
+    //NSString *imageUrl =
+    [AppDelegate takeScreenshot];
     
     //Fire the Notification
-    [AppDelegate triggerNotification:imageUrl];
-    
+    //[AppDelegate triggerNotification:imageUrl];
     
     return noErr;
 }
 
 
-+(NSString *) takeScreenshot {
++(void) takeScreenshot {
     
     //  Starts Screencapture Process
     NSTask *theProcess;
@@ -169,10 +189,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     [theProcess setLaunchPath:@"/usr/sbin/screencapture"];
     
     //  Array with Arguments to be given to screencapture
-    NSArray *arguments;
-    arguments = [NSArray arrayWithObjects:@"-i", @"-c" ,@"image.jpg",nil];
-    
-    
+    NSArray *arguments = [NSArray arrayWithObjects:@"-i", @"-c", @"image.jpg", nil];
     
     //  Apply arguments and start application
     [theProcess setArguments:arguments];
@@ -180,46 +197,40 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     
     [theProcess waitUntilExit];
     
-    NSString *items;
+//    NSString *items;
     NSImage *clipboardimage;
     NSLog(@"%ld", [theProcess terminationReason]);
-    if ([theProcess terminationStatus] == 0)
-    {
-        NSLog(@"Got here");
+    
+    if ([theProcess terminationStatus] == 0) {
         NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
         NSArray *classes = [[NSArray alloc] initWithObjects: [NSImage class], nil];
         NSDictionary *options = [NSDictionary dictionary];
         NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
         if (copiedItems != nil) {
             NSUInteger size = [copiedItems count];
-            NSLog(@"Lenght of cpoied items arra is %lu", (unsigned long)size);
+            NSLog(@"Lenght of copied items arra is %lu", (unsigned long)size);
             // Do something with the contents...
             if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]){
                 clipboardimage = [copiedItems objectAtIndex:0];
                 NSLog(@"%@", [clipboardimage description]);
             }
         }
-        
-    
-        
     }
     
-    NSLog(@"%@", items);
+    //NSLog(@"%@", items);
     
-    //Retina shizzle
-    //SWEET MOTHER OF GOD, PUT THIS IN A FUNCTION!!
-    
-    NSLog(@"~~~~START OF RETINA SCALE LOGS~~~~~");
+    //Retina Resizing
+    //NSLog(@"~~~~START OF RETINA SCALE LOGS~~~~~");
     
     //Debug: Log the size of the image
     NSSize imageSize = [clipboardimage size];
-    NSLog(@"Image size: %f x %f",imageSize.width, imageSize.height);
+    //NSLog(@"Image size: %f x %f", imageSize.width, imageSize.height);
     
     //Debug: Log the actual pixel-size of the image
     NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];
     NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
-    NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
-
+    //NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
+    
     
     /*
      This part creates CGFloats with half of the width and height of the original image.
@@ -230,20 +241,20 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
     //When Timo replaces the variables with constant numbers (i.e. "100") it works for him
     float halfWidth = rep.pixelsWide / 2;
     float halfHeight = rep.pixelsHigh / 2;
-    NSLog(@"The floats are: %f %f", halfWidth, halfHeight);
+   // NSLog(@"The floats are: %f %f", halfWidth, halfHeight);
     
     //Convert the floats to CGFLoats
     CGFloat CGHalfWidth = halfWidth;
     CGFloat CGHalfHeight = halfHeight;
-    NSLog(@"The CGFloats are: %f %f", CGHalfWidth, CGHalfHeight);
+   // NSLog(@"The CGFloats are: %f %f", CGHalfWidth, CGHalfHeight);
     
     NSSize imagePixelSizeHalf = NSMakeSize(halfWidth, halfHeight);
-    NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
+   // NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
     
-    NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
+   // NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
     
     
-   // Some stuff from the Interwebs
+    // Some stuff from the Interwebs
     
     
     NSImage *resizedImage = [[NSImage alloc] initWithSize:imagePixelSizeHalf];
@@ -252,87 +263,86 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
      setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
     
     [clipboardimage drawInRect:NSMakeRect(0,0,CGHalfWidth,CGHalfHeight) fromRect:NSZeroRect
-                  operation:NSCompositeSourceOver fraction:1.0];
+                     operation:NSCompositeSourceOver fraction:1.0];
     [resizedImage unlockFocus];
     
     clipboardimage = resizedImage;
     
-    NSLog(@"resized Image: %@", [resizedImage description]);
-    NSLog(@"Clipboard Image: %@", [clipboardimage description]);
-    
-
-   
-
-    
+    //NSLog(@"resized Image: %@", [resizedImage description]);
+    //NSLog(@"Clipboard Image: %@", [clipboardimage description]);
     
     
     //Check if the tow size differ
     //If so, the image needs to be sscaled down
     if(imageSize.width < imagePixelSize.width){
-         /*Meh
-          All of this could be deleted I guess
-          
-        NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap/copiedimage"];
-        NSBitmapImageRep *imgRep = [[clipboardimage representations] objectAtIndex: 0];
-        NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-        NSData *data = [imgRep representationUsingType:NSJPEGFileType properties:imageProps];
-        [data writeToFile:pathToFile atomically:NO];
-        
-        
-        NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
-        
-        NSLog(@"Now creating a new rep from the clipboard image");
-        NSBitmapImageRep *clipboardRep = [[clipboardimage representations] objectAtIndex: 0];
-        NSSize clipboardRepPixels = NSMakeSize(clipboardRep.pixelsWide, clipboardRep.pixelsHigh);
-        NSLog(@"Size of the new rep is %f x %f", clipboardRepPixels.width, clipboardRepPixels.height);
-        
-        NSLog(@"Now creating a new NSSize");
-        NSSize updatedSize = imageSize;
-        updatedSize.width = clipboardRepPixels.width / 2;
-        updatedSize.height = clipboardRepPixels.height / 2;
-        NSLog(@"New size has the dimensions %f x %f", updatedSize.width, updatedSize.height);
-        
-        NSRect dimensionsRect = NSMakeRect(0, 0, updatedSize.width, updatedSize.height);
-        */
+        /*Meh
+         All of this could be deleted I guess
+         
+         NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap/copiedimage"];
+         NSBitmapImageRep *imgRep = [[clipboardimage representations] objectAtIndex: 0];
+         NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+         NSData *data = [imgRep representationUsingType:NSJPEGFileType properties:imageProps];
+         [data writeToFile:pathToFile atomically:NO];
+         
+         
+         NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
+         
+         NSLog(@"Now creating a new rep from the clipboard image");
+         NSBitmapImageRep *clipboardRep = [[clipboardimage representations] objectAtIndex: 0];
+         NSSize clipboardRepPixels = NSMakeSize(clipboardRep.pixelsWide, clipboardRep.pixelsHigh);
+         NSLog(@"Size of the new rep is %f x %f", clipboardRepPixels.width, clipboardRepPixels.height);
+         
+         NSLog(@"Now creating a new NSSize");
+         NSSize updatedSize = imageSize;
+         updatedSize.width = clipboardRepPixels.width / 2;
+         updatedSize.height = clipboardRepPixels.height / 2;
+         NSLog(@"New size has the dimensions %f x %f", updatedSize.width, updatedSize.height);
+         
+         NSRect dimensionsRect = NSMakeRect(0, 0, updatedSize.width, updatedSize.height);
+         */
         
         // Some stuff from the Interwebs
         
         /*
-        NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
-                                 (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
-        [resizedImage lockFocus];
-        [[NSGraphicsContext currentContext]
+         NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
+         (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
+         [resizedImage lockFocus];
+         [[NSGraphicsContext currentContext]
          setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
+         
+         [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
+         operation:NSCompositeSourceOver fraction:1.0];
+         [resizedImage unlockFocus];
+         
+         clipboardimage = resizedImage;
+         
+         NSLog(@"resized Image: %@", [resizedImage description]);
+         NSLog(@"Clipboard£ Image: %@", [clipboardimage description]);
+         
+         */
         
-        [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
-                         operation:NSCompositeSourceOver fraction:1.0];
-        [resizedImage unlockFocus];
         
-        clipboardimage = resizedImage;
-        
-        NSLog(@"resized Image: %@", [resizedImage description]);
-        NSLog(@"Clipboard£ Image: %@", [clipboardimage description]);
-
-        */
-        
-
     }
     
     
-    sendPost *test = [[sendPost alloc] init];
+    sendPost *post = [[sendPost alloc] init];
     //TODO: Dirty, fix this
-    Token *recieveAuth = [[Token alloc]init];
-    [recieveAuth readTokenFile];
-    NSString *imageUrl =  [test uploadImage:clipboardimage authWith:[recieveAuth getUsername] and:[recieveAuth getToken]];
-    NSLog(@"USERNAME RECIEVED: %@", [recieveAuth getUsername]);
-    NSLog(@"TOKEN RECIEVED: %@", [recieveAuth getToken]);
-    NSLog(@"%@", [imageUrl description]);
     
-    NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
-    [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-    [pasteBoard setString:imageUrl forType:NSStringPboardType];
+    /*Token *recieveAuth = [[Token alloc]init];
+     [recieveAuth readTokenFile];
+     */
     
-    return imageUrl;
+    [post uploadImage:clipboardimage];
+    
+    /*NSLog(@"USERNAME RECIEVED: %@", [recieveAuth getUsername]);
+     NSLog(@"TOKEN RECIEVED: %@", [recieveAuth getToken]);
+     NSLog(@"%@", [imageUrl description]);
+     */
+    
+    /*NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
+     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+     [pasteBoard setString:imageUrl forType:NSStringPboardType];
+     */
 }
 
 
@@ -421,7 +431,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         NSString *token = [checkToken getToken];
         
         sendPost *readToken = [[sendPost alloc]init];
-        if([readToken isValidToken:username with:token]){
+        //if([readToken isValidToken:username with:token]){
+        // DEPRECATED
+        if(true) {
             //Token found and valid
             NSLog(@"Token is found an valid");
             return YES;
@@ -435,7 +447,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent,
         NSLog(@"Token is not found");
         return NO;
     }
-
+    
 }
 
 

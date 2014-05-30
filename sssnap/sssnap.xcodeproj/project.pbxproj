@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BF55B0C018849D0B0003795D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D238188362F200C19A90 /* AppKit.framework */; };
+		BF6B1B331935F6EB009CCC81 /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6B1B2E1935F6DF009CCC81 /* OAuth2Client.framework */; };
+		BF896EAD1935F515001B239B /* functions.m in Sources */ = {isa = PBXBuildFile; fileRef = BF896EAC1935F515001B239B /* functions.m */; };
 		D90E21251884575D007CEE2D /* sendPost.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21241884575D007CEE2D /* sendPost.m */; };
 		D90E21281884BBC5007CEE2D /* checkSignedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21271884BBC5007CEE2D /* checkSignedIn.m */; };
 		D90E212B1884D1D4007CEE2D /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E212A1884D1D4007CEE2D /* Token.m */; };
@@ -28,6 +30,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BF6B1B2D1935F6DF009CCC81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 942FFCD612315E0A00E6C65E;
+			remoteInfo = OAuth2Client.framework;
+		};
+		BF6B1B2F1935F6DF009CCC81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = OAuth2Client;
+		};
+		BF6B1B311935F6E6009CCC81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 942FFCD512315E0A00E6C65E;
+			remoteInfo = OAuth2Client.framework;
+		};
 		D993D257188362F300C19A90 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D993D22A188362F200C19A90 /* Project object */;
@@ -38,6 +61,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
+		BF896EAB1935F515001B239B /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = functions.h; sourceTree = "<group>"; };
+		BF896EAC1935F515001B239B /* functions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = functions.m; sourceTree = "<group>"; };
 		D90E21231884575C007CEE2D /* sendPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sendPost.h; sourceTree = "<group>"; };
 		D90E21241884575D007CEE2D /* sendPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sendPost.m; sourceTree = "<group>"; };
 		D90E21261884BBC5007CEE2D /* checkSignedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checkSignedIn.h; sourceTree = "<group>"; };
@@ -74,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF6B1B331935F6EB009CCC81 /* OAuth2Client.framework in Frameworks */,
 				D90E21301886051B007CEE2D /* SystemConfiguration.framework in Frameworks */,
 				BF55B0C018849D0B0003795D /* AppKit.framework in Frameworks */,
 				D9DBFE7C18841A95003E964E /* Carbon.framework in Frameworks */,
@@ -93,6 +120,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF6B1B291935F6DF009CCC81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BF6B1B2E1935F6DF009CCC81 /* OAuth2Client.framework */,
+				BF6B1B301935F6DF009CCC81 /* libOAuth2Client.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D993D229188362F200C19A90 = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +136,7 @@
 				D993D259188362F300C19A90 /* sssnapTests */,
 				D993D234188362F200C19A90 /* Frameworks */,
 				D993D233188362F200C19A90 /* Products */,
+				BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -150,6 +187,8 @@
 				D993D24A188362F300C19A90 /* MainMenu.xib */,
 				D993D24D188362F300C19A90 /* Images.xcassets */,
 				D993D23C188362F200C19A90 /* Supporting Files */,
+				BF896EAB1935F515001B239B /* functions.h */,
+				BF896EAC1935F515001B239B /* functions.m */,
 			);
 			path = sssnap;
 			sourceTree = "<group>";
@@ -198,6 +237,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BF6B1B321935F6E6009CCC81 /* PBXTargetDependency */,
 			);
 			name = sssnap;
 			productName = sssnap;
@@ -229,7 +269,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = AwesomePeople;
+				ORGANIZATIONNAME = 51seven;
 				TargetAttributes = {
 					D993D252188362F300C19A90 = {
 						TestTargetID = D993D231188362F200C19A90;
@@ -247,6 +287,12 @@
 			mainGroup = D993D229188362F200C19A90;
 			productRefGroup = D993D233188362F200C19A90 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BF6B1B291935F6DF009CCC81 /* Products */;
+					ProjectRef = BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				D993D231188362F200C19A90 /* sssnap */,
@@ -254,6 +300,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BF6B1B2E1935F6DF009CCC81 /* OAuth2Client.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuth2Client.framework;
+			remoteRef = BF6B1B2D1935F6DF009CCC81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BF6B1B301935F6DF009CCC81 /* libOAuth2Client.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOAuth2Client.a;
+			remoteRef = BF6B1B2F1935F6DF009CCC81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D993D230188362F200C19A90 /* Resources */ = {
@@ -286,6 +349,7 @@
 				D90E212B1884D1D4007CEE2D /* Token.m in Sources */,
 				D90E21281884BBC5007CEE2D /* checkSignedIn.m in Sources */,
 				D993D242188362F200C19A90 /* main.m in Sources */,
+				BF896EAD1935F515001B239B /* functions.m in Sources */,
 				D90E21331886099D007CEE2D /* Reachability.m in Sources */,
 				D90E21251884575D007CEE2D /* sendPost.m in Sources */,
 			);
@@ -302,6 +366,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BF6B1B321935F6E6009CCC81 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuth2Client.framework;
+			targetProxy = BF6B1B311935F6E6009CCC81 /* PBXContainerItemProxy */;
+		};
 		D993D258188362F300C19A90 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D993D231188362F200C19A90 /* sssnap */;

@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Reachability.h"
+#import "functions.h"
+#import <OAuth2Client/NXOAuth2.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate>{
     Reachability *internetReachable;
@@ -19,7 +21,7 @@
 - (IBAction)signIn:(id)sender;
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 + (void) triggerNotification: (NSString *) imageUrl;
-+ (NSString *) takeScreenshot;
++ (void) takeScreenshot;
 + (BOOL) tokenIsValid;
 - (void)testInternetConnection;
 

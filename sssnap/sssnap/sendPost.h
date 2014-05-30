@@ -8,13 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "functions.h"
-#import <OAuth2Client/NXOAuth2.h>
+#import "AppDelegate.h"
+#import <tgmath.h>
 
 @interface sendPost : NSObject
 
-//-(NSString *)authenticate:(NSString *) username with:(NSString *) password;
-//-(BOOL)isValidToken:(NSString *) username with:(NSString *) token;
 -(void)uploadImage:(NSImage *) image;
-
 
 @end

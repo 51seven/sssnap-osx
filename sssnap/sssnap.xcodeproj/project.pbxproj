@@ -8,11 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		BF55B0C018849D0B0003795D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D238188362F200C19A90 /* AppKit.framework */; };
-		BF6B1B331935F6EB009CCC81 /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6B1B2E1935F6DF009CCC81 /* OAuth2Client.framework */; };
 		BF896EAD1935F515001B239B /* functions.m in Sources */ = {isa = PBXBuildFile; fileRef = BF896EAC1935F515001B239B /* functions.m */; };
+		BFF3B2E01938A455005008B6 /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF3B2DB1938A447005008B6 /* OAuth2Client.framework */; };
 		D90E21251884575D007CEE2D /* sendPost.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21241884575D007CEE2D /* sendPost.m */; };
 		D90E21281884BBC5007CEE2D /* checkSignedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21271884BBC5007CEE2D /* checkSignedIn.m */; };
-		D90E212B1884D1D4007CEE2D /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E212A1884D1D4007CEE2D /* Token.m */; };
 		D90E21301886051B007CEE2D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90E212F1886051B007CEE2D /* SystemConfiguration.framework */; };
 		D90E21331886099D007CEE2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21321886099D007CEE2D /* Reachability.m */; };
 		D993D236188362F200C19A90 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D235188362F200C19A90 /* Cocoa.framework */; };
@@ -30,23 +29,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BF6B1B2D1935F6DF009CCC81 /* PBXContainerItemProxy */ = {
+		BFF3B2DA1938A447005008B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */;
+			containerPortal = BFF3B2D51938A446005008B6 /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 942FFCD612315E0A00E6C65E;
 			remoteInfo = OAuth2Client.framework;
 		};
-		BF6B1B2F1935F6DF009CCC81 /* PBXContainerItemProxy */ = {
+		BFF3B2DC1938A447005008B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */;
+			containerPortal = BFF3B2D51938A446005008B6 /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = OAuth2Client;
 		};
-		BF6B1B311935F6E6009CCC81 /* PBXContainerItemProxy */ = {
+		BFF3B2DE1938A450005008B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */;
+			containerPortal = BFF3B2D51938A446005008B6 /* OAuth2Client.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 942FFCD512315E0A00E6C65E;
 			remoteInfo = OAuth2Client.framework;
@@ -61,15 +60,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
 		BF896EAB1935F515001B239B /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = functions.h; sourceTree = "<group>"; };
 		BF896EAC1935F515001B239B /* functions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = functions.m; sourceTree = "<group>"; };
+		BFF3B2D51938A446005008B6 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
 		D90E21231884575C007CEE2D /* sendPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sendPost.h; sourceTree = "<group>"; };
 		D90E21241884575D007CEE2D /* sendPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sendPost.m; sourceTree = "<group>"; };
 		D90E21261884BBC5007CEE2D /* checkSignedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checkSignedIn.h; sourceTree = "<group>"; };
 		D90E21271884BBC5007CEE2D /* checkSignedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = checkSignedIn.m; sourceTree = "<group>"; };
-		D90E21291884D1D4007CEE2D /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
-		D90E212A1884D1D4007CEE2D /* Token.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Token.m; sourceTree = "<group>"; };
 		D90E212F1886051B007CEE2D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D90E21311886099D007CEE2D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		D90E21321886099D007CEE2D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -100,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF6B1B331935F6EB009CCC81 /* OAuth2Client.framework in Frameworks */,
+				BFF3B2E01938A455005008B6 /* OAuth2Client.framework in Frameworks */,
 				D90E21301886051B007CEE2D /* SystemConfiguration.framework in Frameworks */,
 				BF55B0C018849D0B0003795D /* AppKit.framework in Frameworks */,
 				D9DBFE7C18841A95003E964E /* Carbon.framework in Frameworks */,
@@ -120,11 +117,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BF6B1B291935F6DF009CCC81 /* Products */ = {
+		BFF3B2D61938A446005008B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BF6B1B2E1935F6DF009CCC81 /* OAuth2Client.framework */,
-				BF6B1B301935F6DF009CCC81 /* libOAuth2Client.a */,
+				BFF3B2DB1938A447005008B6 /* OAuth2Client.framework */,
+				BFF3B2DD1938A447005008B6 /* libOAuth2Client.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,7 +133,7 @@
 				D993D259188362F300C19A90 /* sssnapTests */,
 				D993D234188362F200C19A90 /* Frameworks */,
 				D993D233188362F200C19A90 /* Products */,
-				BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */,
+				BFF3B2D51938A446005008B6 /* OAuth2Client.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,8 +173,6 @@
 			children = (
 				D993D247188362F300C19A90 /* AppDelegate.h */,
 				D993D248188362F300C19A90 /* AppDelegate.m */,
-				D90E21291884D1D4007CEE2D /* Token.h */,
-				D90E212A1884D1D4007CEE2D /* Token.m */,
 				D90E21261884BBC5007CEE2D /* checkSignedIn.h */,
 				D90E21271884BBC5007CEE2D /* checkSignedIn.m */,
 				D90E21231884575C007CEE2D /* sendPost.h */,
@@ -237,7 +232,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				BF6B1B321935F6E6009CCC81 /* PBXTargetDependency */,
+				BFF3B2DF1938A450005008B6 /* PBXTargetDependency */,
 			);
 			name = sssnap;
 			productName = sssnap;
@@ -289,8 +284,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = BF6B1B291935F6DF009CCC81 /* Products */;
-					ProjectRef = BF6B1B281935F6DF009CCC81 /* OAuth2Client.xcodeproj */;
+					ProductGroup = BFF3B2D61938A446005008B6 /* Products */;
+					ProjectRef = BFF3B2D51938A446005008B6 /* OAuth2Client.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -302,18 +297,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		BF6B1B2E1935F6DF009CCC81 /* OAuth2Client.framework */ = {
+		BFF3B2DB1938A447005008B6 /* OAuth2Client.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = OAuth2Client.framework;
-			remoteRef = BF6B1B2D1935F6DF009CCC81 /* PBXContainerItemProxy */;
+			remoteRef = BFF3B2DA1938A447005008B6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BF6B1B301935F6DF009CCC81 /* libOAuth2Client.a */ = {
+		BFF3B2DD1938A447005008B6 /* libOAuth2Client.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libOAuth2Client.a;
-			remoteRef = BF6B1B2F1935F6DF009CCC81 /* PBXContainerItemProxy */;
+			remoteRef = BFF3B2DC1938A447005008B6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -346,7 +341,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D993D249188362F300C19A90 /* AppDelegate.m in Sources */,
-				D90E212B1884D1D4007CEE2D /* Token.m in Sources */,
 				D90E21281884BBC5007CEE2D /* checkSignedIn.m in Sources */,
 				D993D242188362F200C19A90 /* main.m in Sources */,
 				BF896EAD1935F515001B239B /* functions.m in Sources */,
@@ -366,10 +360,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BF6B1B321935F6E6009CCC81 /* PBXTargetDependency */ = {
+		BFF3B2DF1938A450005008B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = OAuth2Client.framework;
-			targetProxy = BF6B1B311935F6E6009CCC81 /* PBXContainerItemProxy */;
+			targetProxy = BFF3B2DE1938A450005008B6 /* PBXContainerItemProxy */;
 		};
 		D993D258188362F300C19A90 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -2,19 +2,17 @@
 //  AppDelegate.m
 //  sssnap
 //
-//  Created by Christian Poplawski on 13.01.14.
+//  Created by Sven Schiffer 30.05.2014
 //  Copyright (c) 2014 AwesomePeople. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "sendPost.h"
-#import "Token.h"
 #import "checkSignedIn.h"
 #import <Carbon/Carbon.h>
 
 @implementation AppDelegate{
     BOOL signedIn; //still needed?
-    
 }
 
 @synthesize statusBar = _statusBar;
@@ -26,25 +24,15 @@
 //
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    
-    NSLog(@"Application did finish launching.");
     [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", @""]];
-
-    //Configure client
     
-    
-    //Go through all accounts saved in sharedStore
-    /* for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"]) {
-     NSLog(@"Account: %@", account.accessToken);
-     };*/
-    
-    // Noch kein Account im Keychain
+    // Found no Userdata = No User logged in
     if(![[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]){
         NSLog(@"AccountStore is empty.");
         [_signInErrorLabel setHidden:YES];
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
     }
-    // User war bereits eingeloggt
+    // User already logged in
     else {
         [_signIn setHidden:YES];
         [_signInWindow close];
@@ -54,34 +42,11 @@
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
     //Check internet connection
-    //TODO: Implement necessary actions
-    //(Later, not important by now)
     [self testInternetConnection];
-    
-    /*
-     if([AppDelegate tokenIsValid]){
-     //Hide sign in option from menu
-     NSLog(@"The token is valid, Sig In Window should be hidden");
-     [_signIn setHidden:YES];
-     //[_signInWindow setHidden:YES];
-     }else {
-     //Hide the error label on
-     [_signInErrorLabel setHidden:YES];
-     //Show sign in window
-     [_signInWindow makeKeyAndOrderFront:_signInWindow];
-     }
-     */
-    
 }
 
 - (IBAction)takeScreenshotItem:(id)sender {
-    
-    //Take the Screenshot
-    //    NSString *imageUrl =
     [AppDelegate takeScreenshot];
-    
-    //Fire the Notification
-    //[AppDelegate triggerNotification:imageUrl];
 }
 
 //
@@ -130,7 +95,7 @@
 
 
 
-//  Ovveride AwakeFromNib
+//  Override AwakeFromNib
 - (void) awakeFromNib {
     
     //  Register the Hotkeys
@@ -140,15 +105,14 @@
     eventType.eventClass=kEventClassKeyboard;
     eventType.eventKind=kEventHotKeyPressed;
     
-    
     InstallApplicationEventHandler(&MyHotKeyHandler,1,&eventType,NULL,NULL);
     
     //  Name and ID of Hotkey
     gMyHotKeyID.signature='htk1';
     gMyHotKeyID.id=1;
     
-    //  Register the Hotkey
-    //Path to file with keyboard codes:
+    // Register the Hotkey
+    // Path to file with keyboard codes:
     // /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
     RegisterEventHotKey(0x15, shiftKey+optionKey, gMyHotKeyID,
                         GetApplicationEventTarget(), 0, &gMyHotKeyRef);
@@ -161,9 +125,7 @@
     NSImage *icon = [[NSImage alloc]initWithContentsOfFile:pathToIcon];
     NSLog(@"%@",[icon description]);
     
-    // you can also set an image
     self.statusBar.image = icon;
-    
     self.statusBar.menu = self.menuBarOutlet;
     self.statusBar.highlightMode = YES;
 }
@@ -171,12 +133,7 @@
 OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void *userData) {
     
     //Take the Screenshot
-    //NSString *imageUrl =
     [AppDelegate takeScreenshot];
-    
-    //Fire the Notification
-    //[AppDelegate triggerNotification:imageUrl];
-    
     return noErr;
 }
 
@@ -194,12 +151,10 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
     //  Apply arguments and start application
     [theProcess setArguments:arguments];
     [theProcess launch];
-    
     [theProcess waitUntilExit];
     
-//    NSString *items;
     NSImage *clipboardimage;
-    NSLog(@"%ld", [theProcess terminationReason]);
+    //NSLog(@"%ld", [theProcess terminationReason]);
     
     if ([theProcess terminationStatus] == 0) {
         NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
@@ -207,12 +162,8 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
         NSDictionary *options = [NSDictionary dictionary];
         NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
         if (copiedItems != nil) {
-            NSUInteger size = [copiedItems count];
-            NSLog(@"Lenght of copied items arra is %lu", (unsigned long)size);
-            // Do something with the contents...
             if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]){
                 clipboardimage = [copiedItems objectAtIndex:0];
-                NSLog(@"%@", [clipboardimage description]);
             }
         }
     }
@@ -231,7 +182,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
     NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
     //NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
     
-    
     /*
      This part creates CGFloats with half of the width and height of the original image.
      This is the size we desire for Retina screenshots
@@ -241,21 +191,15 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
     //When Timo replaces the variables with constant numbers (i.e. "100") it works for him
     float halfWidth = rep.pixelsWide / 2;
     float halfHeight = rep.pixelsHigh / 2;
-   // NSLog(@"The floats are: %f %f", halfWidth, halfHeight);
+    // NSLog(@"The floats are: %f %f", halfWidth, halfHeight);
     
     //Convert the floats to CGFLoats
     CGFloat CGHalfWidth = halfWidth;
     CGFloat CGHalfHeight = halfHeight;
-   // NSLog(@"The CGFloats are: %f %f", CGHalfWidth, CGHalfHeight);
+    // NSLog(@"The CGFloats are: %f %f", CGHalfWidth, CGHalfHeight);
     
     NSSize imagePixelSizeHalf = NSMakeSize(halfWidth, halfHeight);
-   // NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
-    
-   // NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
-    
-    
-    // Some stuff from the Interwebs
-    
+    // NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
     
     NSImage *resizedImage = [[NSImage alloc] initWithSize:imagePixelSizeHalf];
     [resizedImage lockFocus];
@@ -264,13 +208,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
     
     [clipboardimage drawInRect:NSMakeRect(0,0,CGHalfWidth,CGHalfHeight) fromRect:NSZeroRect
                      operation:NSCompositeSourceOver fraction:1.0];
+    
     [resizedImage unlockFocus];
-    
     clipboardimage = resizedImage;
-    
-    //NSLog(@"resized Image: %@", [resizedImage description]);
-    //NSLog(@"Clipboard Image: %@", [clipboardimage description]);
-    
     
     //Check if the tow size differ
     //If so, the image needs to be sscaled down
@@ -324,54 +264,33 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
         
     }
     
-    
     sendPost *post = [[sendPost alloc] init];
-    //TODO: Dirty, fix this
-    
-    /*Token *recieveAuth = [[Token alloc]init];
-     [recieveAuth readTokenFile];
-     */
-    
     [post uploadImage:clipboardimage];
-    
-    /*NSLog(@"USERNAME RECIEVED: %@", [recieveAuth getUsername]);
-     NSLog(@"TOKEN RECIEVED: %@", [recieveAuth getToken]);
-     NSLog(@"%@", [imageUrl description]);
-     */
-    
-    /*NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
-     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-     [pasteBoard setString:imageUrl forType:NSStringPboardType];
-     */
 }
 
 
 //  Checks if we have an internet connection or not
-//  TODO: WTF do these errors mean?
 - (void)testInternetConnection
 {
-    internetReachable = [Reachability reachabilityWithHostname:@"www.google.com"];
+    internetReachable = [Reachability reachabilityWithHostname:@"51seven.de"];
     
     // Internet is reachable
-    internetReachable.reachableBlock = ^(Reachability*reach)
-    {
+    internetReachable.reachableBlock = ^(Reachability*reach) {
         // Update the UI on the main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Yayyy, we have the interwebs!");
-            [_noInternetConnection setHidden:YES];
-            
+            NSLog(@"Connection: ONLINE");
+            [_noInternetConnection setHidden: YES];
         });
     };
     
     // Internet is not reachable
-    internetReachable.unreachableBlock = ^(Reachability*reach)
-    {
+    internetReachable.unreachableBlock = ^(Reachability*reach) {
         // Update the UI on the main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Someone broke the internet :(");
-            [_noInternetConnection setHidden:NO];
+            NSLog(@"Connection: OFFLINE");
+            [_noInternetConnection setHidden: NO];
             [_signIn setHidden:YES];
-            [_takeScreenshotMenuItem setHidden:YES];
+            [_takeScreenshotMenuItem setHidden: YES];
         });
     };
     
@@ -402,7 +321,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
     notification.informativeText = @"Link copied to clipboard";
     notification.soundName = NSUserNotificationDefaultSoundName;
     
-    
     //Deliver
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
@@ -412,42 +330,16 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
 //
 - (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
-    
-    NSLog(@"Notification - Clicked");
     NSString *url = notification.title;
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
-
 
 
 //
 //Checks if the currently saved token is valid.
 //
 +(BOOL)tokenIsValid {
-    Token *checkToken = [[Token alloc]init];
-    if([checkToken readTokenFile]){
-        
-        NSString *username = [checkToken getUsername];
-        NSString *token = [checkToken getToken];
-        
-        sendPost *readToken = [[sendPost alloc]init];
-        //if([readToken isValidToken:username with:token]){
-        // DEPRECATED
-        if(true) {
-            //Token found and valid
-            NSLog(@"Token is found an valid");
-            return YES;
-        }else {
-            //Token found but is not valid
-            NSLog(@"Token is found but not valid");
-            return NO;
-        }
-    }else {
-        //No token found
-        NSLog(@"Token is not found");
-        return NO;
-    }
-    
+    return false;
 }
 
 

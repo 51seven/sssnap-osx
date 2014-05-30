@@ -19,7 +19,6 @@
     notification.informativeText = @"Link copied to clipboard";
     notification.soundName = NSUserNotificationDefaultSoundName;
     
-    
     //Deliver
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
@@ -32,7 +31,25 @@
 
 - (BOOL)dateIsExpired:(NSDate *) date {
     
+    NSDate *now = [NSDate date];
     
-    return true;
+    NSLog(@"Comparing %@ with %@", date, now);
+    
+    // Given Date is taller then Now -> not expired
+    if ([date compare:now] == NSOrderedDescending) {
+        NSLog(@"Liegt in der Zukunft -> date is later than now");
+        return false;
+        
+    }
+    // Given Date is smaller then Now -> expired
+    else if ([date compare:now] == NSOrderedAscending) {
+        NSLog(@"Liegt in der Vergangenheit -> date is earlier than now");
+        return true;
+        
+    }
+    else {
+        NSLog(@"dates are the same");
+        return true;
+    }
 }
 @end

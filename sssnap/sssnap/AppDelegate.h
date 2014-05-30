@@ -19,11 +19,11 @@
 
 - (IBAction)takeScreenshotItem:(id)sender;
 - (IBAction)signIn:(id)sender;
-- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
+- (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 + (void) triggerNotification: (NSString *) imageUrl;
 + (void) takeScreenshot;
 + (BOOL) tokenIsValid;
-- (void)testInternetConnection;
+- (void) testInternetConnection;
 
 
 
@@ -37,8 +37,6 @@
 
 @property (weak) IBOutlet NSTextField *usernameInput;
 @property (weak) IBOutlet NSSecureTextField *passwordInput;
-
-
 
 @property (weak) IBOutlet NSMenu *menuBarOutlet;
 @property (strong, nonatomic) NSStatusItem *statusBar;

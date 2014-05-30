@@ -62,7 +62,6 @@
                                         redirectURL:[NSURL URLWithString:@"http://localhost:3000/"]
                                      forAccountType:@"password"];
     
-    
     NSString *username = [_usernameInput stringValue];  // get username by login-form
     NSString *password = [_passwordInput stringValue];  // get password by login-form
     

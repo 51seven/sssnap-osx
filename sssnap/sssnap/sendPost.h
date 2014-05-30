@@ -10,6 +10,7 @@
 #import "functions.h"
 #import "AppDelegate.h"
 #import <tgmath.h>
+#import "Reachability.h"
 
 @interface sendPost : NSObject
 

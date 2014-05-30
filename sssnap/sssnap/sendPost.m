@@ -15,70 +15,61 @@
 // Uploads an Image to the Server
 - (void)uploadImage:(NSImage *) image {
     
-    functions *function = [[functions alloc] init];
-    
-    NSData *imageData = [image TIFFRepresentation];
-    NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData: imageData];
-    imageData = [imageRep representationUsingType:NSPNGFileType properties: nil];
-    
-    NSDictionary *parameters = @{
-                                 @"file": imageData,
-                                 };
-    
-    NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
-    NSLog(@"Using Account: %@", anAccount);
-    
-    [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
-                                             secret:@"testsecret"
-                                   authorizationURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
-                                           tokenURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
-                                        redirectURL:[NSURL URLWithString:@"http://localhost:3000/"]
-                                     forAccountType:@"password"];
-    
-    // Not sure if neccessary
-    /* if([function dateIsExpired: anAccount.accessToken.expiresAt]) {
-        NSLog(@"AccessToken has expired.");
+    // Check if we're connected to the internet
+    if([[Reachability reachabilityForInternetConnection] isReachable]) {
+        functions *function = [[functions alloc] init];
+        
+        NSData *imageData = [image TIFFRepresentation];
+        NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData: imageData];
+        imageData = [imageRep representationUsingType:NSPNGFileType properties: nil];
+        
+        NSDictionary *parameters = @{
+                                     @"file": imageData,
+                                     };
+        
+        NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
+        NSLog(@"Using Account: %@", anAccount);
+        
+        [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
+                                                 secret:@"testsecret"
+                                       authorizationURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
+                                               tokenURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
+                                            redirectURL:[NSURL URLWithString:@"http://localhost:3000/"]
+                                         forAccountType:@"password"];
         
         [NXOAuth2Request performMethod:@"POST"
-                            onResource:[NSURL URLWithString: @"http://localhost:3000/api/oauth/token"]
-                       usingParameters:nil
+                            onResource:[NSURL URLWithString: @"http://localhost:3000/api/upload"]
+                       usingParameters:parameters
                            withAccount:anAccount
                    sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
                        
-                        }
-                       responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
-                           NSLog(@"I got a new AccessToken.");
-                       }];
-    }*/
-    
-    [NXOAuth2Request performMethod:@"POST"
-                        onResource:[NSURL URLWithString: @"http://localhost:3000/api/upload"]
-                   usingParameters:parameters
-                       withAccount:anAccount
-               sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
-                   
-                   // Getting Progress in Percent
-                   int percent = (int) (((float) bytesSend / (float)bytesTotal) * 100);
-                   int step = (percent%10==0) ? percent : percent+10-(percent%10);
-                   
-                   // Change the Statusbar Icon here
-                   
-                   NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
-               }
-                   responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
-                       NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                       // Getting Progress in Percent
+                       int percent = (int) (((float) bytesSend / (float)bytesTotal) * 100);
+                       int step = (percent%10==0) ? percent : percent+10-(percent%10);
                        
-                       if(error) {
-                           NSLog(@"An error occured: %@", error);
-                       }
-                       else {
-                           NSLog(@"Response was successfull");
-                           NSLog(@"ResponseData: %@", responseString);
+                       // ToDo: Change the Statusbar Icon here
+                       
+                       NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
+                   }
+                       responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                           NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
                            
-                           [function sendGrowl: responseString];
-                           [function copyToClipboard: responseString];
-                       }
-                   }];
+                           if(error) {
+                               NSLog(@"An error occured: %@", error);
+                           }
+                           else {
+                               NSLog(@"Response was successfull");
+                               NSLog(@"ResponseData: %@", responseString);
+                               
+                               [function sendGrowl: responseString];
+                               [function copyToClipboard: responseString];
+                           }
+                       }];
+    }
+    else {
+        NSLog(@"ImageUpload has been canceled because of missing internet connection.");
+        // ToDo: Implement Userfeedback
+    }
 }
 
 

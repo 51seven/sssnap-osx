@@ -279,6 +279,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Connection: ONLINE");
             [_noInternetConnection setHidden: YES];
+            [_takeScreenshotMenuItem setHidden: NO];
         });
     };
     
@@ -288,7 +289,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Connection: OFFLINE");
             [_noInternetConnection setHidden: NO];
-            [_signIn setHidden:YES];
+            //[_signIn setHidden:YES];
             [_takeScreenshotMenuItem setHidden: YES];
         });
     };
@@ -303,7 +304,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
     return YES;
 }
-
 
 
 //
@@ -332,15 +332,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
     NSString *url = notification.title;
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
-
-
-//
-//Checks if the currently saved token is valid.
-//
-+(BOOL)tokenIsValid {
-    return false;
-}
-
 
 
 @end

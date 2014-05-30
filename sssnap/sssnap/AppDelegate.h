@@ -16,13 +16,11 @@
 }
 @property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
 
-
 - (IBAction)takeScreenshotItem:(id)sender;
 - (IBAction)signIn:(id)sender;
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 + (void) triggerNotification: (NSString *) imageUrl;
 + (void) takeScreenshot;
-+ (BOOL) tokenIsValid;
 - (void) testInternetConnection;
 
 @property (weak) IBOutlet NSMenuItem *preferences;

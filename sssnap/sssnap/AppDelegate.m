@@ -8,11 +8,10 @@
 
 #import "AppDelegate.h"
 #import "sendPost.h"
-#import "checkSignedIn.h"
 #import <Carbon/Carbon.h>
 
 @implementation AppDelegate{
-    BOOL signedIn; //still needed?
+
 }
 
 @synthesize statusBar = _statusBar;
@@ -55,22 +54,19 @@
         [_takeScreenshotMenuItem setEnabled: NO];
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
         
-        // Workarround, because setEnabled wont work:
-        [_preferences setHidden: YES];
-        [_takeScreenshotMenuItem setHidden: YES];
 
     }
     // User already logged in
     else {
         [_signIn setHidden: YES];
+        [_preferences setEnabled:YES];
+        [_takeScreenshotMenuItem setEnabled:YES];
         [_signInWindow close];
         NSLog(@"Auth2AccountStore: \n%@", [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"]);
     }
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
-    //Check internet connection
-    [self testInternetConnection];
 }
 
 - (void) proceedLogin {
@@ -96,6 +92,7 @@
                                                   usingBlock:^(NSNotification *aNotification) {
                                                       [_signIn setHidden: YES];
                                                       [_signInWindow close];
+                                                      [_takeScreenshotMenuItem setEnabled:YES];
                                                       NSLog(@"Successfully logged in.");
                                                   }];
     
@@ -318,7 +315,11 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Connection: ONLINE");
             [_noInternetConnection setHidden: YES];
-            [_takeScreenshotMenuItem setEnabled: NO];
+            
+            //Set takeScreenshotMenuItem to enabled only if the user is logged in
+            if([[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]) {
+                [_takeScreenshotMenuItem setEnabled: YES];
+            }
         });
     };
     

@@ -8,11 +8,10 @@
 
 #import "AppDelegate.h"
 #import "sendPost.h"
-#import "checkSignedIn.h"
 #import <Carbon/Carbon.h>
 
 @implementation AppDelegate{
-    BOOL signedIn; //still needed?
+
 }
 
 @synthesize statusBar = _statusBar;

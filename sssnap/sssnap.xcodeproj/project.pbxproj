@@ -11,7 +11,6 @@
 		BF896EAD1935F515001B239B /* functions.m in Sources */ = {isa = PBXBuildFile; fileRef = BF896EAC1935F515001B239B /* functions.m */; };
 		BFF3B2E01938A455005008B6 /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF3B2DB1938A447005008B6 /* OAuth2Client.framework */; };
 		D90E21251884575D007CEE2D /* sendPost.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21241884575D007CEE2D /* sendPost.m */; };
-		D90E21281884BBC5007CEE2D /* checkSignedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21271884BBC5007CEE2D /* checkSignedIn.m */; };
 		D90E21301886051B007CEE2D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90E212F1886051B007CEE2D /* SystemConfiguration.framework */; };
 		D90E21331886099D007CEE2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D90E21321886099D007CEE2D /* Reachability.m */; };
 		D993D236188362F200C19A90 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D993D235188362F200C19A90 /* Cocoa.framework */; };
@@ -65,8 +64,6 @@
 		BFF3B2D51938A446005008B6 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
 		D90E21231884575C007CEE2D /* sendPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sendPost.h; sourceTree = "<group>"; };
 		D90E21241884575D007CEE2D /* sendPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sendPost.m; sourceTree = "<group>"; };
-		D90E21261884BBC5007CEE2D /* checkSignedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checkSignedIn.h; sourceTree = "<group>"; };
-		D90E21271884BBC5007CEE2D /* checkSignedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = checkSignedIn.m; sourceTree = "<group>"; };
 		D90E212F1886051B007CEE2D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D90E21311886099D007CEE2D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		D90E21321886099D007CEE2D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -173,8 +170,6 @@
 			children = (
 				D993D247188362F300C19A90 /* AppDelegate.h */,
 				D993D248188362F300C19A90 /* AppDelegate.m */,
-				D90E21261884BBC5007CEE2D /* checkSignedIn.h */,
-				D90E21271884BBC5007CEE2D /* checkSignedIn.m */,
 				D90E21231884575C007CEE2D /* sendPost.h */,
 				D90E21241884575D007CEE2D /* sendPost.m */,
 				D90E21311886099D007CEE2D /* Reachability.h */,
@@ -341,7 +336,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D993D249188362F300C19A90 /* AppDelegate.m in Sources */,
-				D90E21281884BBC5007CEE2D /* checkSignedIn.m in Sources */,
 				D993D242188362F200C19A90 /* main.m in Sources */,
 				BF896EAD1935F515001B239B /* functions.m in Sources */,
 				D90E21331886099D007CEE2D /* Reachability.m in Sources */,

@@ -14,21 +14,25 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate>{
     Reachability *internetReachable;
 }
-@property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
 
 - (IBAction)takeScreenshotItem:(id)sender;
 - (IBAction)signIn:(id)sender;
+- (IBAction)logoutButton:(id)sender;
+
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
+
 + (void) triggerNotification: (NSString *) imageUrl;
 + (void) takeScreenshot;
 - (void) testInternetConnection;
 
-@property (weak) IBOutlet NSMenuItem *preferences;
+@property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
+@property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;
 
 @property (weak) IBOutlet NSTextField *signInErrorLabel;
+
 @property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;
 @property (weak) IBOutlet NSMenuItem *noInternetConnection;
-
+@property (weak) IBOutlet NSMenuItem *preferences;
 @property (weak) IBOutlet NSMenuItem *signIn;
 
 @property (weak) IBOutlet NSTextField *usernameInput;

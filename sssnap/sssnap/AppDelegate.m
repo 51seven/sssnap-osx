@@ -30,11 +30,18 @@
     if(![[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]){
         NSLog(@"AccountStore is empty.");
         [_signInErrorLabel setHidden:YES];
+        [_preferences setEnabled: NO];
+        [_takeScreenshotMenuItem setEnabled: NO];
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
+        
+        // Workarround, because setEnabled wont work:
+        [_preferences setHidden: YES];
+        [_takeScreenshotMenuItem setHidden: YES];
+
     }
     // User already logged in
     else {
-        [_signIn setHidden:YES];
+        [_signIn setHidden: YES];
         [_signInWindow close];
         NSLog(@"Auth2AccountStore: \n%@", [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"]);
     }
@@ -116,7 +123,6 @@
     RegisterEventHotKey(0x15, shiftKey+optionKey, gMyHotKeyID,
                         GetApplicationEventTarget(), 0, &gMyHotKeyRef);
     
-    
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     
     // self.statusBar.title = @"S";
@@ -129,10 +135,15 @@
     self.statusBar.highlightMode = YES;
 }
 
-OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void *userData) {
+OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
     
     //Take the Screenshot
-    [AppDelegate takeScreenshot];
+    if([[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]) {
+        [AppDelegate takeScreenshot];
+    }
+    else {
+        NSLog(@"Screenshot is forbidden because no User is logged in.");
+    }
     return noErr;
 }
 
@@ -160,10 +171,16 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
         NSArray *classes = [[NSArray alloc] initWithObjects: [NSImage class], nil];
         NSDictionary *options = [NSDictionary dictionary];
         NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
-        if (copiedItems != nil) {
-            if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]){
+        
+        if ([copiedItems count]) {
+            if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]) {
                 clipboardimage = [copiedItems objectAtIndex:0];
+                sendPost *post = [[sendPost alloc] init];
+                [post uploadImage:clipboardimage];
             }
+        }
+        else {
+            NSLog(@"Screencaputre aborted.");
         }
     }
     
@@ -173,12 +190,12 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
     //NSLog(@"~~~~START OF RETINA SCALE LOGS~~~~~");
     
     //Debug: Log the size of the image
-    NSSize imageSize = [clipboardimage size];
+    //NSSize imageSize = [clipboardimage size];
     //NSLog(@"Image size: %f x %f", imageSize.width, imageSize.height);
     
     //Debug: Log the actual pixel-size of the image
-    NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];
-    NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
+    //NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];
+    //NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
     //NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
     
     /*
@@ -188,19 +205,19 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
      */
     //The error seems to be here
     //When Timo replaces the variables with constant numbers (i.e. "100") it works for him
-    float halfWidth = rep.pixelsWide / 2;
-    float halfHeight = rep.pixelsHigh / 2;
+    //float halfWidth = rep.pixelsWide / 2;
+    //float halfHeight = rep.pixelsHigh / 2;
     // NSLog(@"The floats are: %f %f", halfWidth, halfHeight);
     
     //Convert the floats to CGFLoats
-    CGFloat CGHalfWidth = halfWidth;
-    CGFloat CGHalfHeight = halfHeight;
+    //CGFloat CGHalfWidth = halfWidth;
+    //CGFloat CGHalfHeight = halfHeight;
     // NSLog(@"The CGFloats are: %f %f", CGHalfWidth, CGHalfHeight);
     
-    NSSize imagePixelSizeHalf = NSMakeSize(halfWidth, halfHeight);
+    //NSSize imagePixelSizeHalf = NSMakeSize(halfWidth, halfHeight);
     // NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
     
-    NSImage *resizedImage = [[NSImage alloc] initWithSize:imagePixelSizeHalf];
+    /*NSImage *resizedImage = [[NSImage alloc] initWithSize:imagePixelSizeHalf];
     [resizedImage lockFocus];
     [[NSGraphicsContext currentContext]
      setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
@@ -210,10 +227,10 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
     
     [resizedImage unlockFocus];
     clipboardimage = resizedImage;
-    
+    */
     //Check if the tow size differ
     //If so, the image needs to be sscaled down
-    if(imageSize.width < imagePixelSize.width){
+//    if(imageSize.width < imagePixelSize.width){
         /*Meh
          All of this could be deleted I guess
          
@@ -261,10 +278,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
          */
         
         
-    }
-    
-    sendPost *post = [[sendPost alloc] init];
-    [post uploadImage:clipboardimage];
+   // }
 }
 
 
@@ -279,7 +293,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Connection: ONLINE");
             [_noInternetConnection setHidden: YES];
-            [_takeScreenshotMenuItem setHidden: NO];
+            [_takeScreenshotMenuItem setEnabled: NO];
         });
     };
     
@@ -290,11 +304,27 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
             NSLog(@"Connection: OFFLINE");
             [_noInternetConnection setHidden: NO];
             //[_signIn setHidden:YES];
-            [_takeScreenshotMenuItem setHidden: YES];
+            [_takeScreenshotMenuItem setEnabled: NO];
         });
     };
     
     [internetReachable startNotifier];
+}
+
+- (IBAction)logoutButton:(id)sender {
+    
+    // Remove all accounts from the keychain
+    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
+        [[NXOAuth2AccountStore sharedStore] removeAccount: account];
+    };
+    
+    [_preferences setHidden: YES];
+    [_preferences setEnabled: NO];
+    [_takeScreenshotMenuItem setEnabled: NO];
+    [_takeScreenshotMenuItem setHidden: YES];
+    [_signIn setEnabled: YES];
+    [_signIn setHidden: NO];
+    //[_preferencesWindow close];
 }
 
 

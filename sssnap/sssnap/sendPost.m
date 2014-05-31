@@ -28,29 +28,30 @@
                                      };
         
         NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
-        NSLog(@"Using Account: %@", anAccount);
+        if(anAccount) {
+            NSLog(@"Using Account: %@", anAccount);
         
-        [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
-                                                 secret:@"testsecret"
-                                       authorizationURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
-                                               tokenURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
-                                            redirectURL:[NSURL URLWithString:@"http://localhost:3000/"]
-                                         forAccountType:@"password"];
+            [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
+                                                     secret:@"testsecret"
+                                           authorizationURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
+                                                   tokenURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
+                                                redirectURL:[NSURL URLWithString:@"http://localhost:3000/"]
+                                             forAccountType:@"password"];
         
-        [NXOAuth2Request performMethod:@"POST"
-                            onResource:[NSURL URLWithString: @"http://localhost:3000/api/upload"]
-                       usingParameters:parameters
-                           withAccount:anAccount
-                   sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            [NXOAuth2Request performMethod:@"POST"
+                                onResource:[NSURL URLWithString: @"http://localhost:3000/api/upload"]
+                           usingParameters:parameters
+                               withAccount:anAccount
+                       sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
                        
-                       // Getting Progress in Percent
-                       int percent = (int) (((float) bytesSend / (float)bytesTotal) * 100);
-                       int step = (percent%10==0) ? percent : percent+10-(percent%10);
+                           // Getting Progress in Percent
+                           int percent = (int) (((float) bytesSend / (float)bytesTotal) * 100);
+                           int step = (percent%10==0) ? percent : percent+10-(percent%10);
                        
-                       // ToDo: Change the Statusbar Icon here
+                           // ToDo: Change the Statusbar Icon here
                        
-                       NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
-                   }
+                           NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
+                       }
                        responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                            NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
                            
@@ -65,6 +66,10 @@
                                [function copyToClipboard: responseString];
                            }
                        }];
+        }
+        else {
+            NSLog(@"User is not logged in");
+        }
     }
     else {
         NSLog(@"ImageUpload has been canceled because of missing internet connection.");

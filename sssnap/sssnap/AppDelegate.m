@@ -170,7 +170,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 }
 
 
-- (void) takeScreenshot {
++ (void) takeScreenshot {
     
     //  Starts Screencapture Process
     NSTask *theProcess;

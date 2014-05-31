@@ -17,7 +17,6 @@
     
     // Check if we're connected to the internet
     if([[Reachability reachabilityForInternetConnection] isReachable]) {
-        functions *function = [[functions alloc] init];
         
         NSData *imageData = [image TIFFRepresentation];
         NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData: imageData];
@@ -62,8 +61,8 @@
                                NSLog(@"Response was successfull");
                                NSLog(@"ResponseData: %@", responseString);
                                
-                               [function sendGrowl: responseString];
-                               [function copyToClipboard: responseString];
+                               [functions sendGrowl: responseString];
+                               [functions copyToClipboard: responseString];
                            }
                        }];
         }

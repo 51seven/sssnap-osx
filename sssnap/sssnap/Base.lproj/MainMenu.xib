@@ -667,7 +667,7 @@
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
-        <menu id="MaR-sV-yX7">
+        <menu autoenablesItems="NO" id="MaR-sV-yX7">
             <items>
                 <menuItem title="Sign In..." id="PiH-H5-X5f">
                     <modifierMask key="keyEquivalentModifierMask"/>

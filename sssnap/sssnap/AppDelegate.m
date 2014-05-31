@@ -18,6 +18,24 @@
 @synthesize statusBar = _statusBar;
 
 
+- (void)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
+{
+    if (commandSelector == @selector(insertNewline:)) {
+        [self proceedLogin];
+    }
+    else if (commandSelector == @selector(deleteForward:)) {
+        //Do something against DELETE key
+        
+    }
+    else if (commandSelector == @selector(deleteBackward:)) {
+        //Do something against BACKSPACE key
+        
+    }
+    else if (commandSelector == @selector(insertTab:)) {
+        //Do something against TAB key
+    }
+}
+
 //
 //  All code in here is executed immediately after the
 //  application has finished loading.
@@ -26,9 +44,12 @@
 {
     [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", @""]];
     
-    // Found no Userdata = No User logged in
+    // Found no Userdata = User is logged out
     if(![[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]){
         NSLog(@"AccountStore is empty.");
+        
+        self.passwordInput.delegate = self;
+        
         [_signInErrorLabel setHidden:YES];
         [_preferences setEnabled: NO];
         [_takeScreenshotMenuItem setEnabled: NO];
@@ -52,16 +73,7 @@
     [self testInternetConnection];
 }
 
-- (IBAction)takeScreenshotItem:(id)sender {
-    [AppDelegate takeScreenshot];
-}
-
-//
-//  Behavior of the Sign In button.
-//  Keeps the Sign In window open until successful login.
-//
-- (IBAction)signIn:(id)sender {
-    
+- (void) proceedLogin {
     [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
                                              secret:@"testsecret"
                                    authorizationURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
@@ -97,6 +109,19 @@
                                                       [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", [error localizedDescription]]];
                                                       NSLog(@"Failed to login: \n%@", error);
                                                   }];
+
+}
+
+- (IBAction)takeScreenshotItem:(id)sender {
+    [AppDelegate takeScreenshot];
+}
+
+//
+//  Behavior of the Sign In button.
+//  Keeps the Sign In window open until successful login.
+//
+- (IBAction)signIn:(id)sender {
+    [self proceedLogin];
 }
 
 
@@ -148,7 +173,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 }
 
 
-+(void) takeScreenshot {
+- (void) takeScreenshot {
     
     //  Starts Screencapture Process
     NSTask *theProcess;
@@ -340,7 +365,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 //  Triggers a Notification
 //  Needs the imageUrl to display it in the notification
 //
-+(void)triggerNotification:(NSString *)imageUrl {
++ (void)triggerNotification:(NSString *)imageUrl {
     
     //New Notification
     NSUserNotification *notification = [[NSUserNotification alloc] init];

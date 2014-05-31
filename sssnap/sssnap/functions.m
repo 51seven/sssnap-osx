@@ -10,7 +10,7 @@
 
 @implementation functions
 
-- (void)sendGrowl:(NSString *)data {
++ (void)sendGrowl:(NSString *)data {
     //New Notification
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     
@@ -23,13 +23,13 @@
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
-- (void)copyToClipboard:(NSString *)data {
++ (void)copyToClipboard:(NSString *)data {
     NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
     [pasteBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [pasteBoard setString:data forType:NSStringPboardType];
 }
 
-- (BOOL)dateIsExpired:(NSDate *) date {
++ (BOOL)dateIsExpired:(NSDate *) date {
     
     NSDate *now = [NSDate date];
     

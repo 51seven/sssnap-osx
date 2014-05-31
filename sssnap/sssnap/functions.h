@@ -10,8 +10,8 @@
 
 @interface functions : NSObject
 
-- (void)sendGrowl:(NSString *)data;
-- (void)copyToClipboard:(NSString *)data;
-- (BOOL)dateIsExpired:(NSDate *) date;
++ (void)sendGrowl:(NSString *)data;
++ (void)copyToClipboard:(NSString *)data;
++ (BOOL)dateIsExpired:(NSDate *) date;
 
 @end

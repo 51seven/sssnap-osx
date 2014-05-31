@@ -33,9 +33,6 @@
         [_takeScreenshotMenuItem setEnabled: NO];
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
         
-        // Workarround, because setEnabled wont work:
-        [_preferences setHidden: YES];
-        [_takeScreenshotMenuItem setHidden: YES];
 
     }
     // User already logged in

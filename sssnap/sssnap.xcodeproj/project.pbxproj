@@ -174,11 +174,11 @@
 				D90E21241884575D007CEE2D /* sendPost.m */,
 				D90E21311886099D007CEE2D /* Reachability.h */,
 				D90E21321886099D007CEE2D /* Reachability.m */,
+				BF896EAB1935F515001B239B /* functions.h */,
+				BF896EAC1935F515001B239B /* functions.m */,
 				D993D24A188362F300C19A90 /* MainMenu.xib */,
 				D993D24D188362F300C19A90 /* Images.xcassets */,
 				D993D23C188362F200C19A90 /* Supporting Files */,
-				BF896EAB1935F515001B239B /* functions.h */,
-				BF896EAC1935F515001B239B /* functions.m */,
 			);
 			path = sssnap;
 			sourceTree = "<group>";

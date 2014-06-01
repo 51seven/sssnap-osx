@@ -50,7 +50,7 @@
                            // ToDo: Change the Statusbar Icon here
                            [((AppDelegate *)[[NSApplication sharedApplication] delegate]) changeStatusBarIcon: step];
                        
-                           NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
+                           //NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
                        }
                        responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                            NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
@@ -65,6 +65,8 @@
                                [functions sendGrowl: responseString];
                                [functions copyToClipboard: responseString];
                            }
+                           
+                           [((AppDelegate *)[[NSApplication sharedApplication] delegate]) resetStatusBarIcon];
                        }];
         }
         else {

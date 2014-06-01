@@ -25,6 +25,7 @@
 + (void) takeScreenshot;
 - (void) testInternetConnection;
 - (void) changeStatusBarIcon: (int *) percentage;
+- (void) resetStatusBarIcon;
 
 @property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
 @property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;

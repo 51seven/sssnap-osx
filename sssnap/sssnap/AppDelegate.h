@@ -24,6 +24,7 @@
 + (void) triggerNotification: (NSString *) imageUrl;
 + (void) takeScreenshot;
 - (void) testInternetConnection;
+- (void) changeStatusBarIcon: (int *) percentage;
 
 @property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
 @property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;

@@ -48,6 +48,7 @@
                            int step = (percent%10==0) ? percent : percent+10-(percent%10);
                        
                            // ToDo: Change the Statusbar Icon here
+                           [((AppDelegate *)[[NSApplication sharedApplication] delegate]) changeStatusBarIcon: step];
                        
                            NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
                        }

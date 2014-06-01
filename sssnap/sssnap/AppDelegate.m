@@ -122,7 +122,6 @@
 }
 
 
-
 //  Override AwakeFromNib
 - (void) awakeFromNib {
     
@@ -147,7 +146,7 @@
     
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     
-    // self.statusBar.title = @"S";
+    //   self.statusBar.title = @"S";
     NSString *pathToIcon = [NSHomeDirectory() stringByAppendingString:@"/sssnap/iconx2.png"];
     NSImage *icon = [[NSImage alloc]initWithContentsOfFile:pathToIcon];
     NSLog(@"%@",[icon description]);
@@ -155,6 +154,17 @@
     self.statusBar.image = icon;
     self.statusBar.menu = self.menuBarOutlet;
     self.statusBar.highlightMode = YES;
+}
+
+- (void)changeStatusBarIcon:(int *) percentage {
+    
+    // ToDo: Check if icon exists
+    NSString *iconnumber = [NSString stringWithFormat: @"/sssnap/icon-progress-%d.png", percentage];
+    
+    NSString *pathToIcon = [NSHomeDirectory() stringByAppendingString: [NSString stringWithFormat: iconnumber]];
+    NSImage *icon = [[NSImage alloc]initWithContentsOfFile:pathToIcon];
+
+    self.statusBar.image = icon;
 }
 
 OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
@@ -350,7 +360,10 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
     [_takeScreenshotMenuItem setHidden: YES];
     [_signIn setEnabled: YES];
     [_signIn setHidden: NO];
-    //[_preferencesWindow close];
+    
+    
+    [_preferencesWindow close];
+    NSLog(@"The user is logged out");
 }
 
 

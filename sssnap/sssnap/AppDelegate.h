@@ -22,10 +22,13 @@
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 
 + (void) triggerNotification: (NSString *) imageUrl;
-+ (void) takeScreenshot;
+- (void) takeScreenshot;
 - (void) testInternetConnection;
 - (void) changeStatusBarIcon: (int *) percentage;
 - (void) resetStatusBarIcon;
+
+
+@property (weak) IBOutlet NSButton *pref_retinaScale;
 
 @property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
 @property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;

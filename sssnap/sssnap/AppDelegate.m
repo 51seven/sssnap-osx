@@ -63,7 +63,6 @@
         [_preferences setEnabled: YES];
         [_takeScreenshotMenuItem setEnabled: YES];
         [_signInWindow close];
-        //[_label_accountmail setValue: ;
 
         //NSLog(@"%@", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject]);
         

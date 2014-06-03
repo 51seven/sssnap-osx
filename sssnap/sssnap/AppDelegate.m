@@ -16,7 +16,6 @@
 
 @synthesize statusBar = _statusBar;
 
-
 - (void)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
 {
     if (commandSelector == @selector(insertNewline:)) {
@@ -47,38 +46,42 @@
     if(![[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]){
         NSLog(@"AccountStore is empty.");
         
-        self.passwordInput.delegate = self;
-        
-        [_signInErrorLabel setHidden:YES];
+        [_signInErrorLabel setHidden: YES];
         [_preferences setEnabled: NO];
         [_takeScreenshotMenuItem setEnabled: NO];
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
+        [_label_accountmail setStringValue: @"No user logged in."];
         
+        self.passwordInput.delegate = self;
         self.statusBar.image = [NSImage imageNamed: @"icon-disabled"];
-
     }
     // User already logged in
     else {
+        NSLog(@"Found %lu Account(s) in Auth2AccountStore: ", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]);
+        
         [_signIn setHidden: YES];
-        [_preferences setEnabled:YES];
-        [_takeScreenshotMenuItem setEnabled:YES];
+        [_preferences setEnabled: YES];
+        [_takeScreenshotMenuItem setEnabled: YES];
         [_signInWindow close];
+        //[_label_accountmail setValue: ;
+
+        //NSLog(@"%@", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject]);
+        
+        
+        [_label_accountmail setStringValue: @"test@test.de"];
         
         self.statusBar.image = [NSImage imageNamed: @"icon"];
-        
-        NSLog(@"Found %lu Account(s) in Auth2AccountStore: ", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]);
     }
     
-    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
-    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate: self];
 }
 
 - (void) proceedLogin {
     [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
                                              secret:@"testsecret"
-                                   authorizationURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
-                                           tokenURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
-                                        redirectURL:[NSURL URLWithString:@"http://localhost:3000/"]
+                                   authorizationURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
+                                           tokenURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
+                                        redirectURL:[NSURL URLWithString:@"http://51seven.de:8888/"]
                                      forAccountType:@"password"];
     
     NSString *username = [_usernameInput stringValue];  // get username by login-form
@@ -97,6 +100,8 @@
                                                       [_signIn setHidden: YES];
                                                       [_signInWindow close];
                                                       [_takeScreenshotMenuItem setEnabled:YES];
+                                                      [_takeScreenshotMenuItem setHidden: NO];
+                                                      [_preferences setHidden: NO];
                                                       NSLog(@"Successfully logged in.");
                                                   }];
     
@@ -107,10 +112,9 @@
                                                   usingBlock:^(NSNotification *aNotification) {
                                                       NSError *error = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreErrorKey];
                                                       [_signInErrorLabel setHidden: NO];
-                                                      [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", [error localizedDescription]]];
+                                                      [_signInErrorLabel setStringValue: [NSString stringWithFormat: @"%@", [error localizedDescription]]];
                                                       NSLog(@"Failed to login: \n%@", error);
                                                   }];
-
 }
 
 - (IBAction)takeScreenshotItem:(id)sender {
@@ -191,7 +195,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
     [theProcess launch];
     [theProcess waitUntilExit];
     
-    NSImage *clipboardimage;
     //NSLog(@"%ld", [theProcess terminationReason]);
     
     if ([theProcess terminationStatus] == 0) {
@@ -202,111 +205,26 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
         
         if ([copiedItems count]) {
             if([[copiedItems objectAtIndex:0] isKindOfClass:[NSImage class]]) {
-                clipboardimage = [copiedItems objectAtIndex:0];
+                NSImage *image = [copiedItems objectAtIndex:0];
+                
+                NSSize imageSize = [image size]; // Get the Image Size
+                NSImageRep *imgrep = [[image representations] objectAtIndex:0];
+                NSSize imagePixelSize = NSMakeSize(imgrep.pixelsWide, imgrep.pixelsHigh);
+                
+                if(imageSize.width < imagePixelSize.width) {
+                    NSLog(@"Downscaling Retina Screenshot...");// imageSize(%f / %f) and pixelSize(%f / %f)", imageSize.width, imageSize.height, imagePixelSize.width, imagePixelSize.height);
+                    
+                    image = [functions downscaleToNonRetina: image];
+                }
+                
                 sendPost *post = [[sendPost alloc] init];
-                [post uploadImage:clipboardimage];
+                [post uploadImage:image];
             }
         }
         else {
             NSLog(@"Screencaputre aborted.");
         }
     }
-    
-    //NSLog(@"%@", items);
-    
-    //Retina Resizing
-    //NSLog(@"~~~~START OF RETINA SCALE LOGS~~~~~");
-    
-    //Debug: Log the size of the image
-    //NSSize imageSize = [clipboardimage size];
-    //NSLog(@"Image size: %f x %f", imageSize.width, imageSize.height);
-    
-    //Debug: Log the actual pixel-size of the image
-    //NSImageRep *rep = [[clipboardimage representations] objectAtIndex:0];
-    //NSSize imagePixelSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
-    //NSLog(@"Image pixel size: %f x %f", imagePixelSize.width, imagePixelSize.height);
-    
-    /*
-     This part creates CGFloats with half of the width and height of the original image.
-     This is the size we desire for Retina screenshots
-     All of this works on non-retina machines, but not on retina machines, which is quit unfortunate
-     */
-    //The error seems to be here
-    //When Timo replaces the variables with constant numbers (i.e. "100") it works for him
-    //float halfWidth = rep.pixelsWide / 2;
-    //float halfHeight = rep.pixelsHigh / 2;
-    // NSLog(@"The floats are: %f %f", halfWidth, halfHeight);
-    
-    //Convert the floats to CGFLoats
-    //CGFloat CGHalfWidth = halfWidth;
-    //CGFloat CGHalfHeight = halfHeight;
-    // NSLog(@"The CGFloats are: %f %f", CGHalfWidth, CGHalfHeight);
-    
-    //NSSize imagePixelSizeHalf = NSMakeSize(halfWidth, halfHeight);
-    // NSLog(@"The width and size to calculate with (should be half of the pixels: %f x %f", imagePixelSizeHalf.width, imagePixelSizeHalf.height);
-    
-    /*NSImage *resizedImage = [[NSImage alloc] initWithSize:imagePixelSizeHalf];
-    [resizedImage lockFocus];
-    [[NSGraphicsContext currentContext]
-     setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
-    
-    [clipboardimage drawInRect:NSMakeRect(0,0,CGHalfWidth,CGHalfHeight) fromRect:NSZeroRect
-                     operation:NSCompositeSourceOver fraction:1.0];
-    
-    [resizedImage unlockFocus];
-    clipboardimage = resizedImage;
-    */
-    //Check if the tow size differ
-    //If so, the image needs to be sscaled down
-//    if(imageSize.width < imagePixelSize.width){
-        /*Meh
-         All of this could be deleted I guess
-         
-         NSString *pathToFile = [NSHomeDirectory() stringByAppendingString:@"/sssnap/copiedimage"];
-         NSBitmapImageRep *imgRep = [[clipboardimage representations] objectAtIndex: 0];
-         NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-         NSData *data = [imgRep representationUsingType:NSJPEGFileType properties:imageProps];
-         [data writeToFile:pathToFile atomically:NO];
-         
-         
-         NSLog(@"~~~~~~START OF SCALE ALGO~~~~~~");
-         
-         NSLog(@"Now creating a new rep from the clipboard image");
-         NSBitmapImageRep *clipboardRep = [[clipboardimage representations] objectAtIndex: 0];
-         NSSize clipboardRepPixels = NSMakeSize(clipboardRep.pixelsWide, clipboardRep.pixelsHigh);
-         NSLog(@"Size of the new rep is %f x %f", clipboardRepPixels.width, clipboardRepPixels.height);
-         
-         NSLog(@"Now creating a new NSSize");
-         NSSize updatedSize = imageSize;
-         updatedSize.width = clipboardRepPixels.width / 2;
-         updatedSize.height = clipboardRepPixels.height / 2;
-         NSLog(@"New size has the dimensions %f x %f", updatedSize.width, updatedSize.height);
-         
-         NSRect dimensionsRect = NSMakeRect(0, 0, updatedSize.width, updatedSize.height);
-         */
-        
-        // Some stuff from the Interwebs
-        
-        /*
-         NSImage *resizedImage = [[NSImage alloc] initWithSize:NSMakeSize
-         (imagePixelSizeHalf.width,imagePixelSizeHalf.height)];
-         [resizedImage lockFocus];
-         [[NSGraphicsContext currentContext]
-         setImageInterpolation:NSImageInterpolationHigh];    // optional - higher
-         
-         [clipboardimage drawInRect:NSMakeRect(0,0,imagePixelSizeHalf.width,imagePixelSizeHalf.height) fromRect:NSZeroRect
-         operation:NSCompositeSourceOver fraction:1.0];
-         [resizedImage unlockFocus];
-         
-         clipboardimage = resizedImage;
-         
-         NSLog(@"resized Image: %@", [resizedImage description]);
-         NSLog(@"Clipboard£ Image: %@", [clipboardimage description]);
-         
-         */
-        
-        
-   // }
 }
 
 

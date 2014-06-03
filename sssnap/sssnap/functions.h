@@ -13,5 +13,7 @@
 + (void)sendGrowl:(NSString *)data;
 + (void)copyToClipboard:(NSString *)data;
 + (BOOL)dateIsExpired:(NSDate *) date;
++ (NSImage *)downscaleToNonRetina:(NSImage *)image;
+
 
 @end

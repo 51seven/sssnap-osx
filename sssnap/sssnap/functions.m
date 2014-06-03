@@ -52,4 +52,36 @@
         return true;
     }
 }
+
+// Downscaling Retina Screenshots // gist.github.com/mattstevens/4400775
++ (NSImage *)downscaleToNonRetina:(NSImage *)image {
+    
+    NSInteger height = [image size].height;
+    NSInteger width = [image size].width;
+
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
+                             initWithBitmapDataPlanes:NULL
+                             pixelsWide:width
+                             pixelsHigh:height
+                             bitsPerSample:8
+                             samplesPerPixel:4
+                             hasAlpha:YES
+                             isPlanar:NO
+                             colorSpaceName:NSCalibratedRGBColorSpace
+                             bytesPerRow:0
+                             bitsPerPixel:0];
+    [rep setSize:NSMakeSize(width, height)];
+    
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
+    [image drawInRect:NSMakeRect(0, 0, width, height) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+    [NSGraphicsContext restoreGraphicsState];
+    
+    NSData *imageData = [rep representationUsingType:NSPNGFileType properties:nil];
+    NSImage *scaledImage = [[NSImage alloc] initWithData:imageData];
+    
+    return scaledImage;
+}
+
+
 @end

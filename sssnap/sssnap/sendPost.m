@@ -32,13 +32,13 @@
         
             [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
                                                      secret:@"testsecret"
-                                           authorizationURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
-                                                   tokenURL:[NSURL URLWithString:@"http://localhost:3000/api/oauth/token"]
-                                                redirectURL:[NSURL URLWithString:@"http://localhost:3000/"]
+                                           authorizationURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
+                                                   tokenURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
+                                                redirectURL:[NSURL URLWithString:@"http://51seven.de:8888/"]
                                              forAccountType:@"password"];
         
             [NXOAuth2Request performMethod:@"POST"
-                                onResource:[NSURL URLWithString: @"http://localhost:3000/api/upload"]
+                                onResource:[NSURL URLWithString: @"http://51seven.de:8888/api/upload"]
                            usingParameters:parameters
                                withAccount:anAccount
                        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {

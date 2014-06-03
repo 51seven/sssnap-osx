@@ -1,6 +1,7 @@
 sssnap-osx
 ==========
 
-Contains the sssnapp-osx client application.
-
-To get the icon working, copy it to `Users/yourusername/sssnap/iconx2.png`.
+sssnap is a screenshot capture tool like drop.lr with 
+- OAuth2 Support
+- Retina Downscale
+- and nothing more

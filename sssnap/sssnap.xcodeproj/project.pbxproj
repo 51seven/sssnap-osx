@@ -75,47 +75,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BF2A85A7193DBBC9004E2306 /* SRRemoveShortcut.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SRRemoveShortcut.tif; sourceTree = "<group>"; };
-		BF2A85A8193DBBC9004E2306 /* SRRemoveShortcutPressed.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SRRemoveShortcutPressed.tif; sourceTree = "<group>"; };
-		BF2A85A9193DBBC9004E2306 /* SRRemoveShortcutRollover.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SRRemoveShortcutRollover.tif; sourceTree = "<group>"; };
-		BF2A85AA193DBBC9004E2306 /* SRSnapback.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SRSnapback.tiff; sourceTree = "<group>"; };
-		BF2A85AD193DBBC9004E2306 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85AE193DBBC9004E2306 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85AF193DBBC9004E2306 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B0193DBBC9004E2306 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B1193DBBC9004E2306 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B2193DBBC9004E2306 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B3193DBBC9004E2306 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/ShortcutRecorder.strings"; sourceTree = "<group>"; };
-		BF2A85B4193DBBC9004E2306 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B5193DBBC9004E2306 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B6193DBBC9004E2306 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B7193DBBC9004E2306 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B8193DBBC9004E2306 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85B9193DBBC9004E2306 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85BA193DBBC9004E2306 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85BB193DBBC9004E2306 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85BC193DBBC9004E2306 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/ShortcutRecorder.strings"; sourceTree = "<group>"; };
-		BF2A85BD193DBBC9004E2306 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/ShortcutRecorder.strings"; sourceTree = "<group>"; };
-		BF2A85BE193DBBC9004E2306 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85BF193DBBC9004E2306 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85C0193DBBC9004E2306 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85C1193DBBC9004E2306 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85C2193DBBC9004E2306 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85C3193DBBC9004E2306 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/ShortcutRecorder.strings; sourceTree = "<group>"; };
-		BF2A85C4193DBBC9004E2306 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ShortcutRecorder.strings"; sourceTree = "<group>"; };
-		BF2A85C5193DBBC9004E2306 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/ShortcutRecorder.strings"; sourceTree = "<group>"; };
-		BF2A85C6193DBBC9004E2306 /* ShortcutRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShortcutRecorder.h; sourceTree = "<group>"; };
-		BF2A85C8193DBBC9004E2306 /* SRCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRCommon.h; sourceTree = "<group>"; };
-		BF2A85C9193DBBC9004E2306 /* SRCommon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRCommon.m; sourceTree = "<group>"; };
-		BF2A85CA193DBBC9004E2306 /* SRKeyCodeTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRKeyCodeTransformer.h; sourceTree = "<group>"; };
-		BF2A85CB193DBBC9004E2306 /* SRKeyCodeTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRKeyCodeTransformer.m; sourceTree = "<group>"; };
-		BF2A85CC193DBBC9004E2306 /* SRRecorderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRRecorderCell.h; sourceTree = "<group>"; };
-		BF2A85CD193DBBC9004E2306 /* SRRecorderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRRecorderCell.m; sourceTree = "<group>"; };
-		BF2A85CE193DBBC9004E2306 /* SRRecorderControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRRecorderControl.h; sourceTree = "<group>"; };
-		BF2A85CF193DBBC9004E2306 /* SRRecorderControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRRecorderControl.m; sourceTree = "<group>"; };
-		BF2A85D0193DBBC9004E2306 /* SRValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRValidator.h; sourceTree = "<group>"; };
-		BF2A85D1193DBBC9004E2306 /* SRValidator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRValidator.m; sourceTree = "<group>"; };
-		BF2A85D2193DBBC9004E2306 /* SR_LeopardFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SR_LeopardFramework-Info.plist"; sourceTree = "<group>"; };
 		BF2A85D3193E027D004E2306 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		BF2A85D4193E027D004E2306 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		BF896EAB1935F515001B239B /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = functions.h; sourceTree = "<group>"; };
@@ -173,54 +132,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BF2A85A5193DBBC9004E2306 /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-				BF2A85A6193DBBC9004E2306 /* Images */,
-				BF2A85AB193DBBC9004E2306 /* Localizations */,
-				BF2A85C6193DBBC9004E2306 /* ShortcutRecorder.h */,
-				BF2A85C7193DBBC9004E2306 /* Source */,
-				BF2A85D2193DBBC9004E2306 /* SR_LeopardFramework-Info.plist */,
-			);
-			path = Framework;
-			sourceTree = "<group>";
-		};
-		BF2A85A6193DBBC9004E2306 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				BF2A85A7193DBBC9004E2306 /* SRRemoveShortcut.tif */,
-				BF2A85A8193DBBC9004E2306 /* SRRemoveShortcutPressed.tif */,
-				BF2A85A9193DBBC9004E2306 /* SRRemoveShortcutRollover.tif */,
-				BF2A85AA193DBBC9004E2306 /* SRSnapback.tiff */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
-		BF2A85AB193DBBC9004E2306 /* Localizations */ = {
-			isa = PBXGroup;
-			children = (
-				BF2A85AC193DBBC9004E2306 /* ShortcutRecorder.strings */,
-			);
-			path = Localizations;
-			sourceTree = "<group>";
-		};
-		BF2A85C7193DBBC9004E2306 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				BF2A85C8193DBBC9004E2306 /* SRCommon.h */,
-				BF2A85C9193DBBC9004E2306 /* SRCommon.m */,
-				BF2A85CA193DBBC9004E2306 /* SRKeyCodeTransformer.h */,
-				BF2A85CB193DBBC9004E2306 /* SRKeyCodeTransformer.m */,
-				BF2A85CC193DBBC9004E2306 /* SRRecorderCell.h */,
-				BF2A85CD193DBBC9004E2306 /* SRRecorderCell.m */,
-				BF2A85CE193DBBC9004E2306 /* SRRecorderControl.h */,
-				BF2A85CF193DBBC9004E2306 /* SRRecorderControl.m */,
-				BF2A85D0193DBBC9004E2306 /* SRValidator.h */,
-				BF2A85D1193DBBC9004E2306 /* SRValidator.m */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
 		BFF3B2D61938A446005008B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,7 +144,6 @@
 		D993D229188362F200C19A90 = {
 			isa = PBXGroup;
 			children = (
-				BF2A85A5193DBBC9004E2306 /* Framework */,
 				D993D23B188362F200C19A90 /* sssnap */,
 				D993D259188362F300C19A90 /* sssnapTests */,
 				D993D234188362F200C19A90 /* Frameworks */,
@@ -504,38 +414,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		BF2A85AC193DBBC9004E2306 /* ShortcutRecorder.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BF2A85AD193DBBC9004E2306 /* ca */,
-				BF2A85AE193DBBC9004E2306 /* cs */,
-				BF2A85AF193DBBC9004E2306 /* da */,
-				BF2A85B0193DBBC9004E2306 /* de */,
-				BF2A85B1193DBBC9004E2306 /* el */,
-				BF2A85B2193DBBC9004E2306 /* en */,
-				BF2A85B3193DBBC9004E2306 /* es-MX */,
-				BF2A85B4193DBBC9004E2306 /* es */,
-				BF2A85B5193DBBC9004E2306 /* fr */,
-				BF2A85B6193DBBC9004E2306 /* it */,
-				BF2A85B7193DBBC9004E2306 /* ja */,
-				BF2A85B8193DBBC9004E2306 /* ko */,
-				BF2A85B9193DBBC9004E2306 /* nb */,
-				BF2A85BA193DBBC9004E2306 /* nl */,
-				BF2A85BB193DBBC9004E2306 /* pl */,
-				BF2A85BC193DBBC9004E2306 /* pt-BR */,
-				BF2A85BD193DBBC9004E2306 /* pt-PT */,
-				BF2A85BE193DBBC9004E2306 /* pt */,
-				BF2A85BF193DBBC9004E2306 /* ro */,
-				BF2A85C0193DBBC9004E2306 /* ru */,
-				BF2A85C1193DBBC9004E2306 /* sk */,
-				BF2A85C2193DBBC9004E2306 /* sv */,
-				BF2A85C3193DBBC9004E2306 /* th */,
-				BF2A85C4193DBBC9004E2306 /* zh-Hans */,
-				BF2A85C5193DBBC9004E2306 /* zh-Hant */,
-			);
-			name = ShortcutRecorder.strings;
-			sourceTree = "<group>";
-		};
 		D993D23E188362F200C19A90 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

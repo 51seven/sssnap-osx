@@ -18,6 +18,8 @@
 - (IBAction)takeScreenshotItem:(id)sender;
 - (IBAction)signIn:(id)sender;
 - (IBAction)logoutButton:(id)sender;
+- (IBAction)mySnapsItem:(id)sender;
+- (IBAction)createAccountItem:(id)sender;
 
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 
@@ -26,7 +28,6 @@
 - (void) testInternetConnection;
 - (void) changeStatusBarIcon: (int *) percentage;
 - (void) resetStatusBarIcon;
-
 
 @property (weak) IBOutlet NSButton *pref_retinaScale;
 
@@ -39,7 +40,9 @@
 @property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;
 @property (weak) IBOutlet NSMenuItem *noInternetConnection;
 @property (weak) IBOutlet NSMenuItem *preferences;
+@property (weak) IBOutlet NSMenuItem *createAccountItem;
 @property (weak) IBOutlet NSMenuItem *signIn;
+@property (weak) IBOutlet NSMenuItem *mySnapsItem;
 
 @property (weak) IBOutlet NSTextField *usernameInput;
 @property (weak) IBOutlet NSSecureTextField *passwordInput;

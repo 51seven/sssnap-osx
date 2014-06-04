@@ -49,8 +49,10 @@
         [_signInErrorLabel setHidden: YES];
         [_preferences setEnabled: NO];
         [_takeScreenshotMenuItem setEnabled: NO];
+        [_mySnapsItem setEnabled: NO];
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
         [_label_accountmail setStringValue: @"No user logged in."];
+        [_createAccountItem setHidden: NO];
         
         self.passwordInput.delegate = self;
         self.statusBar.image = [NSImage imageNamed: @"icon-disabled"];
@@ -62,8 +64,10 @@
         [_signIn setHidden: YES];
         [_preferences setEnabled: YES];
         [_takeScreenshotMenuItem setEnabled: YES];
+        [_mySnapsItem setEnabled: YES];
         [_signInWindow close];
-
+        [_createAccountItem setHidden: YES];
+    
         //NSLog(@"%@", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject]);
         
         
@@ -128,6 +132,13 @@
     [self proceedLogin];
 }
 
+- (IBAction)mySnapsItem:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
+}
+
+- (IBAction)createAccountItem:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/user/register"]];
+}
 
 //  Override AwakeFromNib
 - (void) awakeFromNib {
@@ -277,13 +288,13 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
     [_takeScreenshotMenuItem setHidden: YES];
     [_signIn setEnabled: YES];
     [_signIn setHidden: NO];
+    [_mySnapsItem setEnabled: NO];
     
     self.statusBar.image = [NSImage imageNamed: @"icon-disabled"];
     
     [_preferencesWindow close];
     NSLog(@"User was successfully logged out.");
 }
-
 
 //
 //  Display Notification even if application is not key
@@ -321,4 +332,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 }
 
 
+- (IBAction)createAccountItem:(id)sender {
+}
 @end

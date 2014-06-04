@@ -331,7 +331,4 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
 
-
-- (IBAction)createAccountItem:(id)sender {
-}
 @end

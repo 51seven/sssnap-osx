@@ -45,7 +45,7 @@
     //[self addAppAsLoginItem];
     [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", @""]];
     
-    // Found no Userdata = User is logged out
+    // User is logged out
     if(![[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]){
         NSLog(@"AccountStore is empty.");
         
@@ -55,27 +55,28 @@
         [_mySnapsItem setEnabled: NO];
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
         [NSApp activateIgnoringOtherApps:YES];
-        [_label_accountmail setStringValue: @"No user logged in."];
+        [_label_accountmail setStringValue: @"unknown"];
         [_createAccountItem setHidden: NO];
         
         self.passwordInput.delegate = self;
         self.statusBar.image = [NSImage imageNamed: @"icon-disabled"];
     }
-    // User already logged in
+    // User is logged in
     else {
         NSLog(@"Found %lu Account(s) in Auth2AccountStore: ", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]);
         
         [_signIn setHidden: YES];
+        
         [_preferences setEnabled: YES];
         [_takeScreenshotMenuItem setEnabled: YES];
         [_mySnapsItem setEnabled: YES];
-        [_signInWindow close];
         [_createAccountItem setHidden: YES];
+        
+        [_signInWindow close];
     
         //NSLog(@"%@", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject]);
         
-        
-        [_label_accountmail setStringValue: @"test@test.de"];
+        [_label_accountmail setStringValue: @"known"];
         
         self.statusBar.image = [NSImage imageNamed: @"icon"];
     }
@@ -105,10 +106,16 @@
                                                        queue:nil
                                                   usingBlock:^(NSNotification *aNotification) {
                                                       [_signIn setHidden: YES];
-                                                      [_signInWindow close];
+                                                      [_createAccountItem setHidden: YES];
+                                                      
+                                                      [_mySnapsItem setEnabled: YES];
+                                                      [_preferences setEnabled: YES];
                                                       [_takeScreenshotMenuItem setEnabled:YES];
-                                                      [_takeScreenshotMenuItem setHidden: NO];
-                                                      [_preferences setHidden: NO];
+                                                      [_preferences setEnabled: YES];
+                                                      
+                                                      [_signInWindow close];
+                                                      self.statusBar.image = [NSImage imageNamed: @"icon"];
+                                                      
                                                       NSLog(@"Successfully logged in.");
                                                   }];
     
@@ -128,20 +135,80 @@
     [AppDelegate takeScreenshot];
 }
 
-//
-//  Behavior of the Sign In button.
-//  Keeps the Sign In window open until successful login.
-//
 - (IBAction)signIn:(id)sender {
     [self proceedLogin];
 }
 
 - (IBAction)mySnapsItem:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
+//    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
+    
+    
+    
 }
 
 - (IBAction)createAccountItem:(id)sender {
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/user/register"]];
+}
+
+- (IBAction)preferencesMenuItemClick:(id)sender {
+    if([self appIsLoginItem]){
+        [_preferencesStartupCheckbox setState:1];
+    }
+    else {
+        [_preferencesStartupCheckbox setState:0];
+    }
+    
+    //Open the preferences Window
+    [_preferencesWindow makeKeyAndOrderFront:_preferencesWindow];
+    [_preferencesWindow setOrderedIndex:0];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+- (IBAction)logoutButton:(id)sender {
+    
+    // Remove all accounts from the keychain
+    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
+        [[NXOAuth2AccountStore sharedStore] removeAccount: account];
+    };
+    
+    [_preferences setEnabled: NO];
+    [_takeScreenshotMenuItem setEnabled: NO];
+    [_signIn setHidden: NO];
+    [_mySnapsItem setEnabled: NO];
+    
+    [_createAccountItem setHidden: NO];
+    
+    [_usernameInput setStringValue: @""];
+    [_passwordInput setStringValue: @""];
+    
+    self.statusBar.image = [NSImage imageNamed: @"icon-disabled"];
+    
+    [_preferencesWindow close];
+    NSLog(@"User was successfully logged out.");
+}
+
+- (IBAction)signInMenuItemClick:(id)sender {
+    [_signInWindow makeKeyAndOrderFront:_signInWindow];
+    [_signInWindow setOrderedIndex:0];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+//This is execute wenn the "start on system startup" checkbox is clicked
+- (IBAction)preferencesStartupCheckboxAction:(id)sender {
+    
+    //Case: App is Login Item -> box is checked (see preferencesMenuItemClick)
+    //Delete App from List and uncheck the box
+    if([self appIsLoginItem]) {
+        [self deleteAppFromLoginItem];
+        [_preferencesStartupCheckbox setState:0];
+    }
+    
+    //Case: App is no Login item -> box is unchecked
+    //Write App in list and check the box
+    else {
+        [self addAppAsLoginItem];
+        [_preferencesStartupCheckbox setState:1];
+    }
 }
 
 //  Override AwakeFromNib
@@ -279,27 +346,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
     [internetReachable startNotifier];
 }
 
-- (IBAction)logoutButton:(id)sender {
-    
-    // Remove all accounts from the keychain
-    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
-        [[NXOAuth2AccountStore sharedStore] removeAccount: account];
-    };
-    
-    [_preferences setHidden: YES];
-    [_preferences setEnabled: NO];
-    [_takeScreenshotMenuItem setEnabled: NO];
-    [_takeScreenshotMenuItem setHidden: YES];
-    [_signIn setEnabled: YES];
-    [_signIn setHidden: NO];
-    [_mySnapsItem setEnabled: NO];
-    
-    self.statusBar.image = [NSImage imageNamed: @"icon-disabled"];
-    
-    [_preferencesWindow close];
-    NSLog(@"User was successfully logged out.");
-}
-
 //
 //  Display Notification even if application is not key
 //
@@ -333,46 +379,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 {
     NSString *url = notification.title;
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
-}
-
-- (IBAction)preferencesMenuItemClick:(id)sender {
-    //prepare the checkbox for system startup
-    //This is kind of like schroedingers cat, no one knows if its sets until it is seen
-    if([self appIsLoginItem]){
-        [_preferencesStartupCheckbox setState:1];
-    } else {
-        [_preferencesStartupCheckbox setState:0];
-    }
-    
-    //Open the preferences Window
-    [_preferencesWindow makeKeyAndOrderFront:_preferencesWindow];
-    [_preferencesWindow setOrderedIndex:0];
-    [NSApp activateIgnoringOtherApps:YES];
-}
-
-- (IBAction)signInMenuItemClick:(id)sender {
-    [_signInWindow makeKeyAndOrderFront:_signInWindow];
-    [_signInWindow setOrderedIndex:0];
-    [NSApp activateIgnoringOtherApps:YES];
-}
-
-//This is execute wenn the "start on system startup" checkbox is clicked
-- (IBAction)preferencesStartupCheckboxAction:(id)sender {
-    
-    //Case: App is Login Item -> box is checked (see preferencesMenuItemClick)
-    //Delete App from List and uncheck the box
-    if([self appIsLoginItem]) {
-        [self deleteAppFromLoginItem];
-        [_preferencesStartupCheckbox setState:0];
-    }
-    
-    //Case: App is no Login item -> box is unchecked
-    //Write App in list and check the box
-    else {
-        [self addAppAsLoginItem];
-        [_preferencesStartupCheckbox setState:1];
-    }
-    
 }
 
 -(void) addAppAsLoginItem{

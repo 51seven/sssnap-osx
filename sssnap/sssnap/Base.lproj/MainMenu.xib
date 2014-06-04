@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -662,6 +662,7 @@
                 <outlet property="passwordInput" destination="GVY-RZ-0oA" id="e3e-rh-vjH"/>
                 <outlet property="pref_retinaScale" destination="XLo-mR-YqD" id="oRG-I5-XNc"/>
                 <outlet property="preferences" destination="z2c-0Y-eJN" id="bn3-cu-V6N"/>
+                <outlet property="preferencesStartupCheckbox" destination="i2p-OY-Ov0" id="wSz-r9-EjX"/>
                 <outlet property="preferencesWindow" destination="NGQ-cL-Vyr" id="0T1-xN-xDt"/>
                 <outlet property="signIn" destination="PiH-H5-X5f" id="ZgO-pe-rYH"/>
                 <outlet property="signInErrorLabel" destination="lh8-CN-kRK" id="1Me-Xc-0gh"/>
@@ -677,7 +678,7 @@
                 <menuItem title="Sign In..." id="PiH-H5-X5f">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="makeKeyAndOrderFront:" target="0Tr-Cm-0Gy" id="I4S-Rs-lny"/>
+                        <action selector="signInMenuItemClick:" target="494" id="TaI-Yz-qxV"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Create account" id="KIn-eO-rTL">
@@ -701,7 +702,7 @@
                 </menuItem>
                 <menuItem title="Preferences" enabled="NO" keyEquivalent="," id="z2c-0Y-eJN">
                     <connections>
-                        <action selector="makeKeyAndOrderFront:" target="NGQ-cL-Vyr" id="Uk2-ff-Efb"/>
+                        <action selector="preferencesMenuItemClick:" target="494" id="3Ct-bQ-1An"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Quit" keyEquivalent="q" id="g1u-vb-P4V">
@@ -784,7 +785,7 @@
             </view>
             <contentBorderThickness minY="50"/>
         </window>
-        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" id="NGQ-cL-Vyr">
+        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" id="NGQ-cL-Vyr">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="396" y="252" width="372" height="237"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
@@ -857,9 +858,12 @@
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXR-7a-T9M">
                                     <rect key="frame" x="16" y="69" width="336" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Start sssnap on system startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="i2p-OY-Ov0">
+                                    <buttonCell key="cell" type="check" title="Start sssnap on system startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="i2p-OY-Ov0">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" size="13" name="LucidaGrande"/>
+                                        <connections>
+                                            <action selector="preferencesStartupCheckboxAction:" target="494" id="Mft-vp-UvV"/>
+                                        </connections>
                                     </buttonCell>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLo-mR-YqD">

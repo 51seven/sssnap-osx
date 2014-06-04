@@ -20,6 +20,9 @@
 - (IBAction)logoutButton:(id)sender;
 - (IBAction)mySnapsItem:(id)sender;
 - (IBAction)createAccountItem:(id)sender;
+- (IBAction)preferencesMenuItemClick:(id)sender;
+- (IBAction)signInMenuItemClick:(id)sender;
+- (IBAction)preferencesStartupCheckboxAction:(id)sender;
 
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 
@@ -28,15 +31,17 @@
 - (void) testInternetConnection;
 - (void) changeStatusBarIcon: (int *) percentage;
 - (void) resetStatusBarIcon;
+- (BOOL) appIsLoginItem;
 
 @property (weak) IBOutlet NSButton *pref_retinaScale;
 
-@property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
-@property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;
+@property (weak) IBOutlet NSWindow *signInWindow;
+@property (weak, nonatomic) IBOutlet NSWindow *preferencesWindow;
 
 @property (weak) IBOutlet NSTextField *signInErrorLabel;
 @property (weak) IBOutlet NSTextField *label_accountmail;
 
+@property (weak) IBOutlet NSButtonCell *preferencesStartupCheckbox;
 @property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;
 @property (weak) IBOutlet NSMenuItem *noInternetConnection;
 @property (weak) IBOutlet NSMenuItem *preferences;

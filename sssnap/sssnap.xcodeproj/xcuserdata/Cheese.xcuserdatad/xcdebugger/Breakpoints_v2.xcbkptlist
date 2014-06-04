@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "423249324.097862"
+            timestampString = "423593286.086959"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "-awakeFromNib"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-proceedLogin"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "423249222.772173"
+            timestampString = "423593286.086959"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "-signIn:"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "-proceedLogin"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,13 +106,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "423249324.097862"
+            timestampString = "423593286.086959"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "+takeScreenshot"
-            landmarkType = "5">
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "MyHotKeyHandler()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "423249648.145877"
+            timestampString = "423593584.178869"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "460"
-            endingLineNumber = "460">
+            startingLineNumber = "555"
+            endingLineNumber = "555">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -136,13 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "423249648.145877"
+            timestampString = "423593584.178869"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
-            landmarkName = "@implementation AppDelegate"
-            landmarkType = "3">
+            startingLineNumber = "462"
+            endingLineNumber = "462">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -182,11 +180,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "423249324.097862"
+            timestampString = "423593286.086959"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "+takeScreenshot"
             landmarkType = "5">
          </BreakpointContent>
@@ -198,13 +196,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sssnap/AppDelegate.m"
-            timestampString = "423249324.097862"
+            timestampString = "423593286.086959"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "+takeScreenshot"
-            landmarkType = "5">
+            startingLineNumber = "234"
+            endingLineNumber = "234"
+            landmarkName = "@implementation AppDelegate"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -142,8 +142,8 @@
 - (IBAction)mySnapsItem:(id)sender {
 //    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
     
-    
-    
+    sendPost *post = [[sendPost alloc] init];
+    [post getRecentSnaps];
 }
 
 - (IBAction)createAccountItem:(id)sender {

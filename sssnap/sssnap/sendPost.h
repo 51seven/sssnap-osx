@@ -15,5 +15,6 @@
 @interface sendPost : NSObject
 
 -(void)uploadImage:(NSImage *) image;
+-(void)getRecentSnaps;
 
 @end

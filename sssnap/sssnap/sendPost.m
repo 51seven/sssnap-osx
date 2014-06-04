@@ -79,5 +79,57 @@
     }
 }
 
+// Uploads an Image to the Server
+- (void)getRecentSnaps {
+    
+    // Check if we're connected to the internet
+    if([[Reachability reachabilityForInternetConnection] isReachable]) {
+        
+        NSDictionary *parameters = @{
+                                     @"file": @"test",
+                                     };
+        
+        NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
+        
+        if(anAccount) {
+                        NSLog(@"Using Account: %@", anAccount);
+            
+            [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
+                                                     secret:@"testsecret"
+                                           authorizationURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
+                                                   tokenURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
+                                                redirectURL:[NSURL URLWithString:@"http://51seven.de:8888/"]
+                                             forAccountType:@"password"];
+            
+            [NXOAuth2Request performMethod:@"POST"
+                                onResource:[NSURL URLWithString: @"http://51seven.de:8888/api/list"]
+                           usingParameters:nil
+                               withAccount:anAccount
+                       sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+                           
+                       }
+                           responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                               NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                               
+                               if(error) {
+                                   NSLog(@"An error occured: %@", error);
+                               }
+                               else {
+                                   NSLog(@"Response was successfull.");
+                                   NSLog(@"ResponseData: %@", responseString);
+                               }
+                           }];
+        }
+        else {
+            NSLog(@"User is not logged in");
+        }
+    }
+    else {
+        NSLog(@"Cant access your recent Snaps, because you have no internet connection.");
+        // ToDo: Implement Userfeedback
+    }
+}
+
+
 
 @end

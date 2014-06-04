@@ -20,6 +20,7 @@
 - (IBAction)logoutButton:(id)sender;
 - (IBAction)preferencesMenuItemClick:(id)sender;
 - (IBAction)signInMenuItemClick:(id)sender;
+- (IBAction)preferencesStartupCheckboxAction:(id)sender;
 
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 
@@ -28,6 +29,7 @@
 - (void) testInternetConnection;
 - (void) changeStatusBarIcon: (int *) percentage;
 - (void) resetStatusBarIcon;
+- (BOOL) appIsLoginItem;
 
 
 @property (weak) IBOutlet NSButton *pref_retinaScale;
@@ -39,6 +41,7 @@
 @property (weak) IBOutlet NSTextField *label_accountmail;
 
 
+@property (weak) IBOutlet NSButtonCell *preferencesStartupCheckbox;
 @property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;
 @property (weak) IBOutlet NSMenuItem *noInternetConnection;
 @property (weak) IBOutlet NSMenuItem *preferences;

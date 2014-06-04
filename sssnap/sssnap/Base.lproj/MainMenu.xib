@@ -659,6 +659,7 @@
                 <outlet property="passwordInput" destination="GVY-RZ-0oA" id="e3e-rh-vjH"/>
                 <outlet property="pref_retinaScale" destination="XLo-mR-YqD" id="oRG-I5-XNc"/>
                 <outlet property="preferences" destination="z2c-0Y-eJN" id="bn3-cu-V6N"/>
+                <outlet property="preferencesStartupCheckbox" destination="i2p-OY-Ov0" id="wSz-r9-EjX"/>
                 <outlet property="preferencesWindow" destination="NGQ-cL-Vyr" id="0T1-xN-xDt"/>
                 <outlet property="signIn" destination="PiH-H5-X5f" id="ZgO-pe-rYH"/>
                 <outlet property="signInErrorLabel" destination="lh8-CN-kRK" id="1Me-Xc-0gh"/>
@@ -842,9 +843,12 @@
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXR-7a-T9M">
                                     <rect key="frame" x="16" y="69" width="336" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Start sssnap on system startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="i2p-OY-Ov0">
+                                    <buttonCell key="cell" type="check" title="Start sssnap on system startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="i2p-OY-Ov0">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" size="13" name="LucidaGrande"/>
+                                        <connections>
+                                            <action selector="preferencesStartupCheckboxAction:" target="494" id="Mft-vp-UvV"/>
+                                        </connections>
                                     </buttonCell>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLo-mR-YqD">

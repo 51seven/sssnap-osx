@@ -30,8 +30,8 @@
 
 @property (weak) IBOutlet NSButton *pref_retinaScale;
 
-@property (unsafe_unretained) IBOutlet NSWindow *signInWindow;
-@property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;
+@property (weak) IBOutlet NSWindow *signInWindow;
+@property (weak) IBOutlet NSWindow *preferencesWindow;
 
 @property (weak) IBOutlet NSTextField *signInErrorLabel;
 @property (weak) IBOutlet NSTextField *label_accountmail;

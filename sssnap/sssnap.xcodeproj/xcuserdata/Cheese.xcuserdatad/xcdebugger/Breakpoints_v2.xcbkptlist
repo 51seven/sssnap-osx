@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "114"
             endingLineNumber = "114"
-            landmarkName = "-awakeFromNib"
+            landmarkName = "-proceedLogin"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -63,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
             endingLineNumber = "83"
-            landmarkName = "-signIn:"
+            landmarkName = "-proceedLogin"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -111,8 +111,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "172"
             endingLineNumber = "172"
-            landmarkName = "+takeScreenshot"
-            landmarkType = "5">
+            landmarkName = "MyHotKeyHandler()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -140,9 +140,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "367"
-            endingLineNumber = "367"
-            landmarkName = "@implementation AppDelegate"
-            landmarkType = "3">
+            endingLineNumber = "367">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -203,7 +201,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "231"
             endingLineNumber = "231"
-            landmarkName = "+takeScreenshot"
+            landmarkName = "-testInternetConnection"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

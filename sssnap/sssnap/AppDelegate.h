@@ -18,6 +18,8 @@
 - (IBAction)takeScreenshotItem:(id)sender;
 - (IBAction)signIn:(id)sender;
 - (IBAction)logoutButton:(id)sender;
+- (IBAction)preferencesMenuItemClick:(id)sender;
+- (IBAction)signInMenuItemClick:(id)sender;
 
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 
@@ -31,10 +33,11 @@
 @property (weak) IBOutlet NSButton *pref_retinaScale;
 
 @property (weak) IBOutlet NSWindow *signInWindow;
-@property (weak) IBOutlet NSWindow *preferencesWindow;
+@property (weak, nonatomic) IBOutlet NSWindow *preferencesWindow;
 
 @property (weak) IBOutlet NSTextField *signInErrorLabel;
 @property (weak) IBOutlet NSTextField *label_accountmail;
+
 
 @property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;
 @property (weak) IBOutlet NSMenuItem *noInternetConnection;

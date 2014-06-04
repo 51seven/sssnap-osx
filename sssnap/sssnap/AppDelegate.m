@@ -16,6 +16,7 @@
 
 @synthesize statusBar = _statusBar;
 
+
 - (void)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
 {
     if (commandSelector == @selector(insertNewline:)) {
@@ -50,6 +51,7 @@
         [_preferences setEnabled: NO];
         [_takeScreenshotMenuItem setEnabled: NO];
         [_signInWindow makeKeyAndOrderFront:_signInWindow];
+        [NSApp activateIgnoringOtherApps:YES];
         [_label_accountmail setStringValue: @"No user logged in."];
         
         self.passwordInput.delegate = self;
@@ -321,4 +323,15 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 }
 
 
+- (IBAction)preferencesMenuItemClick:(id)sender {
+    [_preferencesWindow makeKeyAndOrderFront:_preferencesWindow];
+    [_preferencesWindow setOrderedIndex:0];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+- (IBAction)signInMenuItemClick:(id)sender {
+    [_signInWindow makeKeyAndOrderFront:_signInWindow];
+    [_signInWindow setOrderedIndex:0];
+    [NSApp activateIgnoringOtherApps:YES];
+}
 @end

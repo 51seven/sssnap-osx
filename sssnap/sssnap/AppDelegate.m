@@ -19,6 +19,7 @@
 
 - (void)control:(NSControl *)control textView:(NSTextView *)fieldEditor doCommandBySelector:(SEL)commandSelector
 {
+    // Enter is pressed, so proceed the login
     if (commandSelector == @selector(insertNewline:)) {
         [self proceedLogin];
     }
@@ -41,7 +42,6 @@
 //
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    
     //[self addAppAsLoginItem];
     [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", @""]];
     
@@ -151,12 +151,20 @@
 }
 
 - (IBAction)preferencesMenuItemClick:(id)sender {
-    if([self appIsLoginItem]){
-        [_preferencesStartupCheckbox setState:1];
-    }
-    else {
-        [_preferencesStartupCheckbox setState:0];
-    }
+    
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    
+    // Preparing ShowDesktopNotification Checkbox
+    ([userPreferences boolForKey: @"showDesktopNotifications"]) ? [_pref_showDesktopNotification setState: 1] : [_pref_showDesktopNotification setState: 0];
+    
+    // Preparing Startup Checkbox
+    ([self appIsLoginItem]) ? [_preferencesStartupCheckbox setState:1] : [_preferencesStartupCheckbox setState:0];
+    
+    // Preparing DownscaleRetinaScreenshots Checkbox
+    ([userPreferences boolForKey: @"downscaleRetinaScreenshots"]) ? [_pref_retinaScale setState: 1] : [_pref_retinaScale setState: 0];
+
+    // Preparing CopyLinkToClipboard Checkbox
+    ([userPreferences boolForKey: @"copyLinkToClipboard"]) ? [_pref_CopyLinkToClipboard setState: 1] : [_pref_CopyLinkToClipboard setState: 0];
     
     //Open the preferences Window
     [_preferencesWindow makeKeyAndOrderFront:_preferencesWindow];
@@ -171,6 +179,7 @@
         [[NXOAuth2AccountStore sharedStore] removeAccount: account];
     };
     
+    // Changing Interface
     [_preferences setEnabled: NO];
     [_takeScreenshotMenuItem setEnabled: NO];
     [_signIn setHidden: NO];
@@ -184,6 +193,17 @@
     self.statusBar.image = [NSImage imageNamed: @"icon-disabled"];
     
     [_preferencesWindow close];
+    
+    // Deleting User-Settings from NSUserDefaults
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    NSDictionary * userPrefDict = [userPreferences dictionaryRepresentation];
+    
+    for (id key in userPrefDict) {
+        [userPreferences removeObjectForKey:key];
+    }
+    
+    [userPreferences synchronize];
+    
     NSLog(@"User was successfully logged out.");
 }
 
@@ -193,6 +213,46 @@
     [NSApp activateIgnoringOtherApps:YES];
 }
 
+- (IBAction)pref_retinaScale:(id)sender {
+
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    
+    if([userPreferences boolForKey: @"downscaleRetinaScreenshots"]) {
+        [userPreferences setBool: NO forKey: @"downscaleRetinaScreenshots"];
+    }
+    else {
+        [userPreferences setBool: YES forKey: @"downscaleRetinaScreenshots"];
+    }
+    
+    [userPreferences synchronize];
+}
+
+- (IBAction)pref_showDesktopNotification:(id)sender {
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    
+    if([userPreferences boolForKey: @"showDesktopNotifications"]) {
+        [userPreferences setBool: NO forKey: @"showDesktopNotifications"];
+    }
+    else {
+        [userPreferences setBool: YES forKey: @"showDesktopNotifications"];
+    }
+    
+    [userPreferences synchronize];
+}
+
+- (IBAction)pref_CopyLinkToClipboard:(id)sender {
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    
+    if([userPreferences boolForKey: @"copyLinkToClipboard"]) {
+        [userPreferences setBool: NO forKey: @"copyLinkToClipboard"];
+    }
+    else {
+        [userPreferences setBool: YES forKey: @"copyLinkToClipboard"];
+    }
+    
+    [userPreferences synchronize];
+}
+
 //This is execute wenn the "start on system startup" checkbox is clicked
 - (IBAction)preferencesStartupCheckboxAction:(id)sender {
     
@@ -200,14 +260,14 @@
     //Delete App from List and uncheck the box
     if([self appIsLoginItem]) {
         [self deleteAppFromLoginItem];
-        [_preferencesStartupCheckbox setState:0];
+        //[_preferencesStartupCheckbox setState:0]; // default behavior, isnt it?
     }
     
     //Case: App is no Login item -> box is unchecked
     //Write App in list and check the box
     else {
         [self addAppAsLoginItem];
-        [_preferencesStartupCheckbox setState:1];
+        //[_preferencesStartupCheckbox setState:1]; // default behavior, isnt it?
     }
 }
 
@@ -292,7 +352,12 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
                 NSImageRep *imgrep = [[image representations] objectAtIndex:0];
                 NSSize imagePixelSize = NSMakeSize(imgrep.pixelsWide, imgrep.pixelsHigh);
                 
-                if(imageSize.width < imagePixelSize.width) {
+                NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+                
+                NSLog(@"Want to downscale? %hhd", [userPreferences boolForKey: @"downscaleRetinaScreenshots"]);
+                
+                // Downscale Retina Screenshot if Pixelratio > 1.0 and user wants it to
+                if((imageSize.width < imagePixelSize.width) && [userPreferences boolForKey: @"downscaleRetinaScreenshots"]) {
                     NSLog(@"Downscaling Retina Screenshot...");// imageSize(%f / %f) and pixelSize(%f / %f)", imageSize.width, imageSize.height, imagePixelSize.width, imagePixelSize.height);
                     
                     image = [functions downscaleToNonRetina: image];

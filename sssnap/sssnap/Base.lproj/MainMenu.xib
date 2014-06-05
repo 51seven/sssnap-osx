@@ -660,7 +660,9 @@
                 <outlet property="menuBarOutlet" destination="MaR-sV-yX7" id="tuj-bM-0Xi"/>
                 <outlet property="mySnapsItem" destination="Q9A-le-cir" id="vqc-F8-eFK"/>
                 <outlet property="passwordInput" destination="GVY-RZ-0oA" id="e3e-rh-vjH"/>
+                <outlet property="pref_CopyLinkToClipboard" destination="eQh-3j-X3S" id="ZFm-fS-MHn"/>
                 <outlet property="pref_retinaScale" destination="XLo-mR-YqD" id="oRG-I5-XNc"/>
+                <outlet property="pref_showDesktopNotification" destination="3aY-cm-c7q" id="no6-bZ-wTw"/>
                 <outlet property="preferences" destination="z2c-0Y-eJN" id="bn3-cu-V6N"/>
                 <outlet property="preferencesStartupCheckbox" destination="i2p-OY-Ov0" id="wSz-r9-EjX"/>
                 <outlet property="preferencesWindow" destination="NGQ-cL-Vyr" id="0T1-xN-xDt"/>
@@ -786,7 +788,7 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" id="NGQ-cL-Vyr">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="396" y="252" width="372" height="237"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="ReR-JK-lRs">
                 <rect key="frame" x="0.0" y="0.0" width="372" height="237"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -848,10 +850,13 @@
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aY-cm-c7q">
                                     <rect key="frame" x="16" y="96" width="336" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Show desktop notifications" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" state="on" inset="2" id="pIH-uH-tAo">
+                                    <buttonCell key="cell" type="check" title="Show desktop notifications" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="pIH-uH-tAo">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" size="13" name="LucidaGrande"/>
                                     </buttonCell>
+                                    <connections>
+                                        <action selector="pref_showDesktopNotification:" target="494" id="f30-C7-5DW"/>
+                                    </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXR-7a-T9M">
                                     <rect key="frame" x="16" y="69" width="336" height="25"/>
@@ -867,18 +872,24 @@
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLo-mR-YqD">
                                     <rect key="frame" x="16" y="42" width="336" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Downscale Retina screenshots" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" state="on" inset="2" id="f8f-G9-t7i">
+                                    <buttonCell key="cell" type="check" title="Downscale Retina screenshots" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="f8f-G9-t7i">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" size="13" name="LucidaGrande"/>
                                     </buttonCell>
+                                    <connections>
+                                        <action selector="pref_retinaScale:" target="494" id="feC-8K-n3q"/>
+                                    </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQh-3j-X3S">
                                     <rect key="frame" x="16" y="15" width="336" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Copy the link into clipboard" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="EI9-uU-Al6">
+                                    <buttonCell key="cell" type="check" title="Copy the link into clipboard" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="EI9-uU-Al6">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" size="13" name="LucidaGrande"/>
                                     </buttonCell>
+                                    <connections>
+                                        <action selector="pref_CopyLinkToClipboard:" target="494" id="heC-QG-sdW"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </view>

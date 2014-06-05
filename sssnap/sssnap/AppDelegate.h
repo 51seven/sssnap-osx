@@ -22,7 +22,11 @@
 - (IBAction)createAccountItem:(id)sender;
 - (IBAction)preferencesMenuItemClick:(id)sender;
 - (IBAction)signInMenuItemClick:(id)sender;
+
 - (IBAction)preferencesStartupCheckboxAction:(id)sender;
+- (IBAction)pref_retinaScale:(id)sender;
+- (IBAction)pref_showDesktopNotification:(id)sender;
+- (IBAction)pref_CopyLinkToClipboard:(id)sender;
 
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 
@@ -33,7 +37,10 @@
 - (void) resetStatusBarIcon;
 - (BOOL) appIsLoginItem;
 
-@property (weak) IBOutlet NSButton *pref_retinaScale;
+@property (weak) IBOutlet NSButtonCell *pref_showDesktopNotification;
+@property (weak) IBOutlet NSButtonCell *preferencesStartupCheckbox;
+@property (weak) IBOutlet NSButtonCell *pref_retinaScale;
+@property (weak) IBOutlet NSButtonCell *pref_CopyLinkToClipboard;
 
 @property (weak) IBOutlet NSWindow *signInWindow;
 @property (weak, nonatomic) IBOutlet NSWindow *preferencesWindow;
@@ -41,7 +48,6 @@
 @property (weak) IBOutlet NSTextField *signInErrorLabel;
 @property (weak) IBOutlet NSTextField *label_accountmail;
 
-@property (weak) IBOutlet NSButtonCell *preferencesStartupCheckbox;
 @property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;
 @property (weak) IBOutlet NSMenuItem *noInternetConnection;
 @property (weak) IBOutlet NSMenuItem *preferences;

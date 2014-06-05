@@ -47,7 +47,6 @@
                            int percent = (int) (((float) bytesSend / (float)bytesTotal) * 100);
                            int step = (percent%10==0) ? percent : percent+10-(percent%10);
                        
-                           // ToDo: Change the Statusbar Icon here
                            [((AppDelegate *)[[NSApplication sharedApplication] delegate]) changeStatusBarIcon: step];
                        
                            //NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
@@ -59,11 +58,16 @@
                                NSLog(@"An error occured: %@", error);
                            }
                            else {
-                               NSLog(@"Response was successfull");
                                NSLog(@"ResponseData: %@", responseString);
+
+                               NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
                                
-                               [functions sendGrowl: responseString];
-                               [functions copyToClipboard: responseString];
+                               if([userPreferences boolForKey: @"showDesktopNotifications"]) {
+                                   [functions sendGrowl: responseString];
+                               }
+                               if([userPreferences boolForKey: @"copyLinkToClipboard"]) {
+                                   [functions copyToClipboard: responseString];
+                               }
                            }
                            
                            [((AppDelegate *)[[NSApplication sharedApplication] delegate]) resetStatusBarIcon];

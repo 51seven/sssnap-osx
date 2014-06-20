@@ -16,12 +16,13 @@
 }
 
 - (IBAction)takeScreenshotItem:(id)sender;
-- (IBAction)signIn:(id)sender;
-- (IBAction)logoutButton:(id)sender;
 - (IBAction)mySnapsItem:(id)sender;
 - (IBAction)createAccountItem:(id)sender;
 - (IBAction)preferencesMenuItemClick:(id)sender;
 - (IBAction)signInMenuItemClick:(id)sender;
+
+- (IBAction)logoutButton:(id)sender;
+- (IBAction)signIn:(id)sender;
 
 - (IBAction)preferencesStartupCheckboxAction:(id)sender;
 - (IBAction)pref_retinaScale:(id)sender;
@@ -31,7 +32,7 @@
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 
 + (void) triggerNotification: (NSString *) imageUrl;
-- (void) takeScreenshot;
++ (void) takeScreenshot;
 - (void) testInternetConnection;
 - (void) changeStatusBarIcon: (int *) percentage;
 - (void) resetStatusBarIcon;

@@ -696,6 +696,7 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="zrB-xX-hMW"/>
+                <menuItem isSeparatorItem="YES" id="JoZ-TR-qeb"/>
                 <menuItem title="My Snaps" enabled="NO" id="Q9A-le-cir">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -717,7 +718,7 @@
         <window title="Sign In" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="alertPanel" id="0Tr-Cm-0Gy">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" texturedBackground="YES"/>
             <rect key="contentRect" x="0.0" y="444" width="307" height="164"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="tAC-es-waC">
                 <rect key="frame" x="0.0" y="0.0" width="307" height="164"/>
                 <autoresizingMask key="autoresizingMask"/>

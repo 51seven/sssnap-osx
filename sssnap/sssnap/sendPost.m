@@ -96,7 +96,7 @@
         NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
         
         if(anAccount) {
-                        NSLog(@"Using Account: %@", anAccount);
+            NSLog(@"Using Account: %@", anAccount);
             
             [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
                                                      secret:@"testsecret"
@@ -106,12 +106,10 @@
                                              forAccountType:@"password"];
             
             [NXOAuth2Request performMethod:@"POST"
-                                onResource:[NSURL URLWithString: @"http://51seven.de:8888/api/list"]
+                                onResource:[NSURL URLWithString: @"http://51seven.de:8888/api/list/3"]
                            usingParameters:nil
                                withAccount:anAccount
-                       sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
-                           
-                       }
+                       sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) { }
                            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                                NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
                                

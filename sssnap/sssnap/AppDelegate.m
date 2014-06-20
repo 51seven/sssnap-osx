@@ -25,11 +25,9 @@
     }
     else if (commandSelector == @selector(deleteForward:)) {
         //Do something against DELETE key
-        
     }
     else if (commandSelector == @selector(deleteBackward:)) {
         //Do something against BACKSPACE key
-        
     }
     else if (commandSelector == @selector(insertTab:)) {
         //Do something against TAB key
@@ -294,8 +292,13 @@
                         GetApplicationEventTarget(), 0, &gMyHotKeyRef);
     
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    
+    
+//    [self.menuBarOutlet addItemWithTitle:@"TEST" action:@selector(test:) keyEquivalent:@""];
     self.statusBar.menu = self.menuBarOutlet;
     self.statusBar.highlightMode = YES;
+    
+    [self testInternetConnection];
 }
 
 - (void)changeStatusBarIcon:(int *) percentage {
@@ -354,8 +357,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
                 
                 NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
                 
-                NSLog(@"Want to downscale? %hhd", [userPreferences boolForKey: @"downscaleRetinaScreenshots"]);
-                
                 // Downscale Retina Screenshot if Pixelratio > 1.0 and user wants it to
                 if((imageSize.width < imagePixelSize.width) && [userPreferences boolForKey: @"downscaleRetinaScreenshots"]) {
                     NSLog(@"Downscaling Retina Screenshot...");// imageSize(%f / %f) and pixelSize(%f / %f)", imageSize.width, imageSize.height, imagePixelSize.width, imagePixelSize.height);
@@ -385,7 +386,6 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Connection: ONLINE");
             [_noInternetConnection setHidden: YES];
-            
             self.statusBar.image = [NSImage imageNamed: @"icon"];
             
             //Set takeScreenshotMenuItem to enabled only if the user is logged in
@@ -458,8 +458,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
     // If we want to add it all users, use
     // kLSSharedFileListGlobalLoginItems instead of
     //kLSSharedFileListSessionLoginItems
-	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL,
-                                                            kLSSharedFileListSessionLoginItems, NULL);
+	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
 	if (loginItems) {
 		//Insert an item to the list.
 		LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
@@ -481,8 +480,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
     
 	// Create a reference to the shared file list.
-	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL,
-                                                            kLSSharedFileListSessionLoginItems, NULL);
+	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     
 	if (loginItems) {
 		UInt32 seedValue;
@@ -511,8 +509,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
     
 	// Create a reference to the shared file list.
-	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL,
-                                                            kLSSharedFileListSessionLoginItems, NULL);
+	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     
 	if (loginItems) {
 		UInt32 seedValue;

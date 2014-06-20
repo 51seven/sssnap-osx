@@ -666,6 +666,7 @@
                 <outlet property="preferences" destination="z2c-0Y-eJN" id="bn3-cu-V6N"/>
                 <outlet property="preferencesStartupCheckbox" destination="i2p-OY-Ov0" id="wSz-r9-EjX"/>
                 <outlet property="preferencesWindow" destination="NGQ-cL-Vyr" id="0T1-xN-xDt"/>
+                <outlet property="seperatorRecentSnapsBegin" destination="zrB-xX-hMW" id="lQx-AH-bZa"/>
                 <outlet property="signIn" destination="PiH-H5-X5f" id="ZgO-pe-rYH"/>
                 <outlet property="signInErrorLabel" destination="lh8-CN-kRK" id="1Me-Xc-0gh"/>
                 <outlet property="signInWindow" destination="0Tr-Cm-0Gy" id="TKb-Y8-i1H"/>
@@ -695,8 +696,8 @@
                         <action selector="takeScreenshotItem:" target="494" id="y4b-s2-92V"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="zrB-xX-hMW"/>
-                <menuItem isSeparatorItem="YES" id="JoZ-TR-qeb"/>
+                <menuItem isSeparatorItem="YES" title="seperatorRecentSnapsBegin" id="zrB-xX-hMW"/>
+                <menuItem isSeparatorItem="YES" title="seperatorRecentSnapsEnd" id="JoZ-TR-qeb"/>
                 <menuItem title="My Snaps" enabled="NO" id="Q9A-le-cir">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -925,11 +926,12 @@
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="vYx-d6-0b1"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="7zN-jX-iuE"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarCustomizeToolbarItem" id="W0J-lu-JHK"/>
-                    <toolbarItem implicitItemIdentifier="8B13BC61-BD5F-4E0D-A14E-22F7605A5B93" label="Toolbar Item" paletteLabel="Toolbar Item" tag="-1" id="EYi-ob-dXZ"/>
+                    <toolbarItem implicitItemIdentifier="AEEB72EB-5822-4B3D-AA68-448278FE91F7" label="Toolbar Item" paletteLabel="Toolbar Item" tag="-1" id="wFV-ju-OTi"/>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="EYi-ob-dXZ"/>
-                    <toolbarItem reference="EYi-ob-dXZ"/>
+                    <toolbarItem reference="wFV-ju-OTi"/>
+                    <toolbarItem reference="W0J-lu-JHK"/>
+                    <toolbarItem reference="wFV-ju-OTi"/>
                 </defaultToolbarItems>
             </toolbar>
         </window>

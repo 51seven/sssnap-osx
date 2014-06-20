@@ -40,7 +40,6 @@
 //
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    //[self addAppAsLoginItem];
     [_signInErrorLabel setStringValue:[NSString stringWithFormat:@"%@", @""]];
     
     // User is logged out
@@ -143,6 +142,45 @@
 
 - (IBAction)signIn:(id)sender {
     [self proceedLogin];
+}
+
+// Is called when the Menu is opened
+- (void)menuWillOpen:(NSMenu *)menu {
+    
+    // Get the recent snaps
+    sendPost *post = [[sendPost alloc] init];
+    [post getRecentSnaps];
+}
+
+- (void) menuDidClose:(NSMenu *)menu {
+    
+    // DUPLICATED CODE. SEE sendPost.getRecentSnaps
+    
+    /*int recentSnapsBeginIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsBegin"];
+    int recentSnapsEndIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsEnd"];
+
+    NSLog(@"First line at %d. Endline at %d", recentSnapsBeginIndex, recentSnapsEndIndex);
+    
+    int i = recentSnapsBeginIndex+1;
+    
+    while(i < recentSnapsEndIndex) {
+        [menu removeItemAtIndex:i];
+        NSLog(@"%d", i);
+        i++;
+    }*/
+    
+    /*
+    for (int i = recentSnapsBeginIndex+1; i < recentSnapsEndIndex; i++) {
+        
+        if([[menu itemAtIndex:i] isEqual: [menu itemWithTitle:@"seperatorRecentSnapsEnd"]]) {
+            NSLog(@"Aborted deleting, cuz we reached the end line");
+            break;
+        }
+        else {
+            [menu removeItemAtIndex:i];
+            NSLog(@"removed item at index %d", i);
+        }
+    }*/
 }
 
 - (IBAction)mySnapsItem:(id)sender {
@@ -305,11 +343,12 @@
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     
     
-//    [self.menuBarOutlet addItemWithTitle:@"TEST" action:@selector(test:) keyEquivalent:@""];
+    //    [self.menuBarOutlet addItemWithTitle:@"TEST" action:@selector(test:) keyEquivalent:@""];
     self.statusBar.menu = self.menuBarOutlet;
     self.statusBar.highlightMode = YES;
     
     [self testInternetConnection];
+    [self.statusBar.menu setDelegate:self]; // Is called when the statusbarmenu is about to open
 }
 
 - (void)changeStatusBarIcon:(int *) percentage {

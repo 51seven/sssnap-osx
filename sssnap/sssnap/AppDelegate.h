@@ -38,6 +38,9 @@
 - (void) resetStatusBarIcon;
 - (BOOL) appIsLoginItem;
 
+- (void) menuWillOpen:(NSMenu *)menu;
+- (void) menuDidClose:(NSMenu *)menu;
+
 @property (weak) IBOutlet NSButtonCell *pref_showDesktopNotification;
 @property (weak) IBOutlet NSButtonCell *preferencesStartupCheckbox;
 @property (weak) IBOutlet NSButtonCell *pref_retinaScale;
@@ -55,11 +58,14 @@
 @property (weak) IBOutlet NSMenuItem *createAccountItem;
 @property (weak) IBOutlet NSMenuItem *signIn;
 @property (weak) IBOutlet NSMenuItem *mySnapsItem;
+@property (weak) IBOutlet NSMenuItem *seperatorRecentSnapsBegin;
 
 @property (weak) IBOutlet NSTextField *usernameInput;
 @property (weak) IBOutlet NSSecureTextField *passwordInput;
 
 @property (weak) IBOutlet NSMenu *menuBarOutlet;
 @property (strong, nonatomic) NSStatusItem *statusBar;
+
+
 
 @end

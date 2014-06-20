@@ -61,7 +61,7 @@
     }
     // User is logged in
     else {
-        NSLog(@"Found %lu Account(s) in Auth2AccountStore: ", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]);
+        NSLog(@"Found %lu Account(s) in Auth2AccountStore.", [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]);
         
         [_signIn setHidden: YES];
         
@@ -114,6 +114,14 @@
                                                       [_signInWindow close];
                                                       self.statusBar.image = [NSImage imageNamed: @"icon"];
                                                       
+                                                      // Set the default Values
+                                                      NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+                                                      [userPreferences setBool: YES forKey: @"copyLinkToClipboard"];
+                                                      [userPreferences setBool: YES forKey: @"downscaleRetinaScreenshots"];
+                                                      [userPreferences setBool: YES forKey: @"showDesktopNotifications"];
+                                                      [userPreferences setObject: username forKey: @"current_user"];
+                                                      [userPreferences synchronize];
+                                                      
                                                       NSLog(@"Successfully logged in.");
                                                   }];
     
@@ -163,6 +171,9 @@
 
     // Preparing CopyLinkToClipboard Checkbox
     ([userPreferences boolForKey: @"copyLinkToClipboard"]) ? [_pref_CopyLinkToClipboard setState: 1] : [_pref_CopyLinkToClipboard setState: 0];
+    
+    // Settings the Account
+    [_label_accountmail setStringValue: [NSString stringWithFormat: @"%@", [userPreferences stringForKey: @"current_user"]]];
     
     //Open the preferences Window
     [_preferencesWindow makeKeyAndOrderFront:_preferencesWindow];

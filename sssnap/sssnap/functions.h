@@ -10,10 +10,11 @@
 
 @interface functions : NSObject
 
-+ (void)sendGrowl:(NSString *)data;
-+ (void)copyToClipboard:(NSString *)data;
++ (void)sendGrowl:(NSString *) data;
++ (void)copyToClipboard:(NSString *) data;
 + (BOOL)dateIsExpired:(NSDate *) date;
-+ (NSImage *)downscaleToNonRetina:(NSImage *)image;
++ (NSImage *)downscaleToNonRetina:(NSImage *) image;
 
++ (NSString *) md5:(NSString *) input;
 
 @end

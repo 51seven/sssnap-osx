@@ -93,8 +93,6 @@
         NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
         
         if(anAccount) {
-            //NSLog(@"Using Account: %@", anAccount);
-            
             [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
                                                      secret:@"testsecret"
                                            authorizationURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
@@ -116,11 +114,11 @@
                 NSMenu *menu = [((AppDelegate *)[[NSApplication sharedApplication] delegate]) menuBarOutlet];
                 
                 id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
+                int recentSnapsBeginIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsBegin"];
+                int recentSnapsEndIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsEnd"];
                 
+                // Update for a little bit better statement when the server sends consistent jsons
                 if([json_response count]) {
-                    int recentSnapsBeginIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsBegin"];
-                    int recentSnapsEndIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsEnd"];
-                    
                     // Removing all recent Snaps
                     // Actually we are removing the number of items between the first seperator and the second one.
                     // Care: after deliting an item, the others fill the missing index.
@@ -131,7 +129,13 @@
                     // Adding the new ones
                     for (int i = 0; i < [json_response count]; i++) {
                         NSDictionary *dict = [json_response objectAtIndex: i];
-                        [menu insertItemWithTitle:[NSString stringWithFormat: @"%@", [dict objectForKey: @"title"]] action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+(i+1)]; // @selector(openRecentSnap:)
+                        NSString *snaptitle = [NSString stringWithFormat: @"%@ (%@)", [dict objectForKey: @"title"], [dict objectForKey:@"hits"]];
+                        snaptitle = [snaptitle stringByReplacingOccurrencesOfString:@"Screencapture on" withString:@""];
+                        
+                        NSMenuItem *currentitem = [[NSMenuItem alloc] initWithTitle:snaptitle action:@selector(someUrlAction:) keyEquivalent:@""];
+                        [currentitem setTarget:self];
+                        [currentitem setAction:@selector(someUrlAction:)];
+                        [menu insertItem:currentitem atIndex:recentSnapsBeginIndex+(i+1)];
                         
                         // Download the image thumbnail
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
@@ -140,8 +144,8 @@
                                            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
                                            NSImage *image = [[NSImage alloc] initWithData:imageData];
                                            
-                                           NSInteger height = 45;
-                                           NSInteger width = 80;
+                                           NSInteger height = 34;
+                                           NSInteger width = 60;
                                            
                                            NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
                                                                     initWithBitmapDataPlanes:NULL
@@ -167,13 +171,14 @@
                                            
                                            //This is your completion handler
                                            dispatch_sync(dispatch_get_main_queue(), ^{
-                                               [[menu itemAtIndex:recentSnapsBeginIndex+(i+1)] setImage: scaledImage];
+                                               [currentitem setImage: scaledImage];
                                            });
                                        });
                     }
                 }
                 else {
-                    NSLog(@"You dont have any snaps yet :(");
+                    NSMenuItem *menuitem = [menu insertItemWithTitle:@"You dont have any snaps yet :(" action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
+                    [menuitem setEnabled:NO];
                 }
             }
             else {
@@ -186,10 +191,17 @@
     }
     else {
         NSLog(@"Cant access your recent Snaps, because you have no internet connection.");
-        // ToDo: Implement Userfeedback
     }
 }
 
+-(void)someUrlAction:(id) sender {
+    NSLog(@"Opening URL...");
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de"]];
+}
+-(void)someUrlAction {
+    NSLog(@"Opening URL...");
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de"]];
+}
 
 
 @end

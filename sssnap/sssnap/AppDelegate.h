@@ -51,6 +51,7 @@
 
 @property (weak) IBOutlet NSTextField *signInErrorLabel;
 @property (weak) IBOutlet NSTextField *label_accountmail;
+@property (weak) IBOutlet NSImageView *userAvatar;
 
 @property (weak) IBOutlet NSMenuItem *takeScreenshotMenuItem;
 @property (weak) IBOutlet NSMenuItem *noInternetConnection;

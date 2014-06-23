@@ -153,41 +153,14 @@
 }
 
 - (void) menuDidClose:(NSMenu *)menu {
-    
-    // DUPLICATED CODE. SEE sendPost.getRecentSnaps
-    
-    /*int recentSnapsBeginIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsBegin"];
-    int recentSnapsEndIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsEnd"];
+    // Does nothing yet. ZzZzz...
+}
 
-    NSLog(@"First line at %d. Endline at %d", recentSnapsBeginIndex, recentSnapsEndIndex);
-    
-    int i = recentSnapsBeginIndex+1;
-    
-    while(i < recentSnapsEndIndex) {
-        [menu removeItemAtIndex:i];
-        NSLog(@"%d", i);
-        i++;
-    }*/
-    
-    /*
-    for (int i = recentSnapsBeginIndex+1; i < recentSnapsEndIndex; i++) {
-        
-        if([[menu itemAtIndex:i] isEqual: [menu itemWithTitle:@"seperatorRecentSnapsEnd"]]) {
-            NSLog(@"Aborted deleting, cuz we reached the end line");
-            break;
-        }
-        else {
-            [menu removeItemAtIndex:i];
-            NSLog(@"removed item at index %d", i);
-        }
-    }*/
+- (IBAction)userAvatar:(id)sender {
 }
 
 - (IBAction)mySnapsItem:(id)sender {
-//    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
-    
-    sendPost *post = [[sendPost alloc] init];
-    [post getRecentSnaps];
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
 }
 
 - (IBAction)createAccountItem:(id)sender {
@@ -197,6 +170,22 @@
 - (IBAction)preferencesMenuItemClick:(id)sender {
     
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    
+    NSString *gravatar_user = [NSString stringWithFormat: @"%@", [userPreferences stringForKey: @"current_user"]];
+    gravatar_user = [functions md5: [[gravatar_user lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]]; // Generating Gravatar Hash    
+    
+    // Download the image thumbnail
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                   ^{
+                       NSURL *imageURL = [NSURL URLWithString: [NSString stringWithFormat: @"http://www.gravatar.com/avatar/%@", gravatar_user]];
+                       NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+                       NSImage *gravatar_image = [[NSImage alloc] initWithData:imageData];
+                       
+                       //This is your completion handler
+                       dispatch_sync(dispatch_get_main_queue(), ^{
+                           [_userAvatar setImage: gravatar_image];
+                       });
+                   });
     
     // Preparing ShowDesktopNotification Checkbox
     ([userPreferences boolForKey: @"showDesktopNotifications"]) ? [_pref_showDesktopNotification setState: 1] : [_pref_showDesktopNotification setState: 0];

@@ -84,6 +84,7 @@
 }
 
 // Uploads an Image to the Server
+// One does not simply use a caching method here.
 - (void)getRecentSnaps {
     
     // Check if we're connected to the internet
@@ -101,7 +102,7 @@
                                                 redirectURL:[NSURL URLWithString:@"http://51seven.de:8888/"]
                                              forAccountType:@"password"];
             
-             NXOAuth2Request *theRequest = [[NXOAuth2Request alloc] initWithResource:[NSURL URLWithString:@"http://51seven.de:8888/api/list/3"]
+             NXOAuth2Request *theRequest = [[NXOAuth2Request alloc] initWithResource:[NSURL URLWithString:@"http://51seven.de:8888/api/list/5"]
                                                                               method:@"POST"
                                                                           parameters:nil];
             
@@ -114,41 +115,61 @@
             if(returnString != nil) {
                 NSMenu *menu = [((AppDelegate *)[[NSApplication sharedApplication] delegate]) menuBarOutlet];
                 
-                NSLog(@"> Number of menuitems: %ld", (long)[menu numberOfItems]);
-                
                 id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
                 
                 if([json_response count]) {
                     int recentSnapsBeginIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsBegin"];
                     int recentSnapsEndIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsEnd"];
-
-                    NSLog(@"Removing Items from %d to %d", recentSnapsBeginIndex+1, recentSnapsEndIndex+1);
                     
                     // Removing all recent Snaps
-                    for (int i = recentSnapsBeginIndex+1; i < recentSnapsEndIndex; i++) {
-                        [menu removeItemAtIndex:i];
-                        NSLog(@"removed item at index %d", i);
+                    // Actually we are removing the number of items between the first seperator and the second one.
+                    // Care: after deliting an item, the others fill the missing index.
+                    for (int i = 0; i < recentSnapsEndIndex-recentSnapsBeginIndex-1; i++) {
+                        [menu removeItemAtIndex:recentSnapsBeginIndex+1];
                     }
                     
                     // Adding the new ones
-                    //NSLog(@"Adding Items from %d to %d", recentSnapsBeginIndex+1, recentSnapsBeginIndex+ 1+(int)[json_response count]);
                     for (int i = 0; i < [json_response count]; i++) {
                         NSDictionary *dict = [json_response objectAtIndex: i];
-                        //NSLog(@"Adding item (%d) at %d", i, recentSnapsBeginIndex+(i+1));
-                        [menu insertItemWithTitle:[NSString stringWithFormat: @"%d - %@", i, [dict objectForKey: @"title"]] action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+(i+1)]; // @selector(openRecentSnap:)
+                        [menu insertItemWithTitle:[NSString stringWithFormat: @"%@", [dict objectForKey: @"title"]] action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+(i+1)]; // @selector(openRecentSnap:)
                         
                         // Download the image thumbnail
-                        // Not needed for debug
-                        /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                                        ^{
                                            NSURL *imageURL = [NSURL URLWithString: [NSString stringWithFormat: @"%@", [dict objectForKey: @"uri"]]];
                                            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+                                           NSImage *image = [[NSImage alloc] initWithData:imageData];
+                                           
+                                           NSInteger height = 45;
+                                           NSInteger width = 80;
+                                           
+                                           NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
+                                                                    initWithBitmapDataPlanes:NULL
+                                                                    pixelsWide:width
+                                                                    pixelsHigh:height
+                                                                    bitsPerSample:8
+                                                                    samplesPerPixel:4
+                                                                    hasAlpha:YES
+                                                                    isPlanar:NO
+                                                                    colorSpaceName:NSCalibratedRGBColorSpace
+                                                                    bytesPerRow:0
+                                                                    bitsPerPixel:0];
+                                           [rep setSize:NSMakeSize(width, height)];
+                                           
+                                           [NSGraphicsContext saveGraphicsState];
+                                           [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
+
+                                           [image drawInRect:NSMakeRect(0, 0, width, height) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+                                           [NSGraphicsContext restoreGraphicsState];
+                                           
+                                           NSData *newImageData = [rep representationUsingType:NSPNGFileType properties:nil];
+                                           NSImage *scaledImage = [[NSImage alloc] initWithData:newImageData];
                                            
                                            //This is your completion handler
                                            dispatch_sync(dispatch_get_main_queue(), ^{
-                                               [[menu itemAtIndex:recentSnapsBeginIndex+(i+1)] setImage: [[NSImage alloc] initWithData:imageData]];
+                                               [[menu itemAtIndex:recentSnapsBeginIndex+(i+1)] setImage: scaledImage];
                                            });
-                                       });*/
+                                       });
                     }
                 }
                 else {

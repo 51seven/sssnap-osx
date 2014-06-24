@@ -112,7 +112,6 @@
                                                       [_mySnapsItem setEnabled: YES];
                                                       [_preferences setEnabled: YES];
                                                       [_takeScreenshotMenuItem setEnabled:YES];
-                                                      [_preferences setEnabled: YES];
                                                       
                                                       [_signInWindow close];
                                                       self.statusBar.image = [NSImage imageNamed: @"icon"];
@@ -158,7 +157,7 @@
 }
 
 - (void) menuDidClose:(NSMenu *)menu {
-    // Does nothing yet. ZzZzz...
+        // It's doing nothing atm. ZzZzzz...
 }
 
 - (IBAction)userAvatar:(id)sender {

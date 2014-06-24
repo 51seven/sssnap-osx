@@ -57,9 +57,9 @@
                            //NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
                        }
                        responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
-                           // Just debugging (for the next 2 lines)
-                           NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                           NSLog(@"ResponseData: %@", responseString);
+                           // Just debugging
+                           //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                           //NSLog(@"ResponseData: %@", responseString);
                            
                            id json_response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
                            
@@ -94,6 +94,22 @@
 // One does not simply use a caching method here.
 - (void)getRecentSnaps {
     
+    NSMenu *menu = [((AppDelegate *)[[NSApplication sharedApplication] delegate]) menuBarOutlet];
+    
+    int recentSnapsBeginIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsBegin"];
+    int recentSnapsEndIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsEnd"];
+    
+    // Removing all recent Snaps
+    // Actually we are removing the number of items between the first seperator and the second one.
+    // Care: after deliting an item, the others fill the missing index.
+    /*for (int i = 0; i < recentSnapsEndIndex-recentSnapsBeginIndex-1; i++) {
+        [menu removeItemAtIndex:i];
+        NSLog(@"removed item with title: %@", [[menu itemAtIndex:i] title]);
+    }*/
+    for (int i = recentSnapsEndIndex-1; i > recentSnapsBeginIndex; i--) {
+        [menu removeItemAtIndex:i];
+    }
+    
     // Check if we're connected to the internet
     if([[Reachability reachabilityForInternetConnection] isReachable]) {
         
@@ -122,21 +138,10 @@
             NSData *returnData = [NSURLConnection sendSynchronousRequest: signedRequest returningResponse: nil error: nil]; // Change to Asynchronus Request
             NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
             
-            NSMenu *menu = [((AppDelegate *)[[NSApplication sharedApplication] delegate]) menuBarOutlet];
-            
             if(returnString != nil) {
                 id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
-                int recentSnapsBeginIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsBegin"];
-                int recentSnapsEndIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsEnd"];
                 
                 if([[json_response objectForKey:@"status"] isLike: @"ok"]) {
-                    // Removing all recent Snaps
-                    // Actually we are removing the number of items between the first seperator and the second one.
-                    // Care: after deliting an item, the others fill the missing index.
-                    for (int i = 0; i < recentSnapsEndIndex-recentSnapsBeginIndex-1; i++) {
-                        [menu removeItemAtIndex:recentSnapsBeginIndex+1];
-                    }
-                    
                     // Adding the new ones
                     for (int i = 0; i < [[json_response objectForKey: @"payload"] count]; i++) {
                         
@@ -180,8 +185,8 @@
                                            [NSGraphicsContext restoreGraphicsState];
                                            
                                            NSData *newImageData = [rep representationUsingType:NSPNGFileType properties:nil];
+                                           NSImage *scaledImage = [[NSImage alloc] initWithData:image];
                                             */
-                                           //NSImage *scaledImage = [[NSImage alloc] initWithData:image];
                                            
                                            //This is your completion handler
                                            dispatch_sync(dispatch_get_main_queue(), ^{

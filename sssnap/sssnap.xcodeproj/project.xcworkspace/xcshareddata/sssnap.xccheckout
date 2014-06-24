@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>360D62B5-1AC2-42F8-BFB6-957F88CD28D1</string>
+	<string>297D121A-1B85-4689-8923-85FE6E71B0DD</string>
 	<key>IDESourceControlProjectName</key>
 	<string>sssnap</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F4DC18D5-B46F-4871-8453-5328DB133DB3</key>
-		<string>ssh://github.com/zvaehn/sssnap-osx.git</string>
+		<key>19E6C78D-0DF4-44B5-B61A-CAB21A73B4AE</key>
+		<string>https://github.com/51seven/sssnap-osx</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>sssnap/sssnap.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F4DC18D5-B46F-4871-8453-5328DB133DB3</key>
+		<key>19E6C78D-0DF4-44B5-B61A-CAB21A73B4AE</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/zvaehn/sssnap-osx.git</string>
+	<string>https://github.com/51seven/sssnap-osx</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F4DC18D5-B46F-4871-8453-5328DB133DB3</string>
+	<string>19E6C78D-0DF4-44B5-B61A-CAB21A73B4AE</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F4DC18D5-B46F-4871-8453-5328DB133DB3</string>
+			<string>19E6C78D-0DF4-44B5-B61A-CAB21A73B4AE</string>
 			<key>IDESourceControlWCCName</key>
 			<string>sssnap-osx</string>
 		</dict>

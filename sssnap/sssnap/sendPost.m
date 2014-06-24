@@ -18,6 +18,8 @@
     // Check if we're connected to the internet
     if([[Reachability reachabilityForInternetConnection] isReachable]) {
         
+        NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary]; // Environment Variables
+        
         NSData *imageData = [image TIFFRepresentation];
         NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData: imageData];
         imageData = [imageRep representationUsingType:NSPNGFileType properties: nil];
@@ -28,17 +30,21 @@
         
         NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
         if(anAccount) {
-            NSLog(@"Using Account: %@", anAccount);
+            //NSLog(@"Using Account: %@", anAccount);
         
             [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
                                                      secret:@"testsecret"
-                                           authorizationURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
-                                                   tokenURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
-                                                redirectURL:[NSURL URLWithString:@"http://51seven.de:8888/"]
+                                           authorizationURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/oauth/token", infoDict[@"serverurl"]]]
+                                                   tokenURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/oauth/token", infoDict[@"serverurl"]]]
+                                                redirectURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@", infoDict[@"serverurl"]]]
                                              forAccountType:@"password"];
+            
+            [[NXOAuth2AccountStore sharedStore] setTrustModeHandlerForAccountType:@"password" block:^NXOAuth2TrustMode(NXOAuth2Connection *connection, NSString *hostname) {
+                return NXOAuth2TrustModeAnyCertificate;
+            }];
         
             [NXOAuth2Request performMethod:@"POST"
-                                onResource:[NSURL URLWithString: @"http://51seven.de:8888/api/upload"]
+                                onResource:[NSURL URLWithString: [NSString stringWithFormat: @"%@/api/snap/", infoDict[@"serverurl"]]]
                            usingParameters:parameters
                                withAccount:anAccount
                        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
@@ -48,26 +54,27 @@
                            int step = (percent%10==0) ? percent : percent+10-(percent%10);
                        
                            [((AppDelegate *)[[NSApplication sharedApplication] delegate]) changeStatusBarIcon: step];
-                       
                            //NSLog(@"Bytes send %lld of total %lld (%i%%)", bytesSend, bytesTotal, step);
                        }
                        responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                           // Just debugging (for the next 2 lines)
                            NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                           NSLog(@"ResponseData: %@", responseString);
                            
-                           if(error) {
-                               NSLog(@"An error occured: %@", error);
-                           }
-                           else {
-                               NSLog(@"ResponseData: %@", responseString);
-
+                           id json_response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+                           
+                           if([[json_response objectForKey:@"status"] isLike: @"ok"]) {
                                NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
                                
                                if([userPreferences boolForKey: @"showDesktopNotifications"]) {
-                                   [functions sendGrowl: responseString];
+                                   [functions sendGrowl: [[json_response objectForKey:@"payload"] objectForKey: @"url"]];
                                }
                                if([userPreferences boolForKey: @"copyLinkToClipboard"]) {
-                                   [functions copyToClipboard: responseString];
+                                   [functions copyToClipboard: [[json_response objectForKey:@"payload"] objectForKey: @"url"]];
                                }
+                           }
+                           else {
+                               NSLog(@"An error occured: %@", error);
                            }
                            
                            [((AppDelegate *)[[NSApplication sharedApplication] delegate]) resetStatusBarIcon];
@@ -91,34 +98,38 @@
     if([[Reachability reachabilityForInternetConnection] isReachable]) {
         
         NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
+        NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary]; // Environment Variables
         
         if(anAccount) {
             [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
                                                      secret:@"testsecret"
-                                           authorizationURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
-                                                   tokenURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
-                                                redirectURL:[NSURL URLWithString:@"http://51seven.de:8888/"]
+                                           authorizationURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/oauth/token", infoDict[@"serverurl"]]]
+                                                   tokenURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/oauth/token", infoDict[@"serverurl"]]]
+                                                redirectURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@", infoDict[@"serverurl"]]]
                                              forAccountType:@"password"];
             
-             NXOAuth2Request *theRequest = [[NXOAuth2Request alloc] initWithResource:[NSURL URLWithString:@"http://51seven.de:8888/api/list/5"]
+            [[NXOAuth2AccountStore sharedStore] setTrustModeHandlerForAccountType:@"password" block:^NXOAuth2TrustMode(NXOAuth2Connection *connection, NSString *hostname) {
+                return NXOAuth2TrustModeAnyCertificate;
+            }];
+            
+            NXOAuth2Request *theRequest = [[NXOAuth2Request alloc] initWithResource:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/snap/list/5", infoDict[@"serverurl"]]]
                                                                               method:@"POST"
                                                                           parameters:nil];
             
             theRequest.account = anAccount;
             
             NSURLRequest *signedRequest = [theRequest signedURLRequest];
-            NSData *returnData = [NSURLConnection sendSynchronousRequest: signedRequest returningResponse: nil error: nil];
+            NSData *returnData = [NSURLConnection sendSynchronousRequest: signedRequest returningResponse: nil error: nil]; // Change to Asynchronus Request
             NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
             
+            NSMenu *menu = [((AppDelegate *)[[NSApplication sharedApplication] delegate]) menuBarOutlet];
+            
             if(returnString != nil) {
-                NSMenu *menu = [((AppDelegate *)[[NSApplication sharedApplication] delegate]) menuBarOutlet];
-                
                 id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
                 int recentSnapsBeginIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsBegin"];
                 int recentSnapsEndIndex = (int)[menu indexOfItemWithTitle:@"seperatorRecentSnapsEnd"];
                 
-                // Update for a little bit better statement when the server sends consistent jsons
-                if([json_response count]) {
+                if([[json_response objectForKey:@"status"] isLike: @"ok"]) {
                     // Removing all recent Snaps
                     // Actually we are removing the number of items between the first seperator and the second one.
                     // Care: after deliting an item, the others fill the missing index.
@@ -127,12 +138,13 @@
                     }
                     
                     // Adding the new ones
-                    for (int i = 0; i < [json_response count]; i++) {
-                        NSDictionary *dict = [json_response objectAtIndex: i];
-                        NSString *snaptitle = [NSString stringWithFormat: @"%@ (%@)", [dict objectForKey: @"title"], [dict objectForKey:@"hits"]];
-                        snaptitle = [snaptitle stringByReplacingOccurrencesOfString:@"Screencapture on" withString:@""];
+                    for (int i = 0; i < [[json_response objectForKey: @"payload"] count]; i++) {
                         
-                        NSMenuItem *currentitem = [[NSMenuItem alloc] initWithTitle:snaptitle action:@selector(someUrlAction:) keyEquivalent:@""];
+                        NSString *snaptitle = [NSString stringWithFormat: @"%@", [[[json_response objectForKey: @"payload"] objectAtIndex:i] objectForKey:@"title"]];
+                        NSString *snapcount = [NSString stringWithFormat: @"%@", [[[json_response objectForKey: @"payload"] objectAtIndex:i] objectForKey:@"hits"]];
+                        NSString *itemtitle = [NSString stringWithFormat: @"%@ (%@)", snaptitle, snapcount];
+                        
+                        NSMenuItem *currentitem = [[NSMenuItem alloc] initWithTitle:itemtitle action:@selector(someUrlAction:) keyEquivalent:@""];
                         [currentitem setTarget:self];
                         [currentitem setAction:@selector(someUrlAction:)];
                         [menu insertItem:currentitem atIndex:recentSnapsBeginIndex+(i+1)];
@@ -140,11 +152,12 @@
                         // Download the image thumbnail
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                                        ^{
-                                           NSURL *imageURL = [NSURL URLWithString: [NSString stringWithFormat: @"%@", [dict objectForKey: @"uri"]]];
+                                           NSURL *imageURL = [NSURL URLWithString: [NSString stringWithFormat: @"%@", [[[json_response objectForKey: @"payload"] objectAtIndex:i] objectForKey:@"thumb"]]];
                                            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
                                            NSImage *image = [[NSImage alloc] initWithData:imageData];
                                            
-                                           NSInteger height = 34;
+                                           // Downscaling not needed ATM. But i'll just uncomment it. We'll never know
+                                           /*NSInteger height = 34;
                                            NSInteger width = 60;
                                            
                                            NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
@@ -167,11 +180,12 @@
                                            [NSGraphicsContext restoreGraphicsState];
                                            
                                            NSData *newImageData = [rep representationUsingType:NSPNGFileType properties:nil];
-                                           NSImage *scaledImage = [[NSImage alloc] initWithData:newImageData];
+                                            */
+                                           //NSImage *scaledImage = [[NSImage alloc] initWithData:image];
                                            
                                            //This is your completion handler
                                            dispatch_sync(dispatch_get_main_queue(), ^{
-                                               [currentitem setImage: scaledImage];
+                                               [currentitem setImage: image];
                                            });
                                        });
                     }
@@ -182,15 +196,15 @@
                 }
             }
             else {
-                NSLog(@"Request failed.");
+                NSLog(@"Request for recent snaps failed: Result is empty.");
             }
         }
         else {
-            NSLog(@"User is not logged in");
+            NSLog(@"Request for recent snaps failed: User is not logged-in.");
         }
     }
     else {
-        NSLog(@"Cant access your recent Snaps, because you have no internet connection.");
+        NSLog(@"Request for recent snaps failed: No internet connection.");
     }
 }
 
@@ -203,5 +217,14 @@
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de"]];
 }
 
+@end
 
+
+
+// Fixes HTTPS Issues.
+// Found on stackoverflow: stackoverflow.com/questions/21025622/http-load-failed-kcfstreamerrordomainssl-9813-in-cordova-app
+@implementation NSURLRequest(DataController)
++ (BOOL)allowsAnyHTTPSCertificateForHost:(NSString *)host {
+    return YES;
+}
 @end

@@ -82,20 +82,24 @@
 }
 
 - (void) proceedLogin {
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    
     [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
                                              secret:@"testsecret"
-                                   authorizationURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
-                                           tokenURL:[NSURL URLWithString:@"http://51seven.de:8888/api/oauth/token"]
-                                        redirectURL:[NSURL URLWithString:@"http://51seven.de:8888/"]
+                                   authorizationURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/oauth/token", infoDict[@"serverurl"]]]
+                                           tokenURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/oauth/token", infoDict[@"serverurl"]]]
+                                        redirectURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@", infoDict[@"serverurl"]]]
                                      forAccountType:@"password"];
+    
+    [[NXOAuth2AccountStore sharedStore] setTrustModeHandlerForAccountType:@"password" block:^NXOAuth2TrustMode(NXOAuth2Connection *connection, NSString *hostname) {
+        return NXOAuth2TrustModeAnyCertificate;
+    }];
     
     NSString *username = [_usernameInput stringValue];  // get username by login-form
     NSString *password = [_passwordInput stringValue];  // get password by login-form
     
     // Request access
-    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"password"
-                                                              username:username
-                                                              password:password];
+    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"password" username:username password:password];
     
     // On Sucess
     [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
@@ -132,6 +136,7 @@
                                                       NSError *error = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreErrorKey];
                                                       [_signInErrorLabel setHidden: NO];
                                                       [_signInErrorLabel setStringValue: [NSString stringWithFormat: @"%@", [error localizedDescription]]];
+                                                      
                                                       NSLog(@"Failed to login: \n%@", error);
                                                   }];
 }
@@ -164,13 +169,16 @@
 }
 
 - (IBAction)createAccountItem:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/user/register"]];
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:[NSString stringWithFormat: @"%@/user/register", infoDict[@"serverurl"]]]];
 }
 
 - (IBAction)preferencesMenuItemClick:(id)sender {
     
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
     
+    
+    // Setting the Gravatar Image
     NSString *gravatar_user = [NSString stringWithFormat: @"%@", [userPreferences stringForKey: @"current_user"]];
     gravatar_user = [functions md5: [[gravatar_user lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]]; // Generating Gravatar Hash    
     

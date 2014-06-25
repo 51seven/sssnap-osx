@@ -15,19 +15,37 @@
     Reachability *internetReachable;
 }
 
+// Statusbar menu
+- (IBAction)signIn:(id)sender;
+- (IBAction)signInMenuItemClick:(id)sender;
+- (IBAction)createAccountItem:(id)sender;
+
 - (IBAction)takeScreenshotItem:(id)sender;
 - (IBAction)mySnapsItem:(id)sender;
-- (IBAction)createAccountItem:(id)sender;
 - (IBAction)preferencesMenuItemClick:(id)sender;
-- (IBAction)signInMenuItemClick:(id)sender;
-
 - (IBAction)logoutButton:(id)sender;
-- (IBAction)signIn:(id)sender;
 
 - (IBAction)preferencesStartupCheckboxAction:(id)sender;
 - (IBAction)pref_retinaScale:(id)sender;
 - (IBAction)pref_showDesktopNotification:(id)sender;
 - (IBAction)pref_CopyLinkToClipboard:(id)sender;
+
+// Preferences Toolbar
+@property (weak) IBOutlet NSToolbar *preferencesToolbar;
+- (IBAction)accountPreferences:(id)sender;
+- (IBAction)generalPreferences:(id)sender;
+- (IBAction)aboutPreferences:(id)sender;
+
+@property (weak) IBOutlet NSToolbarItem *accountPreferences;
+@property (weak) IBOutlet NSToolbarItem *generalPreferences;
+@property (weak) IBOutlet NSToolbarItem *aboutPreferences;
+
+@property (weak) IBOutlet NSView *preferencesWrapperView;
+    @property (weak) IBOutlet NSView *preferencesGeneralView;
+    @property (weak) IBOutlet NSView *preferencesAccountView;
+    @property (weak) IBOutlet NSView *preferencesAboutView;
+
+
 
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;
 

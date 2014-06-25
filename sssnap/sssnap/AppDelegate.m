@@ -157,10 +157,7 @@
 }
 
 - (void) menuDidClose:(NSMenu *)menu {
-        // It's doing nothing atm. ZzZzzz...
-}
-
-- (IBAction)userAvatar:(id)sender {
+    // It's doing nothing atm. ZzZzzz...
 }
 
 - (IBAction)mySnapsItem:(id)sender {
@@ -174,17 +171,27 @@
 
 - (IBAction)preferencesMenuItemClick:(id)sender {
     
+    // Loading User Preferences from .plist-file
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
     
+    // Setting the Toolbar defaultitem to active
+    [_preferencesToolbar setSelectedItemIdentifier:@"GeneralPreferences"];
+    
+    // Removing all subviews and setting the default View
+    for (int i = (int)_preferencesWrapperView.subviews.count-1; i >= 0; i--) {
+        [[_preferencesWrapperView.subviews objectAtIndex:i] removeFromSuperview];
+    }
+    
+    [_preferencesWrapperView addSubview: _preferencesGeneralView];
     
     // Setting the Gravatar Image
     NSString *gravatar_user = [NSString stringWithFormat: @"%@", [userPreferences stringForKey: @"current_user"]];
-    gravatar_user = [functions md5: [[gravatar_user lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]]; // Generating Gravatar Hash    
+    gravatar_user = [functions md5: [[gravatar_user lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]]; // Generating Gravatar Hash
     
     // Download the image thumbnail
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^{
-                       NSURL *imageURL = [NSURL URLWithString: [NSString stringWithFormat: @"http://www.gravatar.com/avatar/%@", gravatar_user]];
+                       NSURL *imageURL = [NSURL URLWithString: [NSString stringWithFormat: @"http://www.gravatar.com/avatar/%@?s=128", gravatar_user]];
                        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
                        NSImage *gravatar_image = [[NSImage alloc] initWithData:imageData];
                        
@@ -350,7 +357,7 @@
 - (void)changeStatusBarIcon:(int *) percentage {
     
     // ToDo: Check if icon exists
-    self.statusBar.image = [NSImage imageNamed: [NSString stringWithFormat: @"icon-progress-%d", percentage]];
+    self.statusBar.image = [NSImage imageNamed: [NSString stringWithFormat: @"icon-progress-%d", (int)percentage]];
 }
 
 - (void) resetStatusBarIcon {
@@ -457,9 +464,37 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
     [internetReachable startNotifier];
 }
 
+
+- (IBAction)accountPreferences:(id)sender {    
+    for (int i = (int)_preferencesWrapperView.subviews.count-1; i >= 0; i--) {
+        [[_preferencesWrapperView.subviews objectAtIndex:i] removeFromSuperview];
+    }
+    
+    [_preferencesWrapperView addSubview:_preferencesAccountView];
+}
+
+- (IBAction)generalPreferences:(id)sender {
+    for (int i = (int)_preferencesWrapperView.subviews.count-1; i >= 0; i--) {
+        [[_preferencesWrapperView.subviews objectAtIndex:i] removeFromSuperview];
+    }
+    
+    [_preferencesWrapperView addSubview:_preferencesGeneralView];
+}
+
+- (IBAction)aboutPreferences:(id)sender {
+    for (int i = (int)_preferencesWrapperView.subviews.count-1; i >= 0; i--) {
+        [[_preferencesWrapperView.subviews objectAtIndex:i] removeFromSuperview];
+    }
+    
+    [_preferencesWrapperView addSubview:_preferencesAboutView];
+}
+
+
+
 //
 //  Display Notification even if application is not key
 //
+
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
     return YES;
 }

@@ -136,7 +136,10 @@
             
             NSURLRequest *signedRequest = [theRequest signedURLRequest];
             NSData *returnData = [NSURLConnection sendSynchronousRequest: signedRequest returningResponse: nil error: nil]; // Change to Asynchronus Request
+            
             NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+            
+            NSLog(@"Response: %@", returnString);
             
             if(returnString != nil) {
                 id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
@@ -195,21 +198,28 @@
                                        });
                     }
                 }
+                else if([[json_response objectForKey:@"error"] isLike: @"invalid_token"]) {
+                    NSMenuItem *menuitem = [menu insertItemWithTitle:@"Your Token has expired." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
+                    [menuitem setEnabled:NO];
+                }
                 else {
-                    NSMenuItem *menuitem = [menu insertItemWithTitle:@"You dont have any snaps yet :(" action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
+                    NSMenuItem *menuitem = [menu insertItemWithTitle:@"You dont have any snaps yet." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
                     [menuitem setEnabled:NO];
                 }
             }
             else {
-                NSLog(@"Request for recent snaps failed: Result is empty.");
+                NSMenuItem *menuitem = [menu insertItemWithTitle:@"You dont have any snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
+                [menuitem setEnabled:NO];
             }
         }
         else {
-            NSLog(@"Request for recent snaps failed: User is not logged-in.");
+            NSMenuItem *menuitem = [menu insertItemWithTitle:@"Login to see your snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
+            [menuitem setEnabled:NO];
         }
     }
     else {
-        NSLog(@"Request for recent snaps failed: No internet connection.");
+        NSMenuItem *menuitem = [menu insertItemWithTitle:@"Please connect to the internet." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
+        [menuitem setEnabled:NO];
     }
 }
 

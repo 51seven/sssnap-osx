@@ -29,6 +29,7 @@
                                      };
         
         NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
+        
         if(anAccount) {
             //NSLog(@"Using Account: %@", anAccount);
         
@@ -131,6 +132,12 @@
             NXOAuth2Request *theRequest = [[NXOAuth2Request alloc] initWithResource:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/snap/list/5", infoDict[@"serverurl"]]]
                                                                               method:@"POST"
                                                                           parameters:nil];
+        
+            // Refreshes Token if it has been expired
+            if([functions dateIsExpired: [[anAccount accessToken] expiresAt]]) {
+                NSLog(@"AccessToken expired. I'm getting a new one.");
+                [[anAccount oauthClient] refreshAccessToken];
+            }
             
             theRequest.account = anAccount;
             
@@ -165,7 +172,7 @@
 
                         [imageItem setEnabled:YES];
                         [imageItem setTarget:self];
-                        [imageItem setAction:@selector(someUrlAction:)];
+                        [imageItem setAction:@selector(someUrlAction:)]; // WHY THE FUCK DOES THIS WONT WORK ?
                         
                         [infoItem setEnabled:NO];
 
@@ -221,35 +228,23 @@
                                        });
                     }
                 }
-                else if([[json_response objectForKey:@"error"] isLike: @"invalid_token"]) {
-                    NSMenuItem *menuitem = [menu insertItemWithTitle:@"Your Token has expired." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
-                    [menuitem setEnabled:NO];
-                    
-                    double delayInSeconds = 5.0;
-                    
-                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                        [menu removeItem:menuitem];
-                    });
+                else if([json_response objectForKey:@"code"]) {
+                    [[menu insertItemWithTitle: [json_response objectForKey:@"error_description"] action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1] setEnabled:NO];
                 }
                 else {
-                    NSMenuItem *menuitem = [menu insertItemWithTitle:@"You dont have any snaps yet." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
-                    [menuitem setEnabled:NO];
+                    [[menu insertItemWithTitle:@"We could not fetch your recent snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1] setEnabled:NO];
                 }
             }
             else {
-                NSMenuItem *menuitem = [menu insertItemWithTitle:@"You dont have any snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
-                [menuitem setEnabled:NO];
+                [[menu insertItemWithTitle:@"You dont have any snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1] setEnabled:NO];
             }
         }
         else {
-            NSMenuItem *menuitem = [menu insertItemWithTitle:@"Login to see your snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
-            [menuitem setEnabled:NO];
+            [[menu insertItemWithTitle:@"Login to see your snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1] setEnabled:NO];
         }
     }
     else {
-        NSMenuItem *menuitem = [menu insertItemWithTitle:@"Please connect to the internet." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
-        [menuitem setEnabled:NO];
+        [[menu insertItemWithTitle:@"Server unavailable." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1] setEnabled:NO];
     }
 }
 

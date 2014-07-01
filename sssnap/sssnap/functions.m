@@ -38,18 +38,18 @@
     
     // Given Date is taller then Now -> not expired
     if ([date compare:now] == NSOrderedDescending) {
-        NSLog(@"Liegt in der Zukunft -> date is later than now");
+        //NSLog(@"Liegt in der Zukunft -> date is later than now");
         return false;
         
     }
     // Given Date is smaller then Now -> expired
     else if ([date compare:now] == NSOrderedAscending) {
-        NSLog(@"Liegt in der Vergangenheit -> date is earlier than now");
+        //NSLog(@"Liegt in der Vergangenheit -> date is earlier than now");
         return true;
         
     }
     else {
-        NSLog(@"dates are the same");
+        //NSLog(@"dates are the same");
         return true;
     }
 }

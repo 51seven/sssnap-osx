@@ -58,8 +58,8 @@
                        }
                        responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                            // Just debugging
-                           //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                           //NSLog(@"ResponseData: %@", responseString);
+                           NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                           NSLog(@"ResponseData: %@", responseString);
                            
                            id json_response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
                            
@@ -145,19 +145,42 @@
                 id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
                 
                 if([[json_response objectForKey:@"status"] isLike: @"ok"]) {
-                    // Adding the new ones
+                    // Adding the recent snaps as menuitems
                     for (int i = 0; i < [[json_response objectForKey: @"payload"] count]; i++) {
                         
                         NSString *snaptitle = [NSString stringWithFormat: @"%@", [[[json_response objectForKey: @"payload"] objectAtIndex:i] objectForKey:@"title"]];
                         NSString *snapcount = [NSString stringWithFormat: @"%@", [[[json_response objectForKey: @"payload"] objectAtIndex:i] objectForKey:@"hits"]];
-                        NSString *itemtitle = [NSString stringWithFormat: @"%@ (%@)", snaptitle, snapcount];
+                        NSString *itemtitle = [NSString stringWithFormat: @"%@", snaptitle];
                         
+                        // The recent Snap Item
                         NSMenuItem *currentitem = [[NSMenuItem alloc] initWithTitle:itemtitle action:@selector(someUrlAction:) keyEquivalent:@""];
-                        [currentitem setTarget:self];
-                        [currentitem setAction:@selector(someUrlAction:)];
+                        
+                        // The submenu for the current item
+                        NSMenu* subMenu = [[NSMenu alloc] initWithTitle:@""];
+                        [subMenu setAutoenablesItems:NO];
+                        
+                        // The image and it's counter representated as menuitems
+                        NSMenuItem *imageItem = [[NSMenuItem alloc] initWithTitle:@"" action:@selector(someUrlAction:) keyEquivalent:@""];
+                        NSMenuItem *infoItem = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@ views", snapcount] action:nil keyEquivalent:@""];
+
+                        [imageItem setEnabled:YES];
+                        [imageItem setTarget:self];
+                        [imageItem setAction:@selector(someUrlAction:)];
+                        
+                        [infoItem setEnabled:NO];
+
+                        // And why does this only show up in the last item ?
+                        // [imageItem setView: [((AppDelegate *)[[NSApplication sharedApplication] delegate]) recentSnapsItemSubview]];
+                        
+                        [subMenu addItem:imageItem];
+                        [subMenu addItem:[NSMenuItem separatorItem]];
+                        [subMenu addItem:infoItem];
+                        
+                        // Insert into Main Menu
+                        [currentitem setSubmenu:subMenu];
                         [menu insertItem:currentitem atIndex:recentSnapsBeginIndex+(i+1)];
                         
-                        // Download the image thumbnail
+                        // Download the image thumbnail asynchronus
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                                        ^{
                                            NSURL *imageURL = [NSURL URLWithString: [NSString stringWithFormat: @"%@", [[[json_response objectForKey: @"payload"] objectAtIndex:i] objectForKey:@"thumb"]]];
@@ -191,9 +214,9 @@
                                            NSImage *scaledImage = [[NSImage alloc] initWithData:image];
                                             */
                                            
-                                           //This is your completion handler
+                                           //This is our completion handler
                                            dispatch_sync(dispatch_get_main_queue(), ^{
-                                               [currentitem setImage: image];
+                                               [imageItem setImage: image];
                                            });
                                        });
                     }
@@ -201,6 +224,13 @@
                 else if([[json_response objectForKey:@"error"] isLike: @"invalid_token"]) {
                     NSMenuItem *menuitem = [menu insertItemWithTitle:@"Your Token has expired." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
                     [menuitem setEnabled:NO];
+                    
+                    double delayInSeconds = 5.0;
+                    
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        [menu removeItem:menuitem];
+                    });
                 }
                 else {
                     NSMenuItem *menuitem = [menu insertItemWithTitle:@"You dont have any snaps yet." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1];
@@ -223,17 +253,19 @@
     }
 }
 
--(void)someUrlAction:(id) sender {
+-(void)someUrlAction:(id)sender {
     NSLog(@"Opening URL...");
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de"]];
 }
--(void)someUrlAction {
-    NSLog(@"Opening URL...");
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de"]];
-}
+//-(void)someUrlAction {
+//    NSLog(@"Opening URL...");
+//    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de"]];
+//}
 
+- (BOOL)validateMenuItem:(NSMenuItem *)item {
+   return YES;
+}
 @end
-
 
 
 // Fixes HTTPS Issues.

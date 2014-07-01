@@ -673,10 +673,14 @@
                 <outlet property="preferencesToolbar" destination="u3y-Mw-Ps0" id="J39-1L-Hcw"/>
                 <outlet property="preferencesWindow" destination="NGQ-cL-Vyr" id="0T1-xN-xDt"/>
                 <outlet property="preferencesWrapperView" destination="Bvm-rn-uep" id="COH-DJ-sUX"/>
+                <outlet property="quotaBar" destination="SBo-JJ-eGG" id="hjh-Ik-RKg"/>
+                <outlet property="quotaBarLabel" destination="sY8-mW-gxb" id="p9x-8a-diY"/>
+                <outlet property="recentSnapsItemSubview" destination="KmL-On-RJP" id="0Bf-qM-HqV"/>
                 <outlet property="seperatorRecentSnapsBegin" destination="zrB-xX-hMW" id="lQx-AH-bZa"/>
                 <outlet property="signIn" destination="fMP-uA-8fe" id="GMj-J1-UXE"/>
                 <outlet property="signInErrorLabel" destination="lh8-CN-kRK" id="1Me-Xc-0gh"/>
                 <outlet property="signInWindow" destination="0Tr-Cm-0Gy" id="TKb-Y8-i1H"/>
+                <outlet property="snapsMadeLabel" destination="gVB-km-qpB" id="hjP-QV-lCI"/>
                 <outlet property="takeScreenshotMenuItem" destination="5w4-ce-eKf" id="e3O-X6-PBQ"/>
                 <outlet property="userAvatar" destination="v0d-IN-3mq" id="CDx-gE-KQu"/>
                 <outlet property="username" destination="XyR-Pc-Fsv" id="Aqz-7U-Sn8"/>
@@ -707,6 +711,7 @@
                 <menuItem isSeparatorItem="YES" title="seperatorRecentSnapsBegin" id="zrB-xX-hMW"/>
                 <menuItem isSeparatorItem="YES" title="seperatorRecentSnapsEnd" id="JoZ-TR-qeb"/>
                 <menuItem title="My Snaps" enabled="NO" id="Q9A-le-cir">
+                    <attributedString key="attributedTitle"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="mySnapsItem:" target="494" id="ywG-RV-9qT"/>
@@ -735,7 +740,7 @@
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XyR-Pc-Fsv">
                         <rect key="frame" x="95" y="108" width="192" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="you@example.com" bezelStyle="round" id="R1u-Pg-znQ">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="your email" usesSingleLineMode="YES" bezelStyle="round" id="R1u-Pg-znQ">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -744,7 +749,7 @@
                     <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GVY-RZ-0oA">
                         <rect key="frame" x="95" y="76" width="192" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" placeholderString="password" usesSingleLineMode="YES" bezelStyle="round" id="gUl-oz-VaL">
+                        <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" placeholderString="your password" usesSingleLineMode="YES" bezelStyle="round" id="gUl-oz-VaL">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -756,7 +761,7 @@
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PWI-d3-F7C">
                         <rect key="frame" x="89" y="37" width="204" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Login" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xbw-P0-ALX">
+                        <buttonCell key="cell" type="push" title="Login" bezelStyle="rounded" image="NSFollowLinkFreestandingTemplate" imagePosition="right" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xbw-P0-ALX">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <connections>
@@ -798,7 +803,7 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" id="NGQ-cL-Vyr">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="396" y="252" width="497" height="216"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="ReR-JK-lRs">
                 <rect key="frame" x="0.0" y="0.0" width="497" height="216"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -856,6 +861,80 @@
                 </defaultToolbarItems>
             </toolbar>
         </window>
+        <customView identifier="preferencesGeneralView" id="rWp-Jz-zOR">
+            <rect key="frame" x="0.0" y="0.0" width="497" height="218"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <box fixedFrame="YES" placeholderIntrinsicWidth="327" placeholderIntrinsicHeight="131" title="Snap-Behavior" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="o6t-Ae-7L5">
+                    <rect key="frame" x="17" y="84" width="344" height="114"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView">
+                        <rect key="frame" x="1" y="1" width="342" height="98"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aY-cm-c7q">
+                                <rect key="frame" x="16" y="65" width="336" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Show desktop notifications" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="pIH-uH-tAo">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="LucidaGrande"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pref_showDesktopNotification:" target="494" id="f30-C7-5DW"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLo-mR-YqD">
+                                <rect key="frame" x="16" y="38" width="336" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Downscale Retina screenshots" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="f8f-G9-t7i">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="LucidaGrande"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pref_retinaScale:" target="494" id="feC-8K-n3q"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQh-3j-X3S">
+                                <rect key="frame" x="16" y="11" width="336" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Copy the link into clipboard" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="EI9-uU-Al6">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="LucidaGrande"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pref_CopyLinkToClipboard:" target="494" id="heC-QG-sdW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </box>
+                <box fixedFrame="YES" placeholderIntrinsicWidth="327" placeholderIntrinsicHeight="131" title="App-Behavior" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="9n0-Qy-3n9">
+                    <rect key="frame" x="17" y="16" width="344" height="59"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView">
+                        <rect key="frame" x="1" y="1" width="342" height="43"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXR-7a-T9M">
+                                <rect key="frame" x="16" y="10" width="336" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Start sssnap on system startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="i2p-OY-Ov0">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="LucidaGrande"/>
+                                    <connections>
+                                        <action selector="preferencesStartupCheckboxAction:" target="494" id="Mft-vp-UvV"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </box>
+            </subviews>
+        </customView>
         <customView identifier="preferencesAccountView" placeholderIntrinsicWidth="400" placeholderIntrinsicHeight="139" id="GWg-nM-4Il">
             <rect key="frame" x="0.0" y="0.0" width="497" height="218"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -946,86 +1025,12 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sY8-mW-gxb">
                     <rect key="frame" x="265" y="112" width="170" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="125/1000 Mb" id="sue-ny-RbJ">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="127 Mb" id="sue-ny-RbJ">
                         <font key="font" size="10" name="LucidaGrande"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-            </subviews>
-        </customView>
-        <customView identifier="preferencesGeneralView" id="rWp-Jz-zOR">
-            <rect key="frame" x="0.0" y="0.0" width="497" height="218"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <box fixedFrame="YES" placeholderIntrinsicWidth="327" placeholderIntrinsicHeight="131" title="Snap-Behavior" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="o6t-Ae-7L5">
-                    <rect key="frame" x="17" y="84" width="344" height="114"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <view key="contentView">
-                        <rect key="frame" x="1" y="1" width="342" height="98"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aY-cm-c7q">
-                                <rect key="frame" x="16" y="65" width="336" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Show desktop notifications" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="pIH-uH-tAo">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" size="13" name="LucidaGrande"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="pref_showDesktopNotification:" target="494" id="f30-C7-5DW"/>
-                                </connections>
-                            </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLo-mR-YqD">
-                                <rect key="frame" x="16" y="38" width="336" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Downscale Retina screenshots" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="f8f-G9-t7i">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" size="13" name="LucidaGrande"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="pref_retinaScale:" target="494" id="feC-8K-n3q"/>
-                                </connections>
-                            </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQh-3j-X3S">
-                                <rect key="frame" x="16" y="11" width="336" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Copy the link into clipboard" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="EI9-uU-Al6">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" size="13" name="LucidaGrande"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="pref_CopyLinkToClipboard:" target="494" id="heC-QG-sdW"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                    </view>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </box>
-                <box fixedFrame="YES" placeholderIntrinsicWidth="327" placeholderIntrinsicHeight="131" title="App-Behavior" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="9n0-Qy-3n9">
-                    <rect key="frame" x="17" y="16" width="344" height="59"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <view key="contentView">
-                        <rect key="frame" x="1" y="1" width="342" height="43"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXR-7a-T9M">
-                                <rect key="frame" x="16" y="10" width="336" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Start sssnap on system startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="i2p-OY-Ov0">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" size="13" name="LucidaGrande"/>
-                                    <connections>
-                                        <action selector="preferencesStartupCheckboxAction:" target="494" id="Mft-vp-UvV"/>
-                                    </connections>
-                                </buttonCell>
-                            </button>
-                        </subviews>
-                    </view>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </box>
             </subviews>
         </customView>
         <customView identifier="preferencesAccountView" wantsLayer="YES" placeholderIntrinsicWidth="400" placeholderIntrinsicHeight="139" id="4PX-bH-Fku">
@@ -1083,9 +1088,40 @@
                 </box>
             </subviews>
         </customView>
+        <customView id="KmL-On-RJP">
+            <rect key="frame" x="0.0" y="0.0" width="81" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LNY-ER-Mk3">
+                    <rect key="frame" x="6" y="6" width="21" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundRect" title="x" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Uoa-GW-KhZ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYi-1p-fyL">
+                    <rect key="frame" x="30" y="6" width="21" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundRect" title="y" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yRu-gK-DKN">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJz-VH-wiT">
+                    <rect key="frame" x="54" y="6" width="21" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundRect" title="z" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ayl-jt-cZc">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+        </customView>
     </objects>
     <resources>
         <image name="51seven_logo" width="512" height="512"/>
+        <image name="NSFollowLinkFreestandingTemplate" width="10" height="10"/>
         <image name="NSInfo" width="32" height="32"/>
         <image name="NSPreferencesGeneral" width="32" height="32"/>
         <image name="NSUser" width="32" height="32"/>

@@ -43,8 +43,11 @@
 @property (weak) IBOutlet NSView *preferencesWrapperView;
     @property (weak) IBOutlet NSView *preferencesGeneralView;
     @property (weak) IBOutlet NSView *preferencesAccountView;
-    @property (weak) IBOutlet NSView *preferencesAboutView;
+        @property (weak) IBOutlet NSTextField *snapsMadeLabel;
+        @property (weak) IBOutlet NSLevelIndicator *quotaBar;
+        @property (weak) IBOutlet NSTextField *quotaBarLabel;
 
+    @property (weak) IBOutlet NSView *preferencesAboutView;
 
 
 - (BOOL) userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification;

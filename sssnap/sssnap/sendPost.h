@@ -17,4 +17,5 @@
 -(void)uploadImage:(NSImage *) image;
 -(void)getRecentSnaps;
 
+-(void)someUrlAction:(id)sender;
 @end

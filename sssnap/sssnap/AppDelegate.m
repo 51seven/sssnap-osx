@@ -150,7 +150,7 @@
 
 // Is called when the Menu is opened
 - (void)menuWillOpen:(NSMenu *)menu {
-    
+        
     // Get the recent snaps
     sendPost *post = [[sendPost alloc] init];
     [post getRecentSnaps];
@@ -161,7 +161,8 @@
 }
 
 - (IBAction)mySnapsItem:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
+//    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
+    
 }
 
 - (IBAction)createAccountItem:(id)sender {
@@ -328,8 +329,8 @@
     EventHotKeyRef gMyHotKeyRef;
     EventHotKeyID gMyHotKeyID;
     EventTypeSpec eventType;
-    eventType.eventClass=kEventClassKeyboard;
-    eventType.eventKind=kEventHotKeyPressed;
+    eventType.eventClass = kEventClassKeyboard;
+    eventType.eventKind = kEventHotKeyPressed;
     
     InstallApplicationEventHandler(&MyHotKeyHandler,1,&eventType,NULL,NULL);
     
@@ -345,8 +346,6 @@
     
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     
-    
-    //    [self.menuBarOutlet addItemWithTitle:@"TEST" action:@selector(test:) keyEquivalent:@""];
     self.statusBar.menu = self.menuBarOutlet;
     self.statusBar.highlightMode = YES;
     
@@ -354,9 +353,7 @@
     [self.statusBar.menu setDelegate:self]; // Is called when the statusbarmenu is about to open
 }
 
-- (void)changeStatusBarIcon:(int *) percentage {
-    
-    // ToDo: Check if icon exists
+- (void) changeStatusBarIcon:(int *) percentage {
     self.statusBar.image = [NSImage imageNamed: [NSString stringWithFormat: @"icon-progress-%d", (int)percentage]];
 }
 
@@ -366,8 +363,8 @@
 
 OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData) {
     
-    //Take the Screenshot
     if([[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] count]) {
+        // Take the Screenshot
         [AppDelegate takeScreenshot];
     }
     else {
@@ -454,9 +451,7 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Connection: OFFLINE");
             [_noInternetConnection setHidden: NO];
-            //[_signIn setHidden:YES];
             [_takeScreenshotMenuItem setEnabled: NO];
-            
             self.statusBar.image = [NSImage imageNamed: @"icon-disabled"];
         });
     };
@@ -471,6 +466,47 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
     }
     
     [_preferencesWrapperView addSubview:_preferencesAccountView];
+    
+    // Getting userinformation
+    NXOAuth2Account *anAccount = [[[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"password"] lastObject];
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary]; // Environment Variables
+    
+    [[NXOAuth2AccountStore sharedStore] setClientID:@"testid"
+                                                 secret:@"testsecret"
+                                       authorizationURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/oauth/token", infoDict[@"serverurl"]]]
+                                               tokenURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/oauth/token", infoDict[@"serverurl"]]]
+                                            redirectURL:[NSURL URLWithString:[NSString stringWithFormat: @"%@", infoDict[@"serverurl"]]]
+                                         forAccountType:@"password"];
+        
+    [[NXOAuth2AccountStore sharedStore] setTrustModeHandlerForAccountType:@"password" block:^NXOAuth2TrustMode(NXOAuth2Connection *connection, NSString *hostname) {
+        return NXOAuth2TrustModeAnyCertificate;
+    }];
+    
+    NXOAuth2Request *theRequest = [[NXOAuth2Request alloc] initWithResource:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/user/info", infoDict[@"serverurl"]]]
+                                                                     method:@"POST"
+                                                                 parameters:nil];
+    
+    theRequest.account = anAccount;
+    
+    NSURLRequest *signedRequest = [theRequest signedURLRequest];
+    NSData *returnData = [NSURLConnection sendSynchronousRequest: signedRequest returningResponse: nil error: nil]; // Change to Asynchronus Request
+    
+    NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    
+    //NSLog(@"Response: %@", returnString);
+
+    id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
+    
+    double total = [[[json_response objectForKey: @"storage"] objectForKey: @"total"] doubleValue];
+
+    [_quotaBar setWarningValue: total*0.8];
+    [_quotaBar setCriticalValue: total*0.9];
+    [_quotaBar setMaxValue: total];
+    [_quotaBar setStringValue: [[json_response objectForKey: @"storage"] objectForKey: @"used"]];
+    
+    [_quotaBarLabel setStringValue: [NSString stringWithFormat: @"%.2f mb used", [[[json_response objectForKey: @"storage"] objectForKey: @"used"] doubleValue]/1024/1024]];
+
+    [_snapsMadeLabel setStringValue: [NSString stringWithFormat: @"You've made %@ snaps.", [json_response objectForKey: @"snaps"]]];
 }
 
 - (IBAction)generalPreferences:(id)sender {
@@ -494,11 +530,9 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 //
 //  Display Notification even if application is not key
 //
-
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
     return YES;
 }
-
 
 //
 //  Triggers a Notification
@@ -521,13 +555,12 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 //
 //  Makes the notification clickable
 //
-- (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
-{
+- (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification {
     NSString *url = notification.title;
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
 
--(void) addAppAsLoginItem{
+-(void) addAppAsLoginItem {
 	NSString * appPath = [[NSBundle mainBundle] bundlePath];
     
 	// This will retrieve the path for the application
@@ -537,15 +570,14 @@ OSStatus MyHotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, voi
 	// Create a reference to the shared file list.
     // We are adding it to the current user only.
     // If we want to add it all users, use
-    // kLSSharedFileListGlobalLoginItems instead of
-    //kLSSharedFileListSessionLoginItems
+    // kLSSharedFileListGlobalLoginItems instead of kLSSharedFileListSessionLoginItems
 	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
 	if (loginItems) {
 		//Insert an item to the list.
 		LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
                                                                      kLSSharedFileListItemLast, NULL, NULL,
                                                                      url, NULL, NULL);
-		if (item){
+		if (item) {
 			CFRelease(item);
         }
 	}

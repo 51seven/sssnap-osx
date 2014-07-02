@@ -133,6 +133,11 @@
                                                                              method:@"POST"
                                                                          parameters:nil];
             
+            if([functions dateIsExpired: [[anAccount accessToken] expiresAt]]) {
+                NSLog(@"AccessToken expired. I'm getting a new one.");
+                [[anAccount oauthClient] refreshAccessToken];
+            }
+            
             theRequest.account = anAccount;
             
             NSURLRequest *signedRequest = [theRequest signedURLRequest];
@@ -140,7 +145,7 @@
             
             NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
             
-            //NSLog(@"Response: %@", returnString);
+            NSLog(@"Response: %@", returnString);
             
             if(![returnString isEqual: @""]) {
                 id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
@@ -222,15 +227,11 @@
                                        });
                     }
                 }
-                else if([[json_response objectForKey:@"code"] isEqualToString:@"401"]) {
-/*                    if([functions dateIsExpired: [[anAccount accessToken] expiresAt]]) {
-                        NSLog(@"AccessToken expired. I'm getting a new one.");
-                        [[anAccount oauthClient] refreshAccessToken];
-                    }*/
-                    NSLog(@"AccessToken expired. I'm getting a new one.");
-                    [[anAccount oauthClient] refreshAccessToken];
-                    [self getRecentSnaps];
-                }
+                /*else if([[json_response objectForKey:@"code"] isEqualToNumber: [NSNumber numberWithInt:401]]) {
+                    
+                    
+                    
+                }*/
                 
                 else {
                     [[menu insertItemWithTitle:@"We could not fetch your recent snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1] setEnabled:NO];

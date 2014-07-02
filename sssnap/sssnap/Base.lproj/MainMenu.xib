@@ -710,7 +710,7 @@
                 </menuItem>
                 <menuItem isSeparatorItem="YES" title="seperatorRecentSnapsBegin" id="zrB-xX-hMW"/>
                 <menuItem isSeparatorItem="YES" title="seperatorRecentSnapsEnd" id="JoZ-TR-qeb"/>
-                <menuItem title="My Snaps" enabled="NO" id="Q9A-le-cir">
+                <menuItem title="Open in Browser" enabled="NO" id="Q9A-le-cir">
                     <attributedString key="attributedTitle"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

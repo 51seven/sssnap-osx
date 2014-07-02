@@ -130,14 +130,8 @@
             }];
             
             NXOAuth2Request *theRequest = [[NXOAuth2Request alloc] initWithResource:[NSURL URLWithString:[NSString stringWithFormat: @"%@/api/snap/list/5", infoDict[@"serverurl"]]]
-                                                                              method:@"POST"
-                                                                          parameters:nil];
-        
-            // Refreshes Token if it has been expired
-            if([functions dateIsExpired: [[anAccount accessToken] expiresAt]]) {
-                NSLog(@"AccessToken expired. I'm getting a new one.");
-                [[anAccount oauthClient] refreshAccessToken];
-            }
+                                                                             method:@"POST"
+                                                                         parameters:nil];
             
             theRequest.account = anAccount;
             
@@ -146,9 +140,9 @@
             
             NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
             
-            NSLog(@"Response: %@", returnString);
+            //NSLog(@"Response: %@", returnString);
             
-            if(returnString != nil) {
+            if(![returnString isEqual: @""]) {
                 id json_response = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
                 
                 if([[json_response objectForKey:@"status"] isLike: @"ok"]) {
@@ -228,9 +222,16 @@
                                        });
                     }
                 }
-                else if([json_response objectForKey:@"code"]) {
-                    [[menu insertItemWithTitle: [json_response objectForKey:@"error_description"] action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1] setEnabled:NO];
+                else if([[json_response objectForKey:@"code"] isEqualToString:@"401"]) {
+/*                    if([functions dateIsExpired: [[anAccount accessToken] expiresAt]]) {
+                        NSLog(@"AccessToken expired. I'm getting a new one.");
+                        [[anAccount oauthClient] refreshAccessToken];
+                    }*/
+                    NSLog(@"AccessToken expired. I'm getting a new one.");
+                    [[anAccount oauthClient] refreshAccessToken];
+                    [self getRecentSnaps];
                 }
+                
                 else {
                     [[menu insertItemWithTitle:@"We could not fetch your recent snaps." action:nil keyEquivalent:@"" atIndex:recentSnapsBeginIndex+1] setEnabled:NO];
                 }

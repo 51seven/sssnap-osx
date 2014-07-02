@@ -152,8 +152,7 @@
 - (void)menuWillOpen:(NSMenu *)menu {
         
     // Get the recent snaps
-    sendPost *post = [[sendPost alloc] init];
-    [post getRecentSnaps];
+    [[[sendPost alloc] init] getRecentSnaps];
 }
 
 - (void) menuDidClose:(NSMenu *)menu {
@@ -161,8 +160,7 @@
 }
 
 - (IBAction)mySnapsItem:(id)sender {
-//    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
-    
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://51seven.de:8888/snap/list"]];
 }
 
 - (IBAction)createAccountItem:(id)sender {

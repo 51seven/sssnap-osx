@@ -34,7 +34,7 @@
     
     NSDate *now = [NSDate date];
     
-    NSLog(@"Comparing %@ with %@", date, now);
+    //NSLog(@"Comparing %@ with %@", date, now);
     
     // Given Date is taller then Now -> not expired
     if ([date compare:now] == NSOrderedDescending) {
